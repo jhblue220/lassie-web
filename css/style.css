@@ -1158,6 +1158,78 @@ body.archive-page {
   transition: opacity 0.12s ease;
 }
 
+/* ===== Club page ===== */
+.club-hero {
+  padding: 8px 144px 0 51px;
+}
+
+.club-title {
+  font-size: 96px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--navy);
+}
+
+.club-subtitle {
+  margin-top: 6px;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--navy);
+}
+
+.club-desc {
+  margin-top: 32px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #9aa1ab;
+}
+
+.club-body {
+  display: flex;
+  gap: 74px;
+  padding: 76px 144px 120px 51px;
+  align-items: flex-start;
+}
+
+.club-media {
+  width: 350px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.club-media-a { height: 420px; }
+.club-media-b { height: 420px; }
+
+.club-table {
+  flex: 1;
+  min-width: 0;
+}
+
+.club-row {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 1.7fr 0.9fr;
+  gap: 24px;
+  padding: 26px 0;
+  border-bottom: 1px solid #ececee;
+  font-size: 16px;
+  color: #1e2a3d;
+}
+
+.club-row-head {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  padding-top: 0;
+}
+
+.club-level {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
 /* ===== Small screens: keep it from breaking badly ===== */
 @media (max-width: 900px) {
   .hero { height: auto; min-height: 0; padding-bottom: 90px; }
