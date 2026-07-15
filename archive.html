@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Archiving — Lassie</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="archive-page">
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <a class="logo" href="index.html">
+      <img class="logo-wordmark" src="assets/logo-wordmark.png" alt="Lassie" />
+      <img class="logo-mark" src="assets/logo-icon.png" alt="" aria-hidden="true" />
+    </a>
+
+    <div class="header-right">
+      <div class="menu-wrap">
+        <nav class="nav-pill">
+          <button class="nav-item" type="button">
+            Menu
+            <svg viewBox="0 0 20 20" class="ic" aria-hidden="true">
+              <path d="M3 5h14M3 10h14M3 15h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <span class="nav-divider"></span>
+          <button class="nav-item nav-search" type="button" aria-label="Search">
+            <svg viewBox="0 0 20 20" class="ic" aria-hidden="true">
+              <circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.8" fill="none"/>
+              <path d="M13.5 13.5 17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button class="nav-item nav-about" type="button">About</button>
+        </nav>
+
+        <div class="menu-panel">
+          <div class="menu-panel-inner">
+            <div class="menu-panel-content">
+              <button class="menu-close" type="button" aria-label="Close menu">
+                <svg viewBox="0 0 14 14" aria-hidden="true">
+                  <path d="M2 2l10 10M12 2 2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </button>
+              <div class="menu-group">
+                <svg viewBox="0 0 16 16" class="menu-group-ic" aria-hidden="true">
+                  <path d="M2 4.5h12M2 8h12M2 11.5h7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+                <div class="menu-item">
+                  <button class="menu-link menu-link-toggle" type="button" aria-expanded="false">
+                    Shop
+                    <svg class="menu-chevron" viewBox="0 0 16 16" aria-hidden="true">
+                      <path d="M4 6.2 8 10.2 12 6.2" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <div class="submenu">
+                    <div class="submenu-inner">
+                      <a class="submenu-link" href="#">Adoption</a>
+                      <a class="submenu-link" href="accessories.html">Accessories</a>
+                      <a class="submenu-link" href="#">Charging &amp; Ports</a>
+                      <a class="submenu-link" href="#">Cleaning &amp; Care</a>
+                    </div>
+                  </div>
+                </div>
+                <a class="menu-link" href="archive.html">Archive</a>
+                <a class="menu-link" href="#">Club</a>
+                <a class="menu-link" href="#">Meet Space</a>
+              </div>
+              <div class="menu-group">
+                <svg viewBox="0 0 16 16" class="menu-group-ic" aria-hidden="true">
+                  <circle cx="8" cy="3.2" r="1.2" fill="currentColor"/>
+                  <path d="M8 6.5v6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                <a class="menu-link" href="#">Help</a>
+                <a class="menu-link" href="faq.html">FAQ</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="icon-btn" type="button" aria-label="Cart">
+        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
+          <path d="M3 4h2l2.4 12.2a1.5 1.5 0 0 0 1.47 1.2h8.9a1.5 1.5 0 0 0 1.46-1.14L21 9H6" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="20.6" r="1.4" fill="currentColor"/>
+          <circle cx="17.5" cy="20.6" r="1.4" fill="currentColor"/>
+        </svg>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Account">
+        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
+          <circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.7" fill="none"/>
+          <path d="M5 20c1.2-3.4 3.9-5 7-5s5.8 1.6 7 5" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== Archiving ===== -->
+  <h1 class="archive-title">Archiving</h1>
+
+  <section class="words-strip">
+    <span class="word">Life</span>
+    <span class="word">Moves</span>
+    <span class="word">Better</span>
+    <span class="word">Together</span>
+    <span class="word word-index">Index</span>
+  </section>
+
+  <section class="archive-carousel">
+    <div class="carousel-track" id="carouselTrack">
+      <div class="carousel-slot slot-prev" id="slotPrev">
+        <img id="prevImg" src="" alt="이전 이미지" />
+      </div>
+      <div class="carousel-slot slot-current">
+        <img id="currentImg" src="" alt="" />
+      </div>
+      <div class="carousel-slot slot-next" id="slotNext">
+        <img id="nextImg" src="" alt="다음 이미지" />
+      </div>
+    </div>
+    <p class="carousel-caption" id="carouselCaption"></p>
+  </section>
+
+  <script>
+    const menuWrap = document.querySelector('.menu-wrap');
+    const menuItem = document.querySelector('.menu-item');
+    const menuToggle = document.querySelector('.menu-link-toggle');
+
+    function closeSubmenu() {
+      menuItem.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuItem.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    document.querySelector('.menu-close').addEventListener('click', () => {
+      menuWrap.classList.add('menu-dismissed');
+      closeSubmenu();
+    });
+    menuWrap.addEventListener('mouseleave', () => {
+      menuWrap.classList.remove('menu-dismissed');
+      closeSubmenu();
+    });
+
+    // ---- Archiving carousel ----
+    const images = [
+      { file: 'Interview_01.png', title: 'Interview 01' },
+      { file: 'Interview_02.png', title: 'Interview 02' },
+      { file: 'Research_01.png', title: 'Research 01' },
+      { file: 'Research_02.png', title: 'Research 02' },
+      { file: 'Fabric Research_01.png', title: 'Fabric Research 01' },
+      { file: 'Fabric Research_02.png', title: 'Fabric Research 02' },
+      { file: 'Fabric Research_03.png', title: 'Fabric Research 03' },
+      { file: 'Mock_Up_01.png', title: 'Mock Up 01' },
+      { file: 'Mock_Up_02.png', title: 'Mock Up 02' },
+      { file: 'Mock_Up_03.png', title: 'Mock Up 03' },
+      { file: 'Scale_01.png', title: 'Scale 01' },
+    ];
+
+    const track = document.getElementById('carouselTrack');
+    const prevImg = document.getElementById('prevImg');
+    const currentImg = document.getElementById('currentImg');
+    const nextImg = document.getElementById('nextImg');
+    const caption = document.getElementById('carouselCaption');
+
+    let current = 0;
+    let locked = false;
+
+    function photoPath(file) {
+      return 'archive_photo/' + encodeURIComponent(file);
+    }
+
+    function applyImages() {
+      const n = images.length;
+      const prevIdx = (current - 1 + n) % n;
+      const nextIdx = (current + 1) % n;
+      prevImg.src = photoPath(images[prevIdx].file);
+      currentImg.src = photoPath(images[current].file);
+      nextImg.src = photoPath(images[nextIdx].file);
+      caption.textContent = images[current].title;
+    }
+
+    function go(delta) {
+      if (locked) return;
+      locked = true;
+      track.style.opacity = '0';
+      setTimeout(() => {
+        current = (current + delta + images.length) % images.length;
+        applyImages();
+        track.style.opacity = '1';
+      }, 180);
+      setTimeout(() => { locked = false; }, 420);
+    }
+
+    applyImages();
+
+    window.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      if (Math.abs(e.deltaY) < 4) return;
+      go(e.deltaY > 0 ? 1 : -1);
+    }, { passive: false });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') go(1);
+      if (e.key === 'ArrowLeft') go(-1);
+    });
+
+    document.getElementById('slotPrev').addEventListener('click', () => go(-1));
+    document.getElementById('slotNext').addEventListener('click', () => go(1));
+  </script>
+</body>
+</html>
