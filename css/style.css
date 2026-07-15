@@ -131,10 +131,15 @@ input { font-family: inherit; }
 .menu-panel-inner {
   min-height: 0;
   overflow: hidden;
-  background: linear-gradient(to bottom left, #fcfcfc 0%, #eaebec 100%);
-  border: 1px solid #ececee;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat,
+    rgba(251, 251, 251, 0.68);
+  background-size: 160px 160px, auto;
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
   border-radius: 14px;
-  box-shadow: 0 18px 44px rgba(30, 42, 61, 0.1);
+  box-shadow: 0 18px 44px rgba(30, 42, 61, 0.12);
   transform: translateY(-16px);
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
