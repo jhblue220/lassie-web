@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ — Lassie</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="faq-page">
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <a class="logo" href="index.html">
+      <img class="logo-wordmark" src="assets/logo-wordmark.png" alt="Lassie" />
+      <img class="logo-mark" src="assets/logo-icon.png" alt="" aria-hidden="true" />
+    </a>
+
+    <div class="header-right">
+      <div class="menu-wrap">
+        <nav class="nav-pill">
+          <button class="nav-item" type="button">
+            Menu
+            <svg viewBox="0 0 20 20" class="ic" aria-hidden="true">
+              <path d="M3 5h14M3 10h14M3 15h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <span class="nav-divider"></span>
+          <button class="nav-item nav-search" type="button" aria-label="Search">
+            <svg viewBox="0 0 20 20" class="ic" aria-hidden="true">
+              <circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.8" fill="none"/>
+              <path d="M13.5 13.5 17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button class="nav-item nav-about" type="button">About</button>
+        </nav>
+
+        <div class="menu-panel">
+          <div class="menu-panel-inner">
+            <div class="menu-panel-content">
+              <button class="menu-close" type="button" aria-label="Close menu">
+                <svg viewBox="0 0 14 14" aria-hidden="true">
+                  <path d="M2 2l10 10M12 2 2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </button>
+              <div class="menu-group">
+                <svg viewBox="0 0 16 16" class="menu-group-ic" aria-hidden="true">
+                  <path d="M2 4.5h12M2 8h12M2 11.5h7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+                <div class="menu-item">
+                  <button class="menu-link menu-link-toggle" type="button" aria-expanded="false">
+                    Shop
+                    <svg class="menu-chevron" viewBox="0 0 16 16" aria-hidden="true">
+                      <path d="M4 6.2 8 10.2 12 6.2" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <div class="submenu">
+                    <div class="submenu-inner">
+                      <a class="submenu-link" href="#">Adoption</a>
+                      <a class="submenu-link" href="accessories.html">Accessories</a>
+                      <a class="submenu-link" href="#">Charging &amp; Ports</a>
+                      <a class="submenu-link" href="#">Cleaning &amp; Care</a>
+                    </div>
+                  </div>
+                </div>
+                <a class="menu-link" href="#">Archive</a>
+                <a class="menu-link" href="#">Club</a>
+                <a class="menu-link" href="#">Meet Space</a>
+              </div>
+              <div class="menu-group">
+                <svg viewBox="0 0 16 16" class="menu-group-ic" aria-hidden="true">
+                  <circle cx="8" cy="3.2" r="1.2" fill="currentColor"/>
+                  <path d="M8 6.5v6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                <a class="menu-link" href="#">Help</a>
+                <a class="menu-link" href="faq.html">FAQ</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="icon-btn" type="button" aria-label="Cart">
+        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
+          <path d="M3 4h2l2.4 12.2a1.5 1.5 0 0 0 1.47 1.2h8.9a1.5 1.5 0 0 0 1.46-1.14L21 9H6" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="20.6" r="1.4" fill="currentColor"/>
+          <circle cx="17.5" cy="20.6" r="1.4" fill="currentColor"/>
+        </svg>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Account">
+        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
+          <circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.7" fill="none"/>
+          <path d="M5 20c1.2-3.4 3.9-5 7-5s5.8 1.6 7 5" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== FAQ ===== -->
+  <section class="faq-section">
+    <h1 class="faq-title">Frequently<br />Asked<br />Questions</h1>
+
+    <div class="faq-list" id="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          래시는 어떻게 입양할 수 있나요?
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">공식 웹사이트의 Shop 페이지에서 원하는 래시 모델을 선택하고 결제를 완료하면 입양 절차가 시작됩니다. 이후 배송 전 간단한 온라인 설문으로 성격 설정을 도와드려요.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          주문 후 배송까지 얼마나 걸리나요?
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">주문 완료 후 평일 기준 약 3~5일 이내에 배송됩니다. 배송 지역에 따라 일정이 조금씩 달라질 수 있어요.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          설치와 초기 설정도 지원되나요?
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">네, 박스를 열면 나오는 QR코드로 전용 앱을 설치하면 5분 안에 초기 설정을 마칠 수 있습니다. 어려우시면 우측 하단 Customer Service로 실시간 도움도 받으실 수 있어요.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          래시는 어떤 활동을 함께할 수 있나요?
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">산책, 러닝, 실내 놀이는 물론 음성 명령으로 간단한 트릭도 함께 즐길 수 있습니다.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          비 오는 날에도 사용할 수 있나요?
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">생활 방수(IPX4) 사양이라 가벼운 비에는 문제없지만, 폭우 시에는 사용을 피해주세요.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          다른 래시와는 어떻게 친구가 되나요?
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">블루투스 근접 인식 기능으로 다른 래시를 만나면 자동으로 인사하고 친밀도가 쌓입니다.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          한 번 충전하면 얼마나 사용할 수 있나요?
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">완충 시 최대 6시간 활동할 수 있으며, 급속 충전으로 30분 만에 80%까지 충전됩니다.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false">
+          고장이나 파손 시 수리는 어떻게 진행되나요?
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">마이페이지에서 A/S 접수를 남기시면 방문 수거 후 평균 5영업일 내에 수리해 드립니다.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Customer Service floating button ===== -->
+  <button class="cs-button" type="button" id="csButton">Customer Service</button>
+
+  <!-- ===== Chat widget ===== -->
+  <div class="chat-widget" id="chatWidget" aria-hidden="true">
+    <div class="chat-header">
+      <div>
+        <p class="chat-title">Lassie Support</p>
+        <p class="chat-status"><span class="status-dot"></span>Online</p>
+      </div>
+      <div class="chat-header-actions">
+        <button class="chat-icon-btn" type="button" aria-label="전화 문의">
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M4.5 3h2.7l1.2 3.4-1.6 1.4a9.6 9.6 0 0 0 4.4 4.4l1.4-1.6 3.4 1.2v2.7a1.5 1.5 0 0 1-1.6 1.5A13.5 13.5 0 0 1 3 4.6 1.5 1.5 0 0 1 4.5 3Z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="chat-icon-btn chat-close" type="button" id="chatClose" aria-label="채팅 닫기">
+          <svg viewBox="0 0 14 14" aria-hidden="true">
+            <path d="M2 2l10 10M12 2 2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+      <div class="chat-greeting">
+        <p class="greeting-title">래시에게 궁금한 점이 있나요?</p>
+        <p class="greeting-desc">
+          입양부터 사용, 관리까지 무엇이든 물어보세요.<br />
+          래시 케어팀이 함께 해결해 드립니다.
+        </p>
+        <button class="greeting-faq-btn" type="button" id="greetingFaqBtn">
+          FAQ
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M4 8h8M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="chat-divider"></div>
+      <p class="chat-date" id="chatDate"></p>
+
+      <div class="chat-messages" id="chatMessages">
+        <div class="msg msg-bot">
+          <span class="msg-avatar"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8.5c1 0 1.8-1 1.8-2.2S7 4 6 4s-1.8 1-1.8 2.2S5 8.5 6 8.5Zm8 0c1 0 1.8-1 1.8-2.2S15 4 14 4s-1.8 1-1.8 2.2S13 8.5 14 8.5ZM8.7 6.3c.8 0 1.5-.9 1.5-2S9.5 2.3 8.7 2.3s-1.5.9-1.5 2 .7 2 1.5 2Zm2.6 0c.8 0 1.5-.9 1.5-2s-.7-2-1.5-2-1.5.9-1.5 2 .7 2 1.5 2ZM10 9.3c-2.6 0-5.4 2-5.4 4.6 0 1.5 1.2 2.4 2.7 2 .8-.2 1.7-.5 2.7-.5s1.9.3 2.7.5c1.5.4 2.7-.5 2.7-2 0-2.6-2.8-4.6-5.4-4.6Z" fill="currentColor"/></svg></span>
+          <div class="msg-bubble">안녕하세요, Lassie Support입니다.<br />어떤 도움이 필요하신가요?</div>
+        </div>
+        <div class="msg msg-user">
+          <div class="msg-bubble">안녕하세요. 입양하면 언제 받을 수 있나요?</div>
+        </div>
+        <div class="msg msg-bot">
+          <span class="msg-avatar"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8.5c1 0 1.8-1 1.8-2.2S7 4 6 4s-1.8 1-1.8 2.2S5 8.5 6 8.5Zm8 0c1 0 1.8-1 1.8-2.2S15 4 14 4s-1.8 1-1.8 2.2S13 8.5 14 8.5ZM8.7 6.3c.8 0 1.5-.9 1.5-2S9.5 2.3 8.7 2.3s-1.5.9-1.5 2 .7 2 1.5 2Zm2.6 0c.8 0 1.5-.9 1.5-2s-.7-2-1.5-2-1.5.9-1.5 2 .7 2 1.5 2ZM10 9.3c-2.6 0-5.4 2-5.4 4.6 0 1.5 1.2 2.4 2.7 2 .8-.2 1.7-.5 2.7-.5s1.9.3 2.7.5c1.5.4 2.7-.5 2.7-2 0-2.6-2.8-4.6-5.4-4.6Z" fill="currentColor"/></svg></span>
+          <div class="msg-bubble">
+            주문 완료 후 배송 지역과 설치 일정에 따라 예상 일정을 안내해 드립니다.<br />
+            배송은 평일기준 약 3~5일 소요 되십니다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form class="chat-input-row" id="chatForm">
+      <button class="chat-attach" type="button" aria-label="파일 첨부">
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M12.5 4 6.6 9.9a2.6 2.6 0 0 0 3.7 3.7l5.6-5.6a4.2 4.2 0 0 0-5.9-5.9L4.3 7.8a5.7 5.7 0 0 0 8.1 8.1l5.3-5.3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <input class="chat-input" type="text" id="chatInput" placeholder="메시지를 입력하세요" autocomplete="off" />
+      <button class="chat-send" type="submit" aria-label="전송">
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M17.5 2.5 9.2 10.8M17.5 2.5 12 17.5l-2.8-6.7-6.7-2.8 15-5.5Z" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+
+  <script>
+    // ---- 메뉴 드롭다운 ----
+    const menuWrap = document.querySelector('.menu-wrap');
+    const menuItem = document.querySelector('.menu-item');
+    const menuToggle = document.querySelector('.menu-link-toggle');
+
+    function closeSubmenu() {
+      menuItem.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuItem.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    document.querySelector('.menu-close').addEventListener('click', () => {
+      menuWrap.classList.add('menu-dismissed');
+      closeSubmenu();
+    });
+    menuWrap.addEventListener('mouseleave', () => {
+      menuWrap.classList.remove('menu-dismissed');
+      closeSubmenu();
+    });
+
+    // ---- FAQ 아코디언 ----
+    document.querySelectorAll('.faq-item').forEach((item) => {
+      const btn = item.querySelector('.faq-question');
+      btn.addEventListener('click', () => {
+        const isOpen = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(isOpen));
+      });
+    });
+
+    // ---- 채팅 위젯 ----
+    const csButton = document.getElementById('csButton');
+    const chatWidget = document.getElementById('chatWidget');
+    const chatClose = document.getElementById('chatClose');
+    const chatBody = document.getElementById('chatBody');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatForm = document.getElementById('chatForm');
+    const chatInput = document.getElementById('chatInput');
+    const greetingFaqBtn = document.getElementById('greetingFaqBtn');
+    const chatDate = document.getElementById('chatDate');
+
+    const today = new Date();
+    chatDate.textContent = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
+
+    function openChat() {
+      chatWidget.classList.add('open');
+      chatWidget.setAttribute('aria-hidden', 'false');
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+    function closeChat() {
+      chatWidget.classList.remove('open');
+      chatWidget.setAttribute('aria-hidden', 'true');
+    }
+
+    csButton.addEventListener('click', () => {
+      chatWidget.classList.contains('open') ? closeChat() : openChat();
+    });
+    chatClose.addEventListener('click', closeChat);
+    greetingFaqBtn.addEventListener('click', () => {
+      document.getElementById('faq-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    const botAvatarSvg = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8.5c1 0 1.8-1 1.8-2.2S7 4 6 4s-1.8 1-1.8 2.2S5 8.5 6 8.5Zm8 0c1 0 1.8-1 1.8-2.2S15 4 14 4s-1.8 1-1.8 2.2S13 8.5 14 8.5ZM8.7 6.3c.8 0 1.5-.9 1.5-2S9.5 2.3 8.7 2.3s-1.5.9-1.5 2 .7 2 1.5 2Zm2.6 0c.8 0 1.5-.9 1.5-2s-.7-2-1.5-2-1.5.9-1.5 2 .7 2 1.5 2ZM10 9.3c-2.6 0-5.4 2-5.4 4.6 0 1.5 1.2 2.4 2.7 2 .8-.2 1.7-.5 2.7-.5s1.9.3 2.7.5c1.5.4 2.7-.5 2.7-2 0-2.6-2.8-4.6-5.4-4.6Z" fill="currentColor"/></svg>';
+
+    const faqReplies = [
+      { keys: ['입양', '분양', '구매', '언제 받'], a: '입양은 Shop 페이지에서 원하는 모델을 선택해 결제하시면 진행돼요. 결제 후 간단한 성격 설정 설문을 거쳐 배송이 시작됩니다.' },
+      { keys: ['배송', '언제 오', '며칠'], a: '주문 완료 후 평일 기준 약 3~5일 이내에 도착해요. 지역에 따라 일정이 조금 달라질 수 있어요.' },
+      { keys: ['설치', '초기 설정', '세팅'], a: '박스 안 QR코드로 전용 앱을 설치하시면 5분 안에 초기 설정이 끝나요. 그래도 어려우시면 여기서 계속 도와드릴게요!' },
+      { keys: ['활동', '놀이', '산책', '트릭'], a: '산책, 러닝, 실내 놀이는 물론 음성 명령으로 간단한 트릭도 함께 즐길 수 있어요.' },
+      { keys: ['비', '방수', '날씨', '우천'], a: '생활 방수(IPX4) 사양이라 가벼운 비에는 문제없지만, 폭우 시에는 사용을 피해주세요.' },
+      { keys: ['친구', '다른 래시', '페어링'], a: '블루투스 근접 인식 기능이 있어서, 다른 래시를 만나면 자동으로 인사하고 친밀도가 쌓여요.' },
+      { keys: ['충전', '배터리', '얼마나 사용'], a: '완충 시 최대 6시간 활동할 수 있고, 급속 충전으로 30분 만에 80%까지 채울 수 있어요.' },
+      { keys: ['고장', '파손', '수리', 'a/s', 'as'], a: '마이페이지에서 A/S를 접수해주시면 방문 수거 후 평균 5영업일 내에 수리해 드려요.' },
+      { keys: ['가격', '얼마', '비용'], a: '모델에 따라 가격이 달라요. Shop 페이지에서 모델별 정확한 가격을 확인하실 수 있어요.' },
+    ];
+
+    function findReply(text) {
+      const lower = text.toLowerCase();
+      const hit = faqReplies.find((r) => r.keys.some((k) => lower.includes(k)));
+      if (hit) return hit.a;
+      return '문의 주셔서 감사해요! 조금 더 자세히 알려주시면 래시 케어팀이 정확하게 안내해 드릴게요. 급한 문의는 FAQ 버튼에서 자주 묻는 질문도 확인해보세요.';
+    }
+
+    function addMessage(text, who) {
+      const row = document.createElement('div');
+      row.className = `msg msg-${who}`;
+      if (who === 'bot') {
+        row.innerHTML = `<span class="msg-avatar">${botAvatarSvg}</span><div class="msg-bubble"></div>`;
+      } else {
+        row.innerHTML = `<div class="msg-bubble"></div>`;
+      }
+      row.querySelector('.msg-bubble').textContent = text;
+      chatMessages.appendChild(row);
+      chatBody.scrollTop = chatBody.scrollHeight;
+      return row;
+    }
+
+    function addTyping() {
+      const row = document.createElement('div');
+      row.className = 'msg msg-bot msg-typing';
+      row.innerHTML = `<span class="msg-avatar">${botAvatarSvg}</span><div class="msg-bubble typing-dots"><span></span><span></span><span></span></div>`;
+      chatMessages.appendChild(row);
+      chatBody.scrollTop = chatBody.scrollHeight;
+      return row;
+    }
+
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = chatInput.value.trim();
+      if (!text) return;
+      addMessage(text, 'user');
+      chatInput.value = '';
+
+      const typingRow = addTyping();
+      const delay = 550 + Math.random() * 500;
+      setTimeout(() => {
+        typingRow.remove();
+        addMessage(findReply(text), 'bot');
+      }, delay);
+    });
+  </script>
+</body>
+</html>
