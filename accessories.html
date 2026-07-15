@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accessories — Lassie</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="shop-page">
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <a class="logo" href="index.html">
+      <img class="logo-mark logo-mark-only" src="assets/logo-icon.png" alt="Lassie 홈" />
+    </a>
+
+    <div class="header-right">
+      <div class="menu-wrap">
+        <nav class="nav-pill">
+          <button class="nav-item" type="button">
+            Shop
+            <svg viewBox="0 0 20 20" class="ic" aria-hidden="true">
+              <path d="M5 7h10l-.9 9.2a1.6 1.6 0 0 1-1.6 1.4H7.5a1.6 1.6 0 0 1-1.6-1.4L5 7Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+              <path d="M7.4 9V5.6a2.6 2.6 0 0 1 5.2 0V9" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <span class="nav-divider"></span>
+          <button class="nav-item nav-search" type="button" aria-label="Search">
+            <svg viewBox="0 0 20 20" class="ic" aria-hidden="true">
+              <circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.8" fill="none"/>
+              <path d="M13.5 13.5 17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button class="nav-item nav-about" type="button">About</button>
+        </nav>
+
+        <div class="menu-panel">
+          <div class="menu-panel-inner">
+            <div class="menu-panel-content">
+              <button class="menu-close" type="button" aria-label="Close menu">
+                <svg viewBox="0 0 14 14" aria-hidden="true">
+                  <path d="M2 2l10 10M12 2 2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </button>
+              <div class="menu-group">
+                <svg viewBox="0 0 16 16" class="menu-group-ic" aria-hidden="true">
+                  <path d="M2 4.5h12M2 8h12M2 11.5h7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+                <div class="menu-item">
+                  <button class="menu-link menu-link-toggle" type="button" aria-expanded="false">
+                    Shop
+                    <svg class="menu-chevron" viewBox="0 0 16 16" aria-hidden="true">
+                      <path d="M4 6.2 8 10.2 12 6.2" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <div class="submenu">
+                    <div class="submenu-inner">
+                      <a class="submenu-link" href="#">Adoption</a>
+                      <a class="submenu-link" href="accessories.html">Accessories</a>
+                      <a class="submenu-link" href="#">Charging &amp; Ports</a>
+                      <a class="submenu-link" href="#">Cleaning &amp; Care</a>
+                    </div>
+                  </div>
+                </div>
+                <a class="menu-link" href="#">Archive</a>
+                <a class="menu-link" href="#">Club</a>
+                <a class="menu-link" href="#">Meet Space</a>
+              </div>
+              <div class="menu-group">
+                <svg viewBox="0 0 16 16" class="menu-group-ic" aria-hidden="true">
+                  <circle cx="8" cy="3.2" r="1.2" fill="currentColor"/>
+                  <path d="M8 6.5v6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                <a class="menu-link" href="#">Help</a>
+                <a class="menu-link" href="#">FAQ</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="icon-btn" type="button" aria-label="Cart">
+        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
+          <path d="M3 4h2l2.4 12.2a1.5 1.5 0 0 0 1.47 1.2h8.9a1.5 1.5 0 0 0 1.46-1.14L21 9H6" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="20.6" r="1.4" fill="currentColor"/>
+          <circle cx="17.5" cy="20.6" r="1.4" fill="currentColor"/>
+        </svg>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Account">
+        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
+          <circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.7" fill="none"/>
+          <path d="M5 20c1.2-3.4 3.9-5 7-5s5.8 1.6 7 5" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== Shop layout ===== -->
+  <div class="shop-layout">
+
+    <!-- Sidebar -->
+    <aside class="shop-sidebar">
+      <div class="filter-head">
+        <h2 class="filter-title">Accessories</h2>
+        <svg viewBox="0 0 18 14" class="filter-ic" aria-hidden="true">
+          <path d="M1 2h16M1 7h16M1 12h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <nav class="filter-links">
+        <a class="filter-link" href="#">All</a>
+        <a class="filter-link" href="#">Wearables</a>
+        <a class="filter-link" href="#">Outdoor Gear</a>
+        <a class="filter-link" href="#">Carry &amp; Utility</a>
+        <a class="filter-link" href="#">Safety &amp; Visibility</a>
+      </nav>
+
+      <div class="filter-section">
+        <svg viewBox="0 0 14 8" class="filter-chevron" aria-hidden="true">
+          <path d="M1 7 7 1.4 13 7" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3 class="filter-subtitle">Price</h3>
+        <div class="price-slider">
+          <div class="price-track"><span class="price-fill"></span></div>
+          <div class="price-labels">
+            <span>₩20,000</span>
+            <span>₩100,000</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-section filter-style">
+        <div class="filter-subhead">
+          <h3 class="filter-subtitle">Style</h3>
+          <svg viewBox="0 0 14 8" class="filter-chevron-r" aria-hidden="true">
+            <path d="M1 7 7 1.4 13 7" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <nav class="filter-links filter-links-light">
+          <a class="filter-link" href="#">Trail</a>
+          <a class="filter-link" href="#">Running</a>
+          <a class="filter-link" href="#">City Walk</a>
+          <a class="filter-link" href="#">Weekend Escape</a>
+        </nav>
+      </div>
+
+      <button class="btn-apply" type="button">Apply Filter</button>
+    </aside>
+
+    <!-- Main -->
+    <main class="shop-main">
+      <h1 class="shop-title">Accessories</h1>
+
+      <div class="shop-meta">
+        <span class="shop-count">Showing 1-10 of 100 Products</span>
+        <span class="shop-sort">
+          Sort by: <strong>Most Popular</strong>
+          <svg viewBox="0 0 14 8" class="sort-chevron" aria-hidden="true">
+            <path d="M1 1 7 6.6 13 1" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </div>
+
+      <div class="product-grid">
+        <article class="product">
+          <div class="product-media"><span>컬러 포인트 넥 밴드</span></div>
+          <h3 class="product-name">Lassie Loop</h3>
+          <p class="product-price">₩39,000</p>
+        </article>
+        <article class="product">
+          <div class="product-media"><span>하네스 프레임</span></div>
+          <h3 class="product-name">Trail Harness</h3>
+          <p class="product-price">₩89,000</p>
+        </article>
+        <article class="product">
+          <div class="product-media"><span>발 모듈 보호 커버 4개 세트</span></div>
+          <h3 class="product-name">Paw Guard</h3>
+          <p class="product-price">₩41,300 <s>₩59,000</s> <em class="sale-badge">-30%</em></p>
+        </article>
+        <article class="product">
+          <div class="product-media"><span>야간 산책용 LED 태그</span></div>
+          <h3 class="product-name">Glow Tag</h3>
+          <p class="product-price">₩23,200 <s>₩29,000</s> <em class="sale-badge">-20%</em></p>
+        </article>
+        <article class="product">
+          <div class="product-media"><span>작은 물건을 담는 미니 사이드백</span></div>
+          <h3 class="product-name">Carry Pack</h3>
+          <p class="product-price">₩69,000</p>
+        </article>
+        <article class="product">
+          <div class="product-media"><span>우천 활동용 방수 커버</span></div>
+          <h3 class="product-name">Rain Shell</h3>
+          <p class="product-price">₩79,000</p>
+        </article>
+        <article class="product">
+          <div class="product-media"><span>움직임에 반응하는 사운드 액세서리</span></div>
+          <h3 class="product-name">Trail Bell</h3>
+          <p class="product-price">₩24,000</p>
+        </article>
+        <article class="product">
+          <div class="product-media"><span>시즌 컬러 패브릭 스카프</span></div>
+          <h3 class="product-name">Lassie Scarf</h3>
+          <p class="product-price">₩32,000</p>
+        </article>
+        <article class="product">
+          <div class="product-media"><span>활동성과 개성을 더하는 아웃도어 케이프</span></div>
+          <h3 class="product-name">Adventure Cape</h3>
+          <p class="product-price">₩59,000</p>
+        </article>
+      </div>
+
+      <!-- Pagination -->
+      <nav class="pagination" aria-label="페이지 이동">
+        <a class="page-prev" href="#">
+          <svg viewBox="0 0 20 14" class="page-arrow" aria-hidden="true">
+            <path d="M8 1 2 7l6 6M2 7h17" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Previous
+        </a>
+        <div class="page-numbers">
+          <a class="page-num current" href="#">1</a>
+          <a class="page-num" href="#">2</a>
+          <a class="page-num" href="#">3</a>
+          <span class="page-ellipsis">&hellip;</span>
+          <a class="page-num" href="#">8</a>
+          <a class="page-num" href="#">9</a>
+          <a class="page-num" href="#">10</a>
+        </div>
+        <a class="page-next" href="#">
+          Next
+          <svg viewBox="0 0 20 14" class="page-arrow" aria-hidden="true">
+            <path d="m12 1 6 6-6 6M18 7H1" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </nav>
+    </main>
+  </div>
+
+  <script>
+    const menuWrap = document.querySelector('.menu-wrap');
+    const menuItem = document.querySelector('.menu-item');
+    const menuToggle = document.querySelector('.menu-link-toggle');
+
+    function closeSubmenu() {
+      menuItem.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuItem.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    document.querySelector('.menu-close').addEventListener('click', () => {
+      menuWrap.classList.add('menu-dismissed');
+      closeSubmenu();
+    });
+    menuWrap.addEventListener('mouseleave', () => {
+      menuWrap.classList.remove('menu-dismissed');
+      closeSubmenu();
+    });
+  </script>
+</body>
+</html>
