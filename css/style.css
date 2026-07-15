@@ -1,3 +1,36 @@
+/* ===== Fonts ===== */
+/* PP Pangram Sans: 영문 전용 — 한글 글리프가 없어 한글은 Pretendard로 폴백됨 */
+@font-face {
+  font-family: 'PP Pangram Sans';
+  src: url('../Font/PPPangramSans-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Pangram Sans';
+  src: url('../Font/PPPangramSans-Light.otf') format('opentype');
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Pangram Sans';
+  src: url('../Font/PPPangramSans-Medium.otf') format('opentype');
+  font-weight: 400 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Pangram Sans';
+  src: url('../Font/PPPangramSans-Semibold.otf') format('opentype');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PP Pangram Sans';
+  src: url('../Font/PPPangramSans-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-display: swap;
+}
+
 /* ===== Base ===== */
 :root {
   --navy: #1e2a3d;
@@ -7,7 +40,7 @@
   --ph-gray: #efeeec;
   --line-gray: #e7e7e9;
   --text-gray: #9aa1ab;
-  --font: 'PP Pangram Sans', 'Poppins', 'Pretendard Variable', Pretendard, -apple-system, sans-serif;
+  --font: 'PP Pangram Sans', 'Pretendard Variable', Pretendard, -apple-system, sans-serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -43,18 +76,21 @@ input { font-family: inherit; }
 .logo {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   text-decoration: none;
 }
 
-.logo-text {
-  font-size: 34px;
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  color: var(--navy);
+.logo-wordmark {
+  display: block;
+  height: 26px;
+  width: auto;
 }
 
-.logo-mark { width: 44px; height: 32px; }
+.logo-mark {
+  display: block;
+  height: 24px;
+  width: auto;
+}
 
 .header-right {
   display: flex;
@@ -193,7 +229,7 @@ input { font-family: inherit; }
   position: absolute;
   left: 37px;
   bottom: 11vw;
-  font-size: 5.45vw;
+  font-size: 5.6vw;
   line-height: 1.06;
   font-weight: 600;
   letter-spacing: -0.03em;
@@ -372,18 +408,35 @@ input { font-family: inherit; }
   overflow: hidden;
 }
 
-.cards-row {
+.cards-row { width: max-content; }
+
+.cards-track {
+  display: flex;
+  width: max-content;
+  animation: cards-marquee linear infinite;
+}
+
+.cards-set {
   display: flex;
   gap: 32px;
-  width: max-content;
+  padding-right: 32px;
 }
 
-.row-1 { margin-left: -57px; }
-
-.row-2 {
-  margin-top: 32px;
-  margin-left: 334px;
+@keyframes cards-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
+
+/* 두 줄이 같은 속도(약 50px/s)로 흐르도록 폭에 비례한 시간.
+   row-2는 마진 대신 음수 delay로 위상을 늦춰 시작 배치를 어긋나게 함
+   (마진으로 밀면 루프마다 왼쪽에 빈 공간이 생김) */
+.row-1 .cards-track { animation-duration: 45s; }
+.row-2 .cards-track { animation-duration: 34s; animation-delay: -26s; }
+
+.row-1,
+.row-2 { margin-left: -57px; }
+
+.row-2 { margin-top: 32px; }
 
 .card {
   width: 530px;
