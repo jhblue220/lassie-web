@@ -225,6 +225,57 @@ input { font-family: inherit; }
 }
 .menu-link:hover { color: #5a687f; }
 
+/* 검색 패널 */
+.search-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  pointer-events: none;
+  transition: grid-template-rows 0.4s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.25s ease;
+}
+
+.search-panel.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.search-panel-mask {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.search-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ececec;
+  border-radius: 999px;
+  padding: 13px 22px;
+}
+
+.search-pill-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--navy);
+  flex-shrink: 0;
+}
+
+.search-pill-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 15px;
+  color: var(--navy);
+}
+.search-pill-input::placeholder { color: #9aa1ab; }
+
 .icon-btn {
   width: 46px;
   height: 46px;

@@ -26,13 +26,25 @@
             </svg>
           </button>
           <span class="nav-divider"></span>
-          <button class="nav-item nav-search" type="button" aria-label="Search">
+          <button class="nav-item nav-search" type="button" id="searchToggle" aria-label="Search">
             <svg viewBox="0 0 20 20" class="ic" aria-hidden="true">
               <circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.8" fill="none"/>
               <path d="M13.5 13.5 17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
             </svg>
           </button>
           <button class="nav-item nav-about" type="button">About</button>
+
+          <div class="search-panel" id="searchPanel">
+            <div class="search-panel-mask">
+              <div class="search-pill">
+                <svg class="search-pill-icon" viewBox="0 0 20 20" aria-hidden="true">
+                  <circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.8" fill="none"/>
+                  <path d="M13.5 13.5 17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+                <input type="text" class="search-pill-input" id="searchInput" placeholder="searching" autocomplete="off" />
+              </div>
+            </div>
+          </div>
         </nav>
 
         <div class="menu-panel">
@@ -181,6 +193,40 @@
     menuWrap.addEventListener('mouseleave', () => {
       menuWrap.classList.remove('menu-dismissed');
       closeSubmenu();
+    });
+
+    // ---- 검색 패널 ----
+    const searchToggle = document.getElementById('searchToggle');
+    const searchPanel = document.getElementById('searchPanel');
+    const searchInput = document.getElementById('searchInput');
+
+    function closeSearch() {
+      searchPanel.classList.remove('open');
+    }
+
+    searchToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = searchPanel.classList.toggle('open');
+      if (isOpen) {
+        menuWrap.classList.add('menu-dismissed');
+        closeSubmenu();
+        setTimeout(() => searchInput.focus(), 60);
+      }
+    });
+
+    menuWrap.addEventListener('mouseenter', closeSearch);
+
+    document.addEventListener('click', (e) => {
+      if (!searchPanel.contains(e.target) && e.target !== searchToggle) {
+        closeSearch();
+      }
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeSearch();
+        searchToggle.focus();
+      }
     });
   </script>
 </body>
