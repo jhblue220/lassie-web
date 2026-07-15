@@ -107,16 +107,8 @@
   </section>
 
   <section class="archive-carousel">
-    <div class="carousel-track" id="carouselTrack">
-      <div class="carousel-slot slot-prev" id="slotPrev">
-        <img id="prevImg" src="" alt="이전 이미지" />
-      </div>
-      <div class="carousel-slot slot-current">
-        <img id="currentImg" src="" alt="" />
-      </div>
-      <div class="carousel-slot slot-next" id="slotNext">
-        <img id="nextImg" src="" alt="다음 이미지" />
-      </div>
+    <div class="carousel-viewport" id="carouselViewport">
+      <div class="carousel-track" id="carouselTrack"></div>
     </div>
     <p class="carousel-caption" id="carouselCaption"></p>
   </section>
@@ -145,7 +137,7 @@
       closeSubmenu();
     });
 
-    // ---- Archiving carousel ----
+    // ---- Archiving carousel: 연속 스크롤 + 자석 스냅 ----
     const images = [
       { file: 'Interview_01.png', title: 'Interview 01' },
       { file: 'Interview_02.png', title: 'Interview 02' },
@@ -160,56 +152,131 @@
       { file: 'Scale_01.png', title: 'Scale 01' },
     ];
 
-    const track = document.getElementById('carouselTrack');
-    const prevImg = document.getElementById('prevImg');
-    const currentImg = document.getElementById('currentImg');
-    const nextImg = document.getElementById('nextImg');
-    const caption = document.getElementById('carouselCaption');
+    const N = images.length;
+    const COPIES = 3; // 무한 루프처럼 보이도록 앞뒤로 복제
 
-    let current = 0;
-    let locked = false;
+    const viewport = document.getElementById('carouselViewport');
+    const track = document.getElementById('carouselTrack');
+    const caption = document.getElementById('carouselCaption');
 
     function photoPath(file) {
       return 'archive_photo/' + encodeURIComponent(file);
     }
 
-    function applyImages() {
-      const n = images.length;
-      const prevIdx = (current - 1 + n) % n;
-      const nextIdx = (current + 1) % n;
-      prevImg.src = photoPath(images[prevIdx].file);
-      currentImg.src = photoPath(images[current].file);
-      nextImg.src = photoPath(images[nextIdx].file);
-      caption.textContent = images[current].title;
+    const itemEls = [];
+    for (let c = 0; c < COPIES; c++) {
+      images.forEach((img, i) => {
+        const el = document.createElement('div');
+        el.className = 'carousel-item';
+        const image = document.createElement('img');
+        image.src = photoPath(img.file);
+        image.alt = img.title;
+        image.draggable = false;
+        el.appendChild(image);
+        const flatIndex = c * N + i;
+        el.addEventListener('click', () => animateTo(flatIndex));
+        track.appendChild(el);
+        itemEls.push(el);
+      });
     }
 
-    function go(delta) {
-      if (locked) return;
-      locked = true;
-      track.style.opacity = '0';
-      setTimeout(() => {
-        current = (current + delta + images.length) % images.length;
-        applyImages();
-        track.style.opacity = '1';
-      }, 180);
-      setTimeout(() => { locked = false; }, 420);
+    let itemW = 0;
+    let step = 0;
+
+    function measure() {
+      const rect = itemEls[0].getBoundingClientRect();
+      itemW = rect.width;
+      const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '0');
+      step = itemW + gap;
+    }
+    measure();
+
+    let pos = N; // 가운데 복제본의 첫 이미지에서 시작
+    let lastCaptionIdx = -1;
+    let rafId = null;
+    let snapTimer = null;
+
+    function keepWithinMiddleCopy() {
+      if (pos < N * 0.5) pos += N;
+      if (pos > N * 2.5) pos -= N;
     }
 
-    applyImages();
+    function render() {
+      const viewportCenter = viewport.clientWidth / 2;
+      const shift = pos * step + itemW / 2;
+      track.style.transform = `translateX(${viewportCenter - shift}px)`;
+
+      itemEls.forEach((el, i) => {
+        const dist = Math.min(Math.abs(i - pos), 4);
+        const scale = Math.max(0.72, 1.25 - dist * 0.24);
+        const opacity = Math.max(0.25, 1 - dist * 0.5);
+        el.style.transform = `scale(${scale})`;
+        el.style.opacity = String(opacity);
+        el.style.zIndex = String(Math.round(100 - dist * 10));
+      });
+
+      const nearestFlat = Math.round(pos);
+      const realIdx = ((nearestFlat % N) + N) % N;
+      if (realIdx !== lastCaptionIdx) {
+        lastCaptionIdx = realIdx;
+        caption.style.opacity = '0';
+        setTimeout(() => {
+          caption.textContent = images[realIdx].title;
+          caption.style.opacity = '1';
+        }, 90);
+      }
+    }
+
+    function animateTo(target) {
+      if (rafId) cancelAnimationFrame(rafId);
+      const start = pos;
+      const startTime = performance.now();
+      const duration = 520;
+      function step2(now) {
+        const t = Math.min(1, (now - startTime) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        pos = start + (target - start) * eased;
+        render();
+        if (t < 1) {
+          rafId = requestAnimationFrame(step2);
+        } else {
+          pos = target;
+          keepWithinMiddleCopy();
+          render();
+          rafId = null;
+        }
+      }
+      rafId = requestAnimationFrame(step2);
+    }
+
+    function scheduleSnap() {
+      clearTimeout(snapTimer);
+      snapTimer = setTimeout(() => animateTo(Math.round(pos)), 130);
+    }
 
     window.addEventListener('wheel', (e) => {
       e.preventDefault();
-      if (Math.abs(e.deltaY) < 4) return;
-      go(e.deltaY > 0 ? 1 : -1);
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      pos += e.deltaY / step;
+      keepWithinMiddleCopy();
+      render();
+      scheduleSnap();
     }, { passive: false });
 
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') go(1);
-      if (e.key === 'ArrowLeft') go(-1);
+      if (e.key === 'ArrowRight') animateTo(Math.round(pos) + 1);
+      if (e.key === 'ArrowLeft') animateTo(Math.round(pos) - 1);
     });
 
-    document.getElementById('slotPrev').addEventListener('click', () => go(-1));
-    document.getElementById('slotNext').addEventListener('click', () => go(1));
+    window.addEventListener('resize', () => {
+      measure();
+      render();
+    });
+
+    render();
   </script>
 </body>
 </html>
