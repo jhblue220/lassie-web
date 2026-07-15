@@ -36,27 +36,46 @@
         </nav>
 
         <div class="menu-panel">
-          <button class="menu-close" type="button" aria-label="Close menu">
-            <svg viewBox="0 0 14 14" aria-hidden="true">
-              <path d="M2 2l10 10M12 2 2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </button>
-          <div class="menu-group">
-            <svg viewBox="0 0 16 16" class="menu-group-ic" aria-hidden="true">
-              <path d="M2 4.5h12M2 8h12M2 11.5h7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-            </svg>
-            <a class="menu-link" href="#">Shop</a>
-            <a class="menu-link" href="#">Archive</a>
-            <a class="menu-link" href="#">Club</a>
-            <a class="menu-link" href="#">Meet Space</a>
-          </div>
-          <div class="menu-group">
-            <svg viewBox="0 0 16 16" class="menu-group-ic" aria-hidden="true">
-              <circle cx="8" cy="3.2" r="1.2" fill="currentColor"/>
-              <path d="M8 6.5v6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-            <a class="menu-link" href="#">Help</a>
-            <a class="menu-link" href="#">FAQ</a>
+          <div class="menu-panel-inner">
+            <div class="menu-panel-content">
+              <button class="menu-close" type="button" aria-label="Close menu">
+                <svg viewBox="0 0 14 14" aria-hidden="true">
+                  <path d="M2 2l10 10M12 2 2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </button>
+              <div class="menu-group">
+                <svg viewBox="0 0 16 16" class="menu-group-ic" aria-hidden="true">
+                  <path d="M2 4.5h12M2 8h12M2 11.5h7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+                <div class="menu-item">
+                  <button class="menu-link menu-link-toggle" type="button" aria-expanded="false">
+                    Shop
+                    <svg class="menu-chevron" viewBox="0 0 16 16" aria-hidden="true">
+                      <path d="M4 6.2 8 10.2 12 6.2" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <div class="submenu">
+                    <div class="submenu-inner">
+                      <a class="submenu-link" href="#">Adoption</a>
+                      <a class="submenu-link" href="#">Accessories</a>
+                      <a class="submenu-link" href="#">Charging &amp; Ports</a>
+                      <a class="submenu-link" href="#">Cleaning &amp; Care</a>
+                    </div>
+                  </div>
+                </div>
+                <a class="menu-link" href="#">Archive</a>
+                <a class="menu-link" href="#">Club</a>
+                <a class="menu-link" href="#">Meet Space</a>
+              </div>
+              <div class="menu-group">
+                <svg viewBox="0 0 16 16" class="menu-group-ic" aria-hidden="true">
+                  <circle cx="8" cy="3.2" r="1.2" fill="currentColor"/>
+                  <path d="M8 6.5v6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                <a class="menu-link" href="#">Help</a>
+                <a class="menu-link" href="#">FAQ</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -231,11 +250,26 @@
     });
 
     const menuWrap = document.querySelector('.menu-wrap');
+    const menuItem = document.querySelector('.menu-item');
+    const menuToggle = document.querySelector('.menu-link-toggle');
+
+    function closeSubmenu() {
+      menuItem.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuItem.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
     document.querySelector('.menu-close').addEventListener('click', () => {
       menuWrap.classList.add('menu-dismissed');
+      closeSubmenu();
     });
     menuWrap.addEventListener('mouseleave', () => {
       menuWrap.classList.remove('menu-dismissed');
+      closeSubmenu();
     });
   </script>
 </body>
