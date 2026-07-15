@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lassie — Step outside, together</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <a class="logo" href="#">
+      <span class="logo-text">Lassie</span>
+      <svg class="logo-mark" viewBox="0 0 44 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="16" fill="#e8e8e6"/>
+        <path d="M28 0a16 16 0 0 1 0 32 16 16 0 0 0 0-32Z" fill="#dcdcda"/>
+      </svg>
+    </a>
+
+    <div class="header-right">
+      <div class="menu-wrap">
+        <nav class="nav-pill">
+          <button class="nav-item" type="button">
+            Menu
+            <svg viewBox="0 0 20 20" class="ic" aria-hidden="true">
+              <path d="M3 5h14M3 10h14M3 15h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <span class="nav-divider"></span>
+          <button class="nav-item nav-search" type="button" aria-label="Search">
+            <svg viewBox="0 0 20 20" class="ic" aria-hidden="true">
+              <circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.8" fill="none"/>
+              <path d="M13.5 13.5 17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button class="nav-item nav-about" type="button">About</button>
+        </nav>
+
+        <div class="menu-panel">
+          <button class="menu-close" type="button" aria-label="Close menu">
+            <svg viewBox="0 0 14 14" aria-hidden="true">
+              <path d="M2 2l10 10M12 2 2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="menu-group">
+            <svg viewBox="0 0 16 16" class="menu-group-ic" aria-hidden="true">
+              <path d="M2 4.5h12M2 8h12M2 11.5h7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            <a class="menu-link" href="#">Shop</a>
+            <a class="menu-link" href="#">Archive</a>
+            <a class="menu-link" href="#">Club</a>
+            <a class="menu-link" href="#">Meet Space</a>
+          </div>
+          <div class="menu-group">
+            <svg viewBox="0 0 16 16" class="menu-group-ic" aria-hidden="true">
+              <circle cx="8" cy="3.2" r="1.2" fill="currentColor"/>
+              <path d="M8 6.5v6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            <a class="menu-link" href="#">Help</a>
+            <a class="menu-link" href="#">FAQ</a>
+          </div>
+        </div>
+      </div>
+      <button class="icon-btn" type="button" aria-label="Cart">
+        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
+          <path d="M3 4h2l2.4 12.2a1.5 1.5 0 0 0 1.47 1.2h8.9a1.5 1.5 0 0 0 1.46-1.14L21 9H6" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="20.6" r="1.4" fill="currentColor"/>
+          <circle cx="17.5" cy="20.6" r="1.4" fill="currentColor"/>
+        </svg>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Account">
+        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
+          <circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.7" fill="none"/>
+          <path d="M5 20c1.2-3.4 3.9-5 7-5s5.8 1.6 7 5" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" id="top">
+    <img class="hero-dog" src="assets/hero-dog.png" alt="Lassie 로봇 강아지" />
+    <h1 class="hero-title">Step outside,<br />together</h1>
+    <a class="hero-scroll" href="#features">
+      See all features
+      <svg viewBox="0 0 16 20" class="ic-down" aria-hidden="true">
+        <path d="M8 2v14M2.8 11 8 16.4 13.2 11" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+
+    <div class="sale-tab">
+      <svg viewBox="0 0 20 20" class="ic" aria-hidden="true">
+        <rect x="2.5" y="3" width="15" height="12" rx="1.5" fill="#fff"/>
+        <path d="M2.5 12.4 7 8.8l4 3.2 3-2.4 3.5 2.8V15H2.5Z" fill="#c8c72a"/>
+        <circle cx="7" cy="6.6" r="1.5" fill="#c8c72a"/>
+      </svg>
+      <span class="sale-tab-text">2026 Sale</span>
+    </div>
+  </section>
+
+  <!-- ===== Gallery placeholders ===== -->
+  <section class="gallery">
+    <div class="ph ph-a"></div>
+    <div class="ph ph-b"></div>
+  </section>
+
+  <!-- ===== Words strip ===== -->
+  <section class="words-strip">
+    <span class="word">Life</span>
+    <span class="word">Moves</span>
+    <span class="word">Better</span>
+    <span class="word">Together</span>
+    <p class="strip-copy">
+      Even the smallest step feels easier when you have someone beside you. Lassie walks, runs,
+      and explores with you, turning everyday movement into time spent together.
+    </p>
+    <span class="word word-index">Index</span>
+  </section>
+
+  <!-- ===== Paw / early access ===== -->
+  <section class="paw-section">
+    <div class="paw-col">
+      <div class="paw-media">
+        <img src="assets/paw-closeup.png" alt="Lassie의 발 클로즈업" />
+      </div>
+      <p class="paw-caption">
+        Lassie makes every walk a chance<br />
+        to move, explore, and connect
+      </p>
+      <form class="early-access" onsubmit="return false;">
+        <input class="email-input" type="email" placeholder="Your email" aria-label="Your email" />
+        <button class="btn-yellow" type="submit">Get early access</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== Features ===== -->
+  <section class="features" id="features">
+    <div class="feature-col">
+      <h3 class="feature-title">Expressive Tail</h3>
+      <p class="feature-desc">상태와 감정을 움직임으로 표현</p>
+    </div>
+    <div class="feature-col">
+      <h3 class="feature-title">Responsive Ears</h3>
+      <p class="feature-desc">소리와 사용자의 방향에 반응</p>
+    </div>
+    <div class="feature-col">
+      <h3 class="feature-title">Adaptive Paws</h3>
+      <p class="feature-desc">다양한 야외 환경에 맞춰 안정적으로 움직임</p>
+    </div>
+  </section>
+
+  <!-- ===== Big placeholder ===== -->
+  <section class="big-media">
+    <div class="ph ph-wide"></div>
+  </section>
+
+  <!-- ===== Testimonials ===== -->
+  <section class="testimonials">
+    <div class="cards-row row-1">
+      <article class="card">
+        <p class="card-body">처음에는 로봇이 얼마나 자연스럽게 같이 다닐 수 있을지 걱정했는데, 생각보다 금방 익숙해졌어요. 특히 현관 앞에서 기다리고 있으면 괜히 한 번이라도 더 나가게 됩니다. 요즘은 퇴근 후 산책이 습관이 됐어요.</p>
+        <p class="card-author">서윤 · Seoul, KR</p>
+      </article>
+      <article class="card">
+        <p class="card-body">러닝할 때 일정한 거리로 따라오는 게 제일 마음에 들어요. 제가 멈추면 같이 기다리고 다시 뛰기 시작하면 자연스럽게 따라와서, 기계와 운동한다기보다 러닝 메이트가 생긴 느낌입니다.</p>
+        <p class="card-author">박민재 · Busan, KR</p>
+      </article>
+      <article class="card">
+        <p class="card-body">LASSIE has completely changed my evening routine. Instead of staying home after work, I find myself going outside just because LASSIE is already waiting by the door.</p>
+        <p class="card-author">Emma Wilson · London, UK</p>
+      </article>
+      <article class="card">
+        <p class="card-body">玄関で待っているラッシーを見ると、疲れている日でも少しだけ外に出てみようと思えます。一緒に歩く時間が、毎日の小さな楽しみになりました。</p>
+        <p class="card-author">佐藤 美咲 (Sato Misaki) · Tokyo, JP</p>
+      </article>
+    </div>
+    <div class="cards-row row-2">
+      <article class="card">
+        <p class="card-body">LASSIE让我重新发现了出门散步的乐趣。它会陪着我走，也会用自己的动作回应我。现在对我来说，散步不再只是运动，而是我们一起度过的时间。</p>
+        <p class="card-author">林雨晴 (Lín Yǔqíng) · Shanghai, CN</p>
+      </article>
+      <article class="card">
+        <p class="card-body">My favorite part is discovering new places together. LASSIE gives me small reasons to take a different path, and those little detours have become the best part of my walks.</p>
+        <p class="card-author">Sophie Martin · Paris, FR</p>
+      </article>
+      <article class="card">
+        <p class="card-body">성격에 따라 반응이 조금씩 다른 게 가장 재미있어요. 꼬리나 귀의 움직임만 봐도 지금 뭘 원하는지 점점 알 것 같고, 오래 함께할수록 서로 익숙해지는 느낌이 들어요.</p>
+        <p class="card-author">정유진 · Jeju, KR</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta">
+    <svg class="cta-mark" viewBox="0 0 44 32" aria-hidden="true">
+      <circle cx="16" cy="16" r="16" fill="#e5e5e3"/>
+      <path d="M28 0a16 16 0 0 1 0 32 16 16 0 0 0 0-32Z" fill="#d8d8d6"/>
+    </svg>
+    <h2 class="cta-title">Ready for Your Next Walk?</h2>
+    <p class="cta-desc">
+      래시와 함께 새로운 산책 루트와 계절별 아웃도어 경험, 멤버 전용 이벤트, 그리고 나에게 맞는 미션을 만나보세요.<br />
+      새로운 장소를 탐험하고, 새로운 친구를 만나며, 바깥에서 함께하는 시간을 더욱 특별한 일상으로 만들어 보세요.
+    </p>
+    <button class="btn-yellow btn-explore" type="button">
+      <svg viewBox="0 0 20 20" class="ic" aria-hidden="true">
+        <path d="M5 3h10v3H5zM5 8h10v9l-5-3.6L5 17V8Z" fill="#fff"/>
+      </svg>
+      Explore More
+    </button>
+  </section>
+
+  <!-- ===== Footer placeholder ===== -->
+  <footer class="site-footer">
+    <div class="ph ph-footer"></div>
+  </footer>
+
+  <script>
+    const menuWrap = document.querySelector('.menu-wrap');
+    document.querySelector('.menu-close').addEventListener('click', () => {
+      menuWrap.classList.add('menu-dismissed');
+    });
+    menuWrap.addEventListener('mouseleave', () => {
+      menuWrap.classList.remove('menu-dismissed');
+    });
+  </script>
+</body>
+</html>
