@@ -1077,6 +1077,28 @@ input { font-family: inherit; }
   border-radius: 16px 4px 16px 16px;
 }
 
+/* 봇 답변 아래 추천 질문 칩 */
+.chat-suggests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-left: 36px;
+}
+
+.suggest-chip {
+  padding: 8px 14px;
+  border: 1px solid #dfe1e5;
+  border-radius: 999px;
+  background: #fff;
+  font-size: 12.5px;
+  color: var(--navy);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.suggest-chip:hover {
+  background: #f4f4f3;
+  border-color: var(--navy);
+}
+
 .typing-dots {
   display: flex;
   align-items: center;
