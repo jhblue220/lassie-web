@@ -119,12 +119,7 @@
     <span class="word word-index">Index</span>
   </section>
 
-  <section class="archive-carousel">
-    <div class="carousel-viewport" id="carouselViewport">
-      <div class="carousel-track" id="carouselTrack"></div>
-    </div>
-    <p class="carousel-caption" id="carouselCaption"></p>
-  </section>
+  <section class="archive-gallery" id="archiveGallery"></section>
 
   <script src="assets/cart.js"></script>
   <script>
@@ -186,146 +181,67 @@
       }
     });
 
-    // ---- Archiving carousel: 연속 스크롤 + 자석 스냅 ----
-    const images = [
-      { file: 'Interview_01.png', title: 'Interview 01' },
-      { file: 'Interview_02.png', title: 'Interview 02' },
-      { file: 'Research_01.png', title: 'Research 01' },
-      { file: 'Research_02.png', title: 'Research 02' },
-      { file: 'Fabric Research_01.png', title: 'Fabric Research 01' },
-      { file: 'Fabric Research_02.png', title: 'Fabric Research 02' },
-      { file: 'Fabric Research_03.png', title: 'Fabric Research 03' },
-      { file: 'Mock_Up_01.png', title: 'Mock Up 01' },
-      { file: 'Mock_Up_02.png', title: 'Mock Up 02' },
-      { file: 'Mock_Up_03.png', title: 'Mock Up 03' },
-      { file: 'Scale_01.png', title: 'Scale 01' },
+    // ---- Archiving 갤러리: 위에서 아래로 스크롤하며 감상 ----
+    // 각 행(row)은 2단 또는 1단(전체 폭)으로 구성해 레퍼런스의 리듬을 재현
+    const galleryRows = [
+      { layout: 'two', items: [
+        { file: 'Interview_01.png', title: 'Interview 01' },
+        { file: 'Interview_02.png', title: 'Interview 02' },
+      ] },
+      { layout: 'two', items: [
+        { file: 'Research_01.png', title: 'Research 01' },
+        { file: 'Research_02.png', title: 'Research 02' },
+      ] },
+      { layout: 'one', items: [
+        { file: 'Fabric Research_01.png', title: 'Fabric Research 01' },
+      ] },
+      { layout: 'one', items: [
+        { file: 'Fabric Research_02.png', title: 'Fabric Research 02' },
+      ] },
+      { layout: 'two', items: [
+        { file: 'Fabric Research_03.png', title: 'Fabric Research 03' },
+        { file: 'Mock_Up_01.png', title: 'Mock Up 01' },
+      ] },
+      { layout: 'one', items: [
+        { file: 'Mock_Up_02.png', title: 'Mock Up 02' },
+      ] },
+      { layout: 'two', items: [
+        { file: 'Mock_Up_03.png', title: 'Mock Up 03' },
+        { file: 'Scale_01.png', title: 'Scale 01' },
+      ] },
     ];
-
-    const N = images.length;
-    const COPIES = 3; // 무한 루프처럼 보이도록 앞뒤로 복제
-
-    const viewport = document.getElementById('carouselViewport');
-    const track = document.getElementById('carouselTrack');
-    const caption = document.getElementById('carouselCaption');
 
     function photoPath(file) {
       return 'archive_photo/' + encodeURIComponent(file);
     }
 
-    const itemEls = [];
-    for (let c = 0; c < COPIES; c++) {
-      images.forEach((img, i) => {
-        const el = document.createElement('div');
-        el.className = 'carousel-item';
-        const image = document.createElement('img');
-        image.src = photoPath(img.file);
-        image.alt = img.title;
-        image.draggable = false;
-        el.appendChild(image);
-        const flatIndex = c * N + i;
-        el.addEventListener('click', () => animateTo(flatIndex));
-        track.appendChild(el);
-        itemEls.push(el);
-      });
-    }
+    const gallery = document.getElementById('archiveGallery');
 
-    let itemW = 0;
-    let step = 0;
+    galleryRows.forEach((row) => {
+      const rowEl = document.createElement('div');
+      rowEl.className = `gallery-row gallery-row-${row.layout}`;
 
-    function measure() {
-      const rect = itemEls[0].getBoundingClientRect();
-      itemW = rect.width;
-      const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '0');
-      step = itemW + gap;
-    }
-    measure();
+      row.items.forEach((item) => {
+        const itemEl = document.createElement('div');
+        itemEl.className = 'gallery-item';
 
-    let pos = N; // 가운데 복제본의 첫 이미지에서 시작
-    let lastCaptionIdx = -1;
-    let rafId = null;
-    let snapTimer = null;
+        const img = document.createElement('img');
+        img.src = photoPath(item.file);
+        img.alt = item.title;
+        img.loading = 'lazy';
+        img.draggable = false;
 
-    function keepWithinMiddleCopy() {
-      if (pos < N * 0.5) pos += N;
-      if (pos > N * 2.5) pos -= N;
-    }
+        const caption = document.createElement('span');
+        caption.className = 'gallery-caption';
+        caption.textContent = item.title;
 
-    function render() {
-      const viewportCenter = viewport.clientWidth / 2;
-      const shift = pos * step + itemW / 2;
-      track.style.transform = `translateX(${viewportCenter - shift}px)`;
-
-      itemEls.forEach((el, i) => {
-        const dist = Math.min(Math.abs(i - pos), 4);
-        const scale = Math.max(0.72, 1.25 - dist * 0.24);
-        const opacity = Math.max(0.25, 1 - dist * 0.5);
-        el.style.transform = `scale(${scale})`;
-        el.style.opacity = String(opacity);
-        el.style.zIndex = String(Math.round(100 - dist * 10));
+        itemEl.appendChild(img);
+        itemEl.appendChild(caption);
+        rowEl.appendChild(itemEl);
       });
 
-      const nearestFlat = Math.round(pos);
-      const realIdx = ((nearestFlat % N) + N) % N;
-      if (realIdx !== lastCaptionIdx) {
-        lastCaptionIdx = realIdx;
-        caption.style.opacity = '0';
-        setTimeout(() => {
-          caption.textContent = images[realIdx].title;
-          caption.style.opacity = '1';
-        }, 90);
-      }
-    }
-
-    function animateTo(target) {
-      if (rafId) cancelAnimationFrame(rafId);
-      const start = pos;
-      const startTime = performance.now();
-      const duration = 520;
-      function step2(now) {
-        const t = Math.min(1, (now - startTime) / duration);
-        const eased = 1 - Math.pow(1 - t, 3);
-        pos = start + (target - start) * eased;
-        render();
-        if (t < 1) {
-          rafId = requestAnimationFrame(step2);
-        } else {
-          pos = target;
-          keepWithinMiddleCopy();
-          render();
-          rafId = null;
-        }
-      }
-      rafId = requestAnimationFrame(step2);
-    }
-
-    function scheduleSnap() {
-      clearTimeout(snapTimer);
-      snapTimer = setTimeout(() => animateTo(Math.round(pos)), 130);
-    }
-
-    window.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-        rafId = null;
-      }
-      pos += e.deltaY / step;
-      keepWithinMiddleCopy();
-      render();
-      scheduleSnap();
-    }, { passive: false });
-
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') animateTo(Math.round(pos) + 1);
-      if (e.key === 'ArrowLeft') animateTo(Math.round(pos) - 1);
+      gallery.appendChild(rowEl);
     });
-
-    window.addEventListener('resize', () => {
-      measure();
-      render();
-    });
-
-    render();
   </script>
 </body>
 </html>
