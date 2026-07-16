@@ -109,8 +109,10 @@ input { font-family: inherit; }
 .menu-panel {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 292px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 20px);
+  max-width: calc(100vw - 32px);
   z-index: 100;
   display: grid;
   grid-template-rows: 0fr;
@@ -121,8 +123,7 @@ input { font-family: inherit; }
     opacity 0.3s ease;
 }
 
-.menu-wrap:hover:not(.menu-dismissed) .menu-panel,
-.menu-wrap:focus-within:not(.menu-dismissed) .menu-panel {
+.menu-panel.open {
   grid-template-rows: 1fr;
   opacity: 1;
   pointer-events: auto;
@@ -148,8 +149,7 @@ input { font-family: inherit; }
   padding: 62px 34px 44px;
 }
 
-.menu-wrap:hover:not(.menu-dismissed) .menu-panel-inner,
-.menu-wrap:focus-within:not(.menu-dismissed) .menu-panel-inner {
+.menu-panel.open .menu-panel-inner {
   transform: translateY(0);
 }
 
@@ -343,7 +343,7 @@ input { font-family: inherit; }
   top: 54%;
   background: var(--yellow-dark);
   color: #fff;
-  border-radius: 10px 0 0 10px;
+  border-radius: 0;
   padding: 14px 8px 18px;
   display: flex;
   flex-direction: column;

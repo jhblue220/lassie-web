@@ -19,7 +19,7 @@
     <div class="header-right">
       <div class="menu-wrap">
         <nav class="nav-pill">
-          <button class="nav-item" type="button">
+          <button class="nav-item" type="button" id="menuNavToggle">
             Menu
             <svg viewBox="0 0 20 20" class="ic" aria-hidden="true">
               <path d="M3 5h14M3 10h14M3 15h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -172,7 +172,6 @@
   </section>
 
   <script>
-    const menuWrap = document.querySelector('.menu-wrap');
     const menuItem = document.querySelector('.menu-item');
     const menuToggle = document.querySelector('.menu-link-toggle');
 
@@ -186,46 +185,48 @@
       menuToggle.setAttribute('aria-expanded', String(isOpen));
     });
 
-    document.querySelector('.menu-close').addEventListener('click', () => {
-      menuWrap.classList.add('menu-dismissed');
-      closeSubmenu();
-    });
-    menuWrap.addEventListener('mouseleave', () => {
-      menuWrap.classList.remove('menu-dismissed');
-      closeSubmenu();
-    });
+    // ---- pill 항목별 호버 팝업: Menu -> 메뉴 패널, 검색 -> 검색창, About -> 없음 ----
+    function makeHoverPanel(triggerEl, panelEl, onOpen) {
+      let closeTimer = null;
+      function open() {
+        clearTimeout(closeTimer);
+        panelEl.classList.add('open');
+        if (onOpen) onOpen();
+      }
+      function scheduleClose() {
+        clearTimeout(closeTimer);
+        closeTimer = setTimeout(() => panelEl.classList.remove('open'), 160);
+      }
+      triggerEl.addEventListener('mouseenter', open);
+      triggerEl.addEventListener('mouseleave', scheduleClose);
+      triggerEl.addEventListener('focus', open);
+      triggerEl.addEventListener('blur', scheduleClose);
+      panelEl.addEventListener('mouseenter', open);
+      panelEl.addEventListener('mouseleave', scheduleClose);
+      return { close: () => panelEl.classList.remove('open') };
+    }
 
-    // ---- 검색 패널 ----
+    const menuNavToggle = document.getElementById('menuNavToggle');
+    const menuPanel = document.querySelector('.menu-panel');
     const searchToggle = document.getElementById('searchToggle');
     const searchPanel = document.getElementById('searchPanel');
     const searchInput = document.getElementById('searchInput');
 
-    function closeSearch() {
-      searchPanel.classList.remove('open');
-    }
-
-    searchToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = searchPanel.classList.toggle('open');
-      if (isOpen) {
-        menuWrap.classList.add('menu-dismissed');
-        closeSubmenu();
-        setTimeout(() => searchInput.focus(), 60);
-      }
+    const menuPanelCtl = makeHoverPanel(menuNavToggle, menuPanel, () => searchPanelCtl.close());
+    const searchPanelCtl = makeHoverPanel(searchToggle, searchPanel, () => {
+      menuPanelCtl.close();
+      closeSubmenu();
     });
 
-    menuWrap.addEventListener('mouseenter', closeSearch);
-
-    document.addEventListener('click', (e) => {
-      if (!searchPanel.contains(e.target) && e.target !== searchToggle) {
-        closeSearch();
-      }
+    document.querySelector('.menu-close').addEventListener('click', () => {
+      menuPanelCtl.close();
+      closeSubmenu();
     });
 
     searchInput.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        closeSearch();
-        searchToggle.focus();
+        searchPanelCtl.close();
+        searchToggle.blur();
       }
     });
   </script>
