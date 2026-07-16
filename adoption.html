@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Club — Lassie</title>
+  <title>Meet Your Lassie — Lassie</title>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="club-page">
+<body class="adoption-page">
 
   <!-- ===== Header ===== -->
   <header class="site-header">
@@ -108,72 +108,76 @@
     </div>
   </header>
 
-  <!-- ===== Club hero ===== -->
-  <section class="club-hero">
-    <h1 class="club-title">CLUB</h1>
-    <p class="club-subtitle">Every walk brings you closer!</p>
-    <p class="club-desc">
-      Lassie Club은 래시와 함께한 활동을 기반으로 등급이 성장하는 멤버십 프로그램입니다.<br />
-      산책, 러닝, 탐험 등 다양한 활동을 통해 새로운 레벨을 달성하고, 액세서리 할인, 한정 미션,<br />
-      이벤트 초대 등 다양한 멤버 전용 혜택을 만나보세요.
-    </p>
-  </section>
-
-  <!-- ===== Club body ===== -->
-  <section class="club-body">
-    <div class="club-media">
-      <div class="ph club-media-a"></div>
-      <div class="ph club-media-b"></div>
+  <!-- ===== Adoption hero ===== -->
+  <section class="adopt-hero">
+    <div class="adopt-colors" id="adoptColors">
+      <button class="color-dot-lg" type="button" data-color="gray" data-label="Gray" style="background:#8a8a8a" aria-label="Gray 선택">
+        <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="color-dot-lg" type="button" data-color="yellow" data-label="Yellow" style="background:#d1cf29" aria-label="Yellow 선택">
+        <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="color-dot-lg" type="button" data-color="navy" data-label="Navy" style="background:#232f42" aria-label="Navy 선택">
+        <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="color-dot-lg" type="button" data-color="brown" data-label="Dark Brown" style="background:#3a2e2a" aria-label="Dark Brown 선택">
+        <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="color-dot-lg" type="button" data-color="pink" data-label="Pink" style="background:#f7c5cf" aria-label="Pink 선택">
+        <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </div>
 
-    <div class="club-table">
-      <div class="club-row club-row-head">
-        <span>Level</span>
-        <span>Condition</span>
-        <span>Benefits</span>
-        <span>Badge</span>
-      </div>
-      <div class="club-row">
-        <span class="club-level">FIRST STEP</span>
-        <span>첫 동행 시작</span>
-        <span>10% 할인 · 웰컴 키트</span>
-        <span>New Walker</span>
-      </div>
-      <div class="club-row">
-        <span class="club-level">MATE</span>
-        <span>월 8회 야외 활동</span>
-        <span>LASSIE House 초대 · 액세서리 할인</span>
-        <span>Active Mate</span>
-      </div>
-      <div class="club-row">
-        <span class="club-level">PATHFINDER</span>
-        <span>누적 100km 달성</span>
-        <span>신규 미션 · 루트 우선 공개</span>
-        <span>Explorer</span>
-      </div>
-      <div class="club-row">
-        <span class="club-level">TRAILBLAZER</span>
-        <span>누적 250km 달성</span>
-        <span>한정 액세서리 구매 권한 · 시즌 배지</span>
-        <span>Trail Leader</span>
-      </div>
-      <div class="club-row">
-        <span class="club-level">COMPANION</span>
-        <span>친구 20명 · 소셜워크 20회</span>
-        <span>이벤트 우선 예약 · 베타 기능 체험</span>
-        <span>Community</span>
-      </div>
-      <div class="club-row">
-        <span class="club-level">LEGEND</span>
-        <span>누적 500km + 1년 활동</span>
-        <span>평생 멤버 배지 · 모든 케어 할인 · 한정 컬렉션</span>
-        <span>Legend</span>
+    <img class="adopt-dog-img" src="assets/adoption-dog.png" alt="Lassie 로봇 강아지" />
+
+    <h1 class="adopt-title">Meet Your<br />Lassie</h1>
+
+    <div class="adopt-accessories">
+      <div class="adopt-accessory-thumb"><img src="assets/adoption-accessory-1.png" alt="산책용 액세서리" /></div>
+      <div class="adopt-accessory-thumb"><img src="assets/adoption-accessory-2.png" alt="넥 컬러" /></div>
+      <div class="adopt-accessory-thumb"><img src="assets/adoption-accessory-3.png" alt="하네스" /></div>
+    </div>
+  </section>
+
+  <!-- ===== Made to Move Together (색상 선택 후 노출) ===== -->
+  <section class="adopt-reveal" id="adoptReveal">
+    <div class="adopt-reveal-mask">
+      <div class="adopt-reveal-content">
+        <div class="adopt-move-col">
+          <h2 class="adopt-move-title">Made to Move Together</h2>
+          <p class="adopt-move-desc">
+            당신과 래시는 활동적인 일상과 새로운 야외 경험을 즐긴다는 공통점을 가지고 있어요.
+            함께 달리며 서로의 속도를 맞추고, 익숙한 길을 벗어나 새로운 장소를 탐색하며
+            자연스럽게 더 많은 시간을 바깥에서 보내게 됩니다.
+          </p>
+
+          <div class="detail-tags adopt-tags">
+            <span class="detail-tag">Cleaning</span>
+            <span class="detail-tag">Charging</span>
+            <span class="detail-tag">Modular Port</span>
+            <span class="detail-tag active">Weatherproof</span>
+          </div>
+
+          <div class="detail-buy-row adopt-buy-row">
+            <div class="qty-stepper detail-qty">
+              <button type="button" class="qty-btn" id="adoptQtyMinus" aria-label="수량 감소">−</button>
+              <span class="qty-val" id="adoptQtyVal">1</span>
+              <button type="button" class="qty-btn" id="adoptQtyPlus" aria-label="수량 증가">+</button>
+            </div>
+            <button class="detail-add-cart" type="button" id="adoptAddCart">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="adopt-move-media">
+          <img src="assets/adoption-move-together.png" alt="래시 클로즈업" />
+        </div>
       </div>
     </div>
   </section>
 
   <script src="assets/cart.js"></script>
   <script>
+    // ---- 메뉴 드롭다운 ----
     const menuItem = document.querySelector('.menu-item');
     const menuToggle = document.querySelector('.menu-link-toggle');
 
@@ -187,7 +191,6 @@
       menuToggle.setAttribute('aria-expanded', String(isOpen));
     });
 
-    // ---- pill 항목별 호버 팝업: Menu -> 메뉴 패널, 검색 -> 검색창, About -> 없음 ----
     function makeHoverPanel(triggerEl, panelEl, onOpen) {
       let closeTimer = null;
       function open() {
@@ -230,6 +233,63 @@
         searchPanelCtl.close();
         searchToggle.blur();
       }
+    });
+
+    // ---- 색상 선택 -> Made to Move Together 공개 ----
+    const LASSIE_PRICE = 2490000;
+    const colorDots = document.querySelectorAll('.color-dot-lg');
+    const adoptReveal = document.getElementById('adoptReveal');
+    let selectedColor = null;
+    let revealed = false;
+
+    colorDots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        colorDots.forEach((d) => d.classList.remove('selected'));
+        dot.classList.add('selected');
+        selectedColor = { id: dot.dataset.color, label: dot.dataset.label };
+
+        if (!revealed) {
+          revealed = true;
+          adoptReveal.classList.add('open');
+          setTimeout(() => {
+            adoptReveal.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 380);
+        }
+      });
+    });
+
+    // ---- 수량 ----
+    let adoptQty = 1;
+    const adoptQtyVal = document.getElementById('adoptQtyVal');
+    document.getElementById('adoptQtyMinus').addEventListener('click', () => {
+      adoptQty = Math.max(1, adoptQty - 1);
+      adoptQtyVal.textContent = String(adoptQty);
+    });
+    document.getElementById('adoptQtyPlus').addEventListener('click', () => {
+      adoptQty += 1;
+      adoptQtyVal.textContent = String(adoptQty);
+    });
+
+    // ---- Add to Cart ----
+    const adoptAddCart = document.getElementById('adoptAddCart');
+    adoptAddCart.addEventListener('click', () => {
+      if (!selectedColor) return;
+      Cart.add({
+        id: 'lassie-' + selectedColor.id,
+        name: 'Lassie',
+        price: LASSIE_PRICE,
+        desc: 'Color: ' + selectedColor.label,
+        color: selectedColor.label,
+        image: 'assets/adoption-dog.png',
+        qty: adoptQty,
+      });
+      const original = adoptAddCart.textContent;
+      adoptAddCart.textContent = 'Added ✓';
+      adoptAddCart.classList.add('added');
+      setTimeout(() => {
+        adoptAddCart.textContent = original;
+        adoptAddCart.classList.remove('added');
+      }, 1200);
     });
   </script>
 </body>

@@ -68,7 +68,7 @@
                   </button>
                   <div class="submenu">
                     <div class="submenu-inner">
-                      <a class="submenu-link" href="#">Adoption</a>
+                      <a class="submenu-link" href="adoption.html">Adoption</a>
                       <a class="submenu-link" href="accessories.html">Accessories</a>
                       <a class="submenu-link" href="#">Charging &amp; Ports</a>
                       <a class="submenu-link" href="#">Cleaning &amp; Care</a>
@@ -349,6 +349,9 @@
     };
 
     function itemMedia(item) {
+      if (item.image) {
+        return `<div class="cart-item-media cart-item-media-photo"><img src="${item.image}" alt="${item.name}" /></div>`;
+      }
       return `<div class="cart-item-media"><span>${item.desc || item.name}</span></div>`;
     }
 

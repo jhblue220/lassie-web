@@ -27,7 +27,7 @@ const Cart = (() => {
     if (existing) {
       existing.qty += item.qty || 1;
     } else {
-      items.push({ id: item.id, name: item.name, price: item.price, desc: item.desc || '', color: item.color || '', qty: item.qty || 1 });
+      items.push({ id: item.id, name: item.name, price: item.price, desc: item.desc || '', color: item.color || '', image: item.image || '', qty: item.qty || 1 });
     }
     write(items);
   }
