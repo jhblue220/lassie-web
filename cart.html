@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cart — Lassie</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="cart-page">
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <a class="logo" href="index.html">
+      <img class="logo-wordmark" src="assets/logo-wordmark.png" alt="Lassie" />
+      <img class="logo-mark" src="assets/logo-icon.png" alt="" aria-hidden="true" />
+    </a>
+
+    <div class="header-right">
+      <div class="menu-wrap">
+        <nav class="nav-pill">
+          <button class="nav-item" type="button" id="menuNavToggle">
+            Menu
+            <svg viewBox="0 0 20 20" class="ic" aria-hidden="true">
+              <path d="M3 5h14M3 10h14M3 15h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <span class="nav-divider"></span>
+          <button class="nav-item nav-search" type="button" id="searchToggle" aria-label="Search">
+            <svg viewBox="0 0 20 20" class="ic" aria-hidden="true">
+              <circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.8" fill="none"/>
+              <path d="M13.5 13.5 17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button class="nav-item nav-about" type="button">About</button>
+
+          <div class="search-panel" id="searchPanel">
+            <div class="search-panel-mask">
+              <div class="search-pill">
+                <svg class="search-pill-icon" viewBox="0 0 20 20" aria-hidden="true">
+                  <circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.8" fill="none"/>
+                  <path d="M13.5 13.5 17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+                <input type="text" class="search-pill-input" id="searchInput" placeholder="searching" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <div class="menu-panel">
+          <div class="menu-panel-inner">
+            <div class="menu-panel-content">
+              <button class="menu-close" type="button" aria-label="Close menu">
+                <svg viewBox="0 0 14 14" aria-hidden="true">
+                  <path d="M2 2l10 10M12 2 2 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </button>
+              <div class="menu-group">
+                <svg viewBox="0 0 16 16" class="menu-group-ic" aria-hidden="true">
+                  <path d="M2 4.5h12M2 8h12M2 11.5h7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+                <div class="menu-item">
+                  <button class="menu-link menu-link-toggle" type="button" aria-expanded="false">
+                    Shop
+                    <svg class="menu-chevron" viewBox="0 0 16 16" aria-hidden="true">
+                      <path d="M4 6.2 8 10.2 12 6.2" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <div class="submenu">
+                    <div class="submenu-inner">
+                      <a class="submenu-link" href="#">Adoption</a>
+                      <a class="submenu-link" href="accessories.html">Accessories</a>
+                      <a class="submenu-link" href="#">Charging &amp; Ports</a>
+                      <a class="submenu-link" href="#">Cleaning &amp; Care</a>
+                    </div>
+                  </div>
+                </div>
+                <a class="menu-link" href="archive.html">Archive</a>
+                <a class="menu-link" href="club.html">Club</a>
+                <a class="menu-link" href="#">Meet Space</a>
+              </div>
+              <div class="menu-group">
+                <svg viewBox="0 0 16 16" class="menu-group-ic" aria-hidden="true">
+                  <circle cx="8" cy="3.2" r="1.2" fill="currentColor"/>
+                  <path d="M8 6.5v6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                <a class="menu-link" href="#">Help</a>
+                <a class="menu-link" href="faq.html">FAQ</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="icon-btn" href="cart.html" aria-label="Cart">
+        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
+          <path d="M3 4h2l2.4 12.2a1.5 1.5 0 0 0 1.47 1.2h8.9a1.5 1.5 0 0 0 1.46-1.14L21 9H6" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="20.6" r="1.4" fill="currentColor"/>
+          <circle cx="17.5" cy="20.6" r="1.4" fill="currentColor"/>
+        </svg>
+        <span class="cart-badge" id="cartBadge"></span>
+      </a>
+      <button class="icon-btn" type="button" aria-label="Account">
+        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
+          <circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.7" fill="none"/>
+          <path d="M5 20c1.2-3.4 3.9-5 7-5s5.8 1.6 7 5" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== Cart hero ===== -->
+  <section class="cart-hero">
+    <nav class="breadcrumb" id="breadcrumb">
+      <a href="index.html">Home</a>
+      <svg viewBox="0 0 8 12" class="crumb-arrow" aria-hidden="true"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <button type="button" class="crumb-link" id="crumbCart">Cart</button>
+      <span id="crumbPaymentWrap" hidden>
+        <svg viewBox="0 0 8 12" class="crumb-arrow" aria-hidden="true"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Payment</span>
+      </span>
+    </nav>
+    <h1 class="cart-page-title" id="pageTitle">Cart</h1>
+  </section>
+
+  <nav class="cart-tabs">
+    <button class="cart-tab" type="button" data-step="details">Product Details</button>
+    <button class="cart-tab active" type="button" data-step="purchase" id="tabPurchase">Purchase</button>
+    <button class="cart-tab" type="button" data-step="payment" id="tabPayment" aria-disabled="true">Payment</button>
+  </nav>
+
+  <div class="cart-toolbar" id="cartToolbar">
+    <button class="toolbar-icon-btn" type="button" aria-label="필터">
+      <svg viewBox="0 0 18 14" aria-hidden="true"><path d="M1 2h16M4 7h10M7 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <button class="toolbar-pill" type="button">
+      Like
+      <svg viewBox="0 0 14 8" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="toolbar-dark-pill" type="button" id="paymentDetailsBtn">Payment Details</button>
+  </div>
+
+  <div class="cart-body">
+    <div class="cart-items-col">
+      <div class="cart-items" id="cartItems"></div>
+
+      <div class="cart-summary-inline" id="summaryInline" hidden>
+        <div class="summary-row"><span>Subtotal</span><span id="sumSubtotal2"></span></div>
+        <div class="summary-row"><span>Discount</span><span id="sumDiscount2" class="discount"></span></div>
+        <div class="summary-row"><span>Delivery Fee</span><span>0</span></div>
+        <div class="summary-row summary-total"><span>Total</span><span id="sumTotal2"></span></div>
+      </div>
+
+      <div class="cart-details-panel" id="detailsPanel" hidden></div>
+    </div>
+
+    <div class="cart-side-col">
+      <!-- Purchase step -->
+      <div class="order-summary" id="orderSummary">
+        <h2>Order Summary</h2>
+        <div class="summary-row"><span>Subtotal</span><span id="sumSubtotal"></span></div>
+        <div class="summary-row"><span>Discount</span><span id="sumDiscount" class="discount"></span></div>
+        <div class="summary-row"><span>Delivery Fee</span><span>0</span></div>
+        <div class="summary-row summary-total"><span>Total</span><span id="sumTotal"></span></div>
+
+        <div class="promo-row">
+          <div class="promo-input-wrap">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3h6a1 1 0 0 1 1 1v6a1 1 0 0 1-.3.7l-7 7a1 1 0 0 1-1.4 0l-6-6a1 1 0 0 1 0-1.4l7-7A1 1 0 0 1 10 3Z" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linejoin="round"/><circle cx="14.5" cy="6.5" r="1.1" fill="currentColor"/></svg>
+            <input type="text" id="promoInput" placeholder="Add promo code" />
+          </div>
+          <button class="btn-dark-pill" type="button" id="applyPromoBtn">Apply</button>
+        </div>
+        <p class="promo-msg" id="promoMsg"></p>
+
+        <button class="btn-checkout" type="button" id="checkoutBtn">Go to Checkout</button>
+        <p class="cart-empty-msg" id="checkoutHint" hidden>장바구니가 비어 있어 결제를 진행할 수 없어요. Accessories에서 상품을 담아보세요.</p>
+      </div>
+
+      <!-- Shipping step -->
+      <form class="shipping-form" id="shippingForm" hidden novalidate>
+        <h2>Shipping Information</h2>
+        <div class="form-row two">
+          <input required placeholder="First Name" id="shipFirst" />
+          <input required placeholder="Last Name" id="shipLast" />
+        </div>
+        <input required placeholder="Address" id="shipAddress" />
+        <input placeholder="Apartment, suite, etc (optional)" id="shipApt" />
+        <input required placeholder="City" id="shipCityText" />
+        <div class="form-row three">
+          <div class="select-like">
+            <input required placeholder="City" id="shipCity" />
+            <svg viewBox="0 0 14 8" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="select-like">
+            <input required placeholder="Zipcode" id="shipZip" />
+            <svg viewBox="0 0 14 8" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="select-like">
+            <input required placeholder="Country" id="shipCountry" />
+            <svg viewBox="0 0 14 8" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <input placeholder="Optional" id="shipOptional" />
+
+        <label class="checkbox-row">
+          <input type="checkbox" id="saveContact" />
+          <span class="checkbox-box"></span>
+          Save contact information
+        </label>
+
+        <button type="submit" class="btn-checkout">Continue to shipping</button>
+      </form>
+
+      <!-- Card step -->
+      <form class="payment-form" id="paymentForm" hidden novalidate>
+        <h2>Payment Details</h2>
+        <input required placeholder="Cardholder Name" id="cardName" />
+        <input required placeholder="Card Number" id="cardNumber" inputmode="numeric" autocomplete="off" />
+        <div class="form-row three">
+          <div class="select-like">
+            <input required placeholder="Month" id="cardMonth" inputmode="numeric" />
+            <svg viewBox="0 0 14 8" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="select-like">
+            <input required placeholder="Year" id="cardYear" inputmode="numeric" />
+            <svg viewBox="0 0 14 8" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <input required placeholder="CVC" id="cardCvc" inputmode="numeric" autocomplete="off" />
+        </div>
+        <input placeholder="Optional" id="cardOptional" />
+
+        <div class="pay-brands" aria-hidden="true">
+          <span class="brand brand-visa">VISA</span>
+          <span class="brand brand-mc">Mastercard</span>
+          <span class="brand brand-pp">PayPal</span>
+          <span class="brand brand-ap">Apple Pay</span>
+          <span class="brand brand-gp">Google Pay</span>
+        </div>
+
+        <label class="toggle-row">
+          Save card data for future payments
+          <span class="toggle">
+            <input type="checkbox" id="saveCard" />
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </span>
+        </label>
+
+        <button type="submit" class="btn-checkout" id="payBtn">Pay with card</button>
+      </form>
+
+      <!-- Success step -->
+      <div class="order-success" id="orderSuccess" hidden>
+        <svg viewBox="0 0 48 48" class="success-ic" aria-hidden="true">
+          <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="2" fill="none"/>
+          <path d="M15 24l6 6 12-13" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h2>주문이 완료됐어요!</h2>
+        <p>결제가 정상적으로 처리됐습니다. 곧 배송 준비를 시작할게요.</p>
+        <a class="btn-checkout" href="accessories.html">쇼핑 계속하기</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/cart.js"></script>
+  <script>
+    // ---- 메뉴 드롭다운 ----
+    const menuItem = document.querySelector('.menu-item');
+    const menuToggle = document.querySelector('.menu-link-toggle');
+
+    function closeSubmenu() {
+      menuItem.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuItem.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    function makeHoverPanel(triggerEl, panelEl, onOpen) {
+      let closeTimer = null;
+      function open() {
+        clearTimeout(closeTimer);
+        panelEl.classList.add('open');
+        if (onOpen) onOpen();
+      }
+      function scheduleClose() {
+        clearTimeout(closeTimer);
+        closeTimer = setTimeout(() => panelEl.classList.remove('open'), 160);
+      }
+      triggerEl.addEventListener('mouseenter', open);
+      triggerEl.addEventListener('mouseleave', scheduleClose);
+      triggerEl.addEventListener('focus', open);
+      triggerEl.addEventListener('blur', scheduleClose);
+      panelEl.addEventListener('mouseenter', open);
+      panelEl.addEventListener('mouseleave', scheduleClose);
+      return { close: () => panelEl.classList.remove('open') };
+    }
+
+    const menuNavToggle = document.getElementById('menuNavToggle');
+    const menuPanel = document.querySelector('.menu-panel');
+    const searchToggle = document.getElementById('searchToggle');
+    const searchPanel = document.getElementById('searchPanel');
+    const searchInput = document.getElementById('searchInput');
+
+    const menuPanelCtl = makeHoverPanel(menuNavToggle, menuPanel, () => searchPanelCtl.close());
+    const searchPanelCtl = makeHoverPanel(searchToggle, searchPanel, () => {
+      menuPanelCtl.close();
+      closeSubmenu();
+    });
+
+    document.querySelector('.menu-close').addEventListener('click', () => {
+      menuPanelCtl.close();
+      closeSubmenu();
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        searchPanelCtl.close();
+        searchToggle.blur();
+      }
+    });
+
+    // ---- 장바구니 / 체크아웃 흐름 ----
+    let step = 'purchase'; // details | purchase | shipping | card | success
+    let promoDiscount = 0;
+    let hasStartedCheckout = false;
+
+    const won = (n) => '₩' + Math.max(0, Math.round(n)).toLocaleString('ko-KR');
+
+    const els = {
+      pageTitle: document.getElementById('pageTitle'),
+      crumbCart: document.getElementById('crumbCart'),
+      crumbPaymentWrap: document.getElementById('crumbPaymentWrap'),
+      tabPurchase: document.getElementById('tabPurchase'),
+      tabPayment: document.getElementById('tabPayment'),
+      cartToolbar: document.getElementById('cartToolbar'),
+      cartItems: document.getElementById('cartItems'),
+      summaryInline: document.getElementById('summaryInline'),
+      detailsPanel: document.getElementById('detailsPanel'),
+      orderSummary: document.getElementById('orderSummary'),
+      shippingForm: document.getElementById('shippingForm'),
+      paymentForm: document.getElementById('paymentForm'),
+      orderSuccess: document.getElementById('orderSuccess'),
+      checkoutBtn: document.getElementById('checkoutBtn'),
+      checkoutHint: document.getElementById('checkoutHint'),
+      paymentDetailsBtn: document.getElementById('paymentDetailsBtn'),
+      promoInput: document.getElementById('promoInput'),
+      promoMsg: document.getElementById('promoMsg'),
+    };
+
+    function itemMedia(item) {
+      return `<div class="cart-item-media"><span>${item.desc || item.name}</span></div>`;
+    }
+
+    function renderItems() {
+      const items = Cart.getAll();
+
+      if (items.length === 0) {
+        els.cartItems.innerHTML = `
+          <div class="cart-empty">
+            <p class="cart-empty-title">장바구니가 비어 있어요</p>
+            <p class="cart-empty-desc">Accessories에서 마음에 드는 상품을 담아보세요.</p>
+            <a class="btn-dark-pill" href="accessories.html">Continue Shopping</a>
+          </div>`;
+        return items;
+      }
+
+      els.cartItems.innerHTML = items.map((item) => `
+        <div class="cart-item" data-id="${item.id}">
+          ${itemMedia(item)}
+          <div class="cart-item-info">
+            <div class="cart-item-top">
+              <h3>${item.name}</h3>
+              <button class="cart-item-delete" type="button" aria-label="삭제" data-id="${item.id}">
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 6h12M8 6V4.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1V6m-7 0 .6 10a1.5 1.5 0 0 0 1.5 1.4h3.8a1.5 1.5 0 0 0 1.5-1.4L15 6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+            ${item.color ? `<p class="cart-item-color">Color: <span>${item.color}</span></p>` : ''}
+            <div class="cart-item-bottom">
+              <p class="cart-item-price">${won(item.price)}</p>
+              <div class="qty-stepper">
+                <button type="button" class="qty-btn qty-minus" data-id="${item.id}" aria-label="수량 감소">−</button>
+                <span class="qty-val">${item.qty}</span>
+                <button type="button" class="qty-btn qty-plus" data-id="${item.id}" aria-label="수량 증가">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      els.cartItems.querySelectorAll('.qty-minus').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.id;
+          const current = Cart.getAll().find((i) => i.id === id);
+          if (current) Cart.setQty(id, current.qty - 1);
+          render();
+        });
+      });
+      els.cartItems.querySelectorAll('.qty-plus').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.id;
+          const current = Cart.getAll().find((i) => i.id === id);
+          if (current) Cart.setQty(id, current.qty + 1);
+          render();
+        });
+      });
+      els.cartItems.querySelectorAll('.cart-item-delete').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          Cart.remove(btn.dataset.id);
+          render();
+        });
+      });
+
+      return items;
+    }
+
+    function renderDetailsPanel(items) {
+      if (items.length === 0) {
+        els.detailsPanel.innerHTML = '';
+        return;
+      }
+      els.detailsPanel.innerHTML = `
+        <h2>Product Details</h2>
+        ${items.map((i) => `<div class="detail-row"><strong>${i.name}</strong><span>${i.desc || ''}</span></div>`).join('')}
+      `;
+    }
+
+    function renderSummary(items) {
+      const subtotal = items.reduce((s, i) => s + i.price * i.qty, 0);
+      const discount = subtotal > 0 ? promoDiscount : 0;
+      const total = Math.max(0, subtotal - discount);
+
+      document.getElementById('sumSubtotal').textContent = won(subtotal);
+      document.getElementById('sumDiscount').textContent = discount > 0 ? `-${won(discount)}` : won(0);
+      document.getElementById('sumTotal').textContent = won(total);
+
+      document.getElementById('sumSubtotal2').textContent = won(subtotal);
+      document.getElementById('sumDiscount2').textContent = discount > 0 ? `-${won(discount)}` : won(0);
+      document.getElementById('sumTotal2').textContent = won(total);
+
+      const empty = items.length === 0;
+      els.checkoutBtn.classList.toggle('disabled', empty);
+      els.paymentDetailsBtn.classList.toggle('disabled', empty);
+      els.checkoutHint.hidden = !empty;
+    }
+
+    function applyStepVisibility() {
+      els.pageTitle.textContent = (step === 'shipping' || step === 'card' || step === 'success') ? 'Payment' : 'Cart';
+      els.crumbPaymentWrap.hidden = !(step === 'shipping' || step === 'card' || step === 'success');
+
+      els.tabPurchase.classList.toggle('active', step === 'purchase');
+      els.tabPayment.classList.toggle('active', step === 'shipping' || step === 'card' || step === 'success');
+      document.querySelector('.cart-tab[data-step="details"]').classList.toggle('active', step === 'details');
+      els.tabPayment.setAttribute('aria-disabled', String(!hasStartedCheckout));
+
+      els.cartToolbar.hidden = step !== 'purchase';
+      els.detailsPanel.hidden = step !== 'details';
+      els.orderSummary.hidden = step !== 'purchase' && step !== 'details';
+      els.summaryInline.hidden = !(step === 'shipping' || step === 'card');
+      els.shippingForm.hidden = step !== 'shipping';
+      els.paymentForm.hidden = step !== 'card';
+      els.orderSuccess.hidden = step !== 'success';
+
+      const itemsCol = document.querySelector('.cart-items-col');
+      const cartBody = document.querySelector('.cart-body');
+      itemsCol.hidden = step === 'success';
+      cartBody.classList.toggle('success-mode', step === 'success');
+    }
+
+    function render() {
+      const items = renderItems();
+      renderSummary(items);
+      renderDetailsPanel(items);
+      applyStepVisibility();
+    }
+
+    // ---- 탭 전환 ----
+    document.querySelectorAll('.cart-tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.step;
+        if (target === 'payment') {
+          if (!hasStartedCheckout) return;
+          step = (step === 'card' || step === 'success') ? step : 'shipping';
+        } else {
+          step = target;
+        }
+        render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    els.crumbCart.addEventListener('click', () => {
+      step = 'purchase';
+      render();
+    });
+
+    // ---- 체크아웃 진입 (비어있으면 막기) ----
+    function goToCheckout() {
+      if (Cart.count() === 0) {
+        els.checkoutHint.hidden = false;
+        els.checkoutBtn.classList.add('shake');
+        setTimeout(() => els.checkoutBtn.classList.remove('shake'), 400);
+        return;
+      }
+      hasStartedCheckout = true;
+      step = 'shipping';
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    els.checkoutBtn.addEventListener('click', goToCheckout);
+    els.paymentDetailsBtn.addEventListener('click', goToCheckout);
+
+    // ---- 프로모 코드 (데모: 코드 입력 시 소계의 5% 할인) ----
+    document.getElementById('applyPromoBtn').addEventListener('click', () => {
+      const code = els.promoInput.value.trim();
+      if (!code) {
+        els.promoMsg.textContent = '프로모 코드를 입력해주세요.';
+        return;
+      }
+      const subtotal = Cart.subtotal();
+      promoDiscount = Math.round(subtotal * 0.05);
+      els.promoMsg.textContent = `프로모 코드가 적용됐어요 (-5%).`;
+      render();
+    });
+
+    // ---- 배송지 입력 -> 결제 정보 입력 ----
+    els.shippingForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!els.shippingForm.reportValidity()) return;
+      step = 'card';
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ---- 결제 (데모: 실제 결제 없이 주문 완료 처리) ----
+    els.paymentForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!els.paymentForm.reportValidity()) return;
+      Cart.clear();
+      promoDiscount = 0;
+      step = 'success';
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    render();
+  </script>
+</body>
+</html>

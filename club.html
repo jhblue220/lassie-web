@@ -91,13 +91,14 @@
           </div>
         </div>
       </div>
-      <button class="icon-btn" type="button" aria-label="Cart">
+      <a class="icon-btn" href="cart.html" aria-label="Cart">
         <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
           <path d="M3 4h2l2.4 12.2a1.5 1.5 0 0 0 1.47 1.2h8.9a1.5 1.5 0 0 0 1.46-1.14L21 9H6" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
           <circle cx="10" cy="20.6" r="1.4" fill="currentColor"/>
           <circle cx="17.5" cy="20.6" r="1.4" fill="currentColor"/>
         </svg>
-      </button>
+        <span class="cart-badge" id="cartBadge"></span>
+      </a>
       <button class="icon-btn" type="button" aria-label="Account">
         <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
           <circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.7" fill="none"/>
@@ -171,6 +172,7 @@
     </div>
   </section>
 
+  <script src="assets/cart.js"></script>
   <script>
     const menuItem = document.querySelector('.menu-item');
     const menuToggle = document.querySelector('.menu-link-toggle');
