@@ -179,55 +179,46 @@
           <div class="product-media"><span>컬러 포인트 넥 밴드</span></div>
           <h3 class="product-name">Lassie Loop</h3>
           <p class="product-price">₩39,000</p>
-          <button class="btn-add-cart" type="button">Add to Cart</button>
         </article>
         <article class="product" data-id="trail-harness" data-name="Trail Harness" data-price="89000" data-desc="하네스 프레임">
           <div class="product-media"><span>하네스 프레임</span></div>
           <h3 class="product-name">Trail Harness</h3>
           <p class="product-price">₩89,000</p>
-          <button class="btn-add-cart" type="button">Add to Cart</button>
         </article>
         <article class="product" data-id="paw-guard" data-name="Paw Guard" data-price="41300" data-desc="발 모듈 보호 커버 4개 세트">
           <div class="product-media"><span>발 모듈 보호 커버 4개 세트</span></div>
           <h3 class="product-name">Paw Guard</h3>
           <p class="product-price">₩41,300 <s>₩59,000</s> <em class="sale-badge">-30%</em></p>
-          <button class="btn-add-cart" type="button">Add to Cart</button>
         </article>
         <article class="product" data-id="glow-tag" data-name="Glow Tag" data-price="23200" data-desc="야간 산책용 LED 태그">
           <div class="product-media"><span>야간 산책용 LED 태그</span></div>
           <h3 class="product-name">Glow Tag</h3>
           <p class="product-price">₩23,200 <s>₩29,000</s> <em class="sale-badge">-20%</em></p>
-          <button class="btn-add-cart" type="button">Add to Cart</button>
         </article>
         <article class="product" data-id="carry-pack" data-name="Carry Pack" data-price="69000" data-desc="작은 물건을 담는 미니 사이드백">
           <div class="product-media"><span>작은 물건을 담는 미니 사이드백</span></div>
           <h3 class="product-name">Carry Pack</h3>
           <p class="product-price">₩69,000</p>
-          <button class="btn-add-cart" type="button">Add to Cart</button>
         </article>
         <article class="product" data-id="rain-shell" data-name="Rain Shell" data-price="79000" data-desc="우천 활동용 방수 커버">
           <div class="product-media"><span>우천 활동용 방수 커버</span></div>
           <h3 class="product-name">Rain Shell</h3>
           <p class="product-price">₩79,000</p>
-          <button class="btn-add-cart" type="button">Add to Cart</button>
         </article>
         <article class="product" data-id="trail-bell" data-name="Trail Bell" data-price="24000" data-desc="움직임에 반응하는 사운드 액세서리">
           <div class="product-media"><span>움직임에 반응하는 사운드 액세서리</span></div>
           <h3 class="product-name">Trail Bell</h3>
           <p class="product-price">₩24,000</p>
-          <button class="btn-add-cart" type="button">Add to Cart</button>
         </article>
         <article class="product" data-id="lassie-scarf" data-name="Lassie Scarf" data-price="32000" data-desc="시즌 컬러 패브릭 스카프">
           <div class="product-media"><span>시즌 컬러 패브릭 스카프</span></div>
           <h3 class="product-name">Lassie Scarf</h3>
           <p class="product-price">₩32,000</p>
-          <button class="btn-add-cart" type="button">Add to Cart</button>
         </article>
         <article class="product" data-id="adventure-cape" data-name="Adventure Cape" data-price="59000" data-desc="활동성과 개성을 더하는 아웃도어 케이프">
           <div class="product-media"><span>활동성과 개성을 더하는 아웃도어 케이프</span></div>
           <h3 class="product-name">Adventure Cape</h3>
           <p class="product-price">₩59,000</p>
-          <button class="btn-add-cart" type="button">Add to Cart</button>
         </article>
       </div>
 
@@ -316,26 +307,6 @@
 
   <script src="assets/cart.js"></script>
   <script>
-    // ---- Add to Cart ----
-    document.querySelectorAll('.product').forEach((product) => {
-      const btn = product.querySelector('.btn-add-cart');
-      btn.addEventListener('click', () => {
-        Cart.add({
-          id: product.dataset.id,
-          name: product.dataset.name,
-          price: Number(product.dataset.price),
-          desc: product.dataset.desc,
-        });
-        const original = btn.textContent;
-        btn.textContent = 'Added ✓';
-        btn.classList.add('added');
-        setTimeout(() => {
-          btn.textContent = original;
-          btn.classList.remove('added');
-        }, 1200);
-      });
-    });
-
     // ---- 상품 상세 슬라이드 패널 ----
     const productDetails = {
       'lassie-loop': {
