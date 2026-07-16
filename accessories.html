@@ -258,6 +258,62 @@
     </main>
   </div>
 
+  <!-- ===== Product detail slide-in ===== -->
+  <div class="detail-overlay" id="detailOverlay" aria-hidden="true">
+    <div class="detail-backdrop" id="detailBackdrop"></div>
+    <aside class="detail-panel" role="dialog" aria-modal="true" aria-label="상품 상세">
+      <button class="detail-back" type="button" id="detailBack" aria-label="닫기">
+        <svg viewBox="0 0 8 12" aria-hidden="true"><path d="M7 1 2 6l5 5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <div class="detail-scroll">
+        <nav class="breadcrumb detail-crumb">
+          <a href="index.html">Home</a>
+          <svg viewBox="0 0 8 12" class="crumb-arrow" aria-hidden="true"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="accessories.html">Shop</a>
+          <svg viewBox="0 0 8 12" class="crumb-arrow" aria-hidden="true"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="crumb-current">Accessories</span>
+        </nav>
+
+        <div class="detail-columns">
+          <div class="detail-media-col">
+            <div class="detail-media"></div>
+            <div class="detail-media"></div>
+            <div class="detail-media"></div>
+          </div>
+
+          <div class="detail-info-col">
+            <h2 class="detail-name" id="detailName"></h2>
+            <p class="detail-watchers">
+              <svg viewBox="0 0 20 14" aria-hidden="true"><path d="M1 7s3.3-6 9-6 9 6 9 6-3.3 6-9 6-9-6-9-6Z" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linejoin="round"/><circle cx="10" cy="7" r="2.6" fill="currentColor"/></svg>
+              현재 <span id="detailWatchers"></span>명이 함께 보고 있어요.
+            </p>
+
+            <p class="detail-price" id="detailPrice"></p>
+            <p class="detail-desc" id="detailDesc"></p>
+
+            <p class="detail-colors-label">Select Colors</p>
+            <div class="detail-colors" id="detailColors"></div>
+
+            <div class="detail-tags" id="detailTags"></div>
+
+            <div class="detail-buy-row">
+              <div class="qty-stepper detail-qty">
+                <button type="button" class="qty-btn" id="detailQtyMinus" aria-label="수량 감소">−</button>
+                <span class="qty-val" id="detailQtyVal">1</span>
+                <button type="button" class="qty-btn" id="detailQtyPlus" aria-label="수량 증가">+</button>
+              </div>
+              <button class="detail-add-cart" type="button" id="detailAddCart">Add to Cart</button>
+            </div>
+
+            <h3 class="detail-also-title">You might<br />also like</h3>
+            <div class="detail-also" id="detailAlso"></div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
   <script src="assets/cart.js"></script>
   <script>
     // ---- Add to Cart ----
@@ -278,6 +334,159 @@
           btn.classList.remove('added');
         }, 1200);
       });
+    });
+
+    // ---- 상품 상세 슬라이드 패널 ----
+    const productDetails = {
+      'lassie-loop': {
+        story: '컬러 포인트가 들어간 넥 밴드로, 래시의 첫인상을 바꿔주는 가장 쉬운 방법이에요. 부드러운 패브릭 소재라 착용 부위에 흠집을 남기지 않고, 원터치 버클로 산책 전 준비 시간이 짧아집니다.',
+        tags: ['Cleaning', 'Charging', 'Modular Port', 'Weatherproof'],
+      },
+      'trail-harness': {
+        story: '험한 길에서도 몸체를 안정적으로 잡아주는 하네스 프레임입니다. 하중을 고르게 분산하는 구조라 오래 착용해도 관절 모듈에 무리가 가지 않아요.',
+        tags: ['Outdoor', 'Trail', 'Modular Port', 'Weatherproof'],
+      },
+      'paw-guard': {
+        story: '발 모듈을 보호하는 커버 4개 세트예요. 거친 노면이나 뜨거운 아스팔트에서 발끝 마모를 줄여주고, 미끄럼 방지 패턴으로 접지력도 높여줍니다.',
+        tags: ['Cleaning', 'Outdoor', 'Weatherproof'],
+      },
+      'glow-tag': {
+        story: '야간 산책용 LED 태그입니다. 움직임을 감지해 자동으로 켜지고, 200m 밖에서도 래시의 위치를 확인할 수 있어 어두운 길에서도 안심이에요.',
+        tags: ['Safety', 'Night Walk', 'Charging'],
+      },
+      'carry-pack': {
+        story: '작은 물건을 담을 수 있는 미니 사이드백이에요. 래시의 등 모듈에 딱 맞게 설계되어 흔들림이 적고, 산책 중 간식이나 열쇠 같은 소지품을 맡기기 좋아요.',
+        tags: ['Carry', 'Outdoor', 'Modular Port'],
+      },
+      'rain-shell': {
+        story: '우천 활동용 방수 커버입니다. 본체의 통풍구는 살리면서 수분에 약한 관절 부위만 정확히 덮어주는 재단으로, 비 오는 날에도 산책을 포기하지 않아도 돼요.',
+        tags: ['Weatherproof', 'Outdoor', 'Cleaning'],
+      },
+      'trail-bell': {
+        story: '움직임에 반응해 은은한 소리를 내는 사운드 액세서리예요. 래시가 다가오는 것을 주변에서 자연스럽게 알 수 있고, 소리 톤은 앱에서 조절할 수 있습니다.',
+        tags: ['Safety', 'Trail', 'Sound'],
+      },
+      'lassie-scarf': {
+        story: '시즌 컬러로 제작된 패브릭 스카프입니다. 계절마다 새로운 컬러웨이가 출시되어 래시의 스타일을 가장 가볍게 바꿀 수 있는 아이템이에요.',
+        tags: ['Style', 'Fabric', 'Season'],
+      },
+      'adventure-cape': {
+        story: '활동성과 개성을 동시에 챙기는 아웃도어 케이프예요. 가벼운 소재로 움직임을 방해하지 않으면서, 바람에 날리는 실루엣이 산책길의 시선을 사로잡습니다.',
+        tags: ['Style', 'Outdoor', 'Weatherproof'],
+      },
+    };
+
+    const detailColorSet = ['#8a8a8a', '#d1cf29', '#232f42', '#3a2e2a', '#f7c5cf'];
+
+    const catalog = [...document.querySelectorAll('.product')].map((p) => ({
+      id: p.dataset.id,
+      name: p.dataset.name,
+      price: Number(p.dataset.price),
+      desc: p.dataset.desc,
+      priceHtml: p.querySelector('.product-price').innerHTML,
+    }));
+
+    const overlay = document.getElementById('detailOverlay');
+    const detailEls = {
+      name: document.getElementById('detailName'),
+      watchers: document.getElementById('detailWatchers'),
+      price: document.getElementById('detailPrice'),
+      desc: document.getElementById('detailDesc'),
+      colors: document.getElementById('detailColors'),
+      tags: document.getElementById('detailTags'),
+      qtyVal: document.getElementById('detailQtyVal'),
+      addCart: document.getElementById('detailAddCart'),
+      also: document.getElementById('detailAlso'),
+    };
+
+    let detailCurrent = null;
+    let detailQty = 1;
+
+    function openDetail(id) {
+      const item = catalog.find((c) => c.id === id);
+      if (!item) return;
+      const extra = productDetails[id] || { story: item.desc, tags: [] };
+
+      detailCurrent = item;
+      detailQty = 1;
+      detailEls.qtyVal.textContent = '1';
+
+      detailEls.name.innerHTML = item.name.replace(' ', '<br />');
+      detailEls.watchers.textContent = 12 + Math.floor(Math.random() * 70);
+      detailEls.price.textContent = '₩' + item.price.toLocaleString('ko-KR');
+      detailEls.desc.textContent = extra.story;
+
+      detailEls.colors.innerHTML = detailColorSet.map((c, i) => `
+        <button type="button" class="color-dot${i === 0 ? ' selected' : ''}" style="background:${c}" aria-label="색상 선택">
+          <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>`).join('');
+      detailEls.colors.querySelectorAll('.color-dot').forEach((dot) => {
+        dot.addEventListener('click', () => {
+          detailEls.colors.querySelectorAll('.color-dot').forEach((d) => d.classList.remove('selected'));
+          dot.classList.add('selected');
+        });
+      });
+
+      detailEls.tags.innerHTML = extra.tags.map((t, i) =>
+        `<span class="detail-tag${i === extra.tags.length - 1 ? ' active' : ''}">${t}</span>`).join('');
+
+      const others = catalog.filter((c) => c.id !== id).slice(0, 2);
+      detailEls.also.innerHTML = others.map((o) => `
+        <button type="button" class="also-card" data-id="${o.id}">
+          <span class="also-media"></span>
+          <span class="also-name">${o.name}</span>
+          <span class="also-price">₩${o.price.toLocaleString('ko-KR')}</span>
+        </button>`).join('');
+      detailEls.also.querySelectorAll('.also-card').forEach((card) => {
+        card.addEventListener('click', () => openDetail(card.dataset.id));
+      });
+
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('detail-open');
+      overlay.querySelector('.detail-scroll').scrollTop = 0;
+    }
+
+    function closeDetail() {
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('detail-open');
+    }
+
+    document.querySelectorAll('.product').forEach((product) => {
+      product.querySelector('.product-media').addEventListener('click', () => openDetail(product.dataset.id));
+    });
+
+    document.getElementById('detailBackdrop').addEventListener('click', closeDetail);
+    document.getElementById('detailBack').addEventListener('click', closeDetail);
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) closeDetail();
+    });
+
+    document.getElementById('detailQtyMinus').addEventListener('click', () => {
+      detailQty = Math.max(1, detailQty - 1);
+      detailEls.qtyVal.textContent = String(detailQty);
+    });
+    document.getElementById('detailQtyPlus').addEventListener('click', () => {
+      detailQty += 1;
+      detailEls.qtyVal.textContent = String(detailQty);
+    });
+
+    detailEls.addCart.addEventListener('click', () => {
+      if (!detailCurrent) return;
+      Cart.add({
+        id: detailCurrent.id,
+        name: detailCurrent.name,
+        price: detailCurrent.price,
+        desc: detailCurrent.desc,
+        qty: detailQty,
+      });
+      detailEls.addCart.textContent = 'Added ✓';
+      detailEls.addCart.classList.add('added');
+      setTimeout(() => {
+        detailEls.addCart.textContent = 'Add to Cart';
+        detailEls.addCart.classList.remove('added');
+      }, 1200);
     });
 
     const menuItem = document.querySelector('.menu-item');
