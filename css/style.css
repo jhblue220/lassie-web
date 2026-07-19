@@ -337,31 +337,6 @@ input { font-family: inherit; }
 
 .ic-down { width: 16px; height: 20px; }
 
-.sale-tab {
-  position: fixed;
-  right: 0;
-  top: 54%;
-  background: var(--yellow-dark);
-  color: #fff;
-  border-radius: 0;
-  padding: 14px 8px 18px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  z-index: 50;
-}
-
-.sale-tab .ic { width: 18px; height: 18px; }
-
-.sale-tab-text {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-}
-
 /* ===== Gallery ===== */
 .gallery {
   display: grid;
