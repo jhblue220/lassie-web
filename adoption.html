@@ -107,69 +107,81 @@
     </div>
   </header>
 
-  <!-- ===== Adoption hero ===== -->
-  <section class="adopt-hero">
-    <div class="adopt-colors" id="adoptColors">
-      <button class="color-dot-lg" type="button" data-color="gray" data-label="Gray" style="background:#8a8a8a" aria-label="Gray 선택">
-        <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button class="color-dot-lg" type="button" data-color="yellow" data-label="Yellow" style="background:#d1cf29" aria-label="Yellow 선택">
-        <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button class="color-dot-lg" type="button" data-color="navy" data-label="Navy" style="background:#232f42" aria-label="Navy 선택">
-        <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button class="color-dot-lg" type="button" data-color="brown" data-label="Dark Brown" style="background:#3a2e2a" aria-label="Dark Brown 선택">
-        <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button class="color-dot-lg" type="button" data-color="pink" data-label="Pink" style="background:#f7c5cf" aria-label="Pink 선택">
-        <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
-
-    <img class="adopt-dog-img" src="assets/adoption-dog.png" alt="Lassie 로봇 강아지" />
-
-    <h1 class="adopt-title">Meet Your<br />Lassie</h1>
-
-    <div class="adopt-accessories">
-      <div class="adopt-accessory-thumb"><img src="assets/adoption-accessory-1.png" alt="산책용 액세서리" /></div>
-      <div class="adopt-accessory-thumb"><img src="assets/adoption-accessory-2.png" alt="넥 컬러" /></div>
-      <div class="adopt-accessory-thumb"><img src="assets/adoption-accessory-3.png" alt="하네스" /></div>
+  <!-- ===== Intro: Meet Your Lassie ===== -->
+  <section class="adopt-intro" id="adoptIntro">
+    <img class="adopt-intro-img" src="assets/adoption-hero.jpg" alt="Lassie 클로즈업" draggable="false" />
+    <div class="adopt-intro-copy">
+      <h1 class="adopt-intro-title">
+        Meet Your<br />
+        <span class="adopt-intro-row">
+          Lassie
+          <button class="click-here-btn" type="button" id="clickHereBtn">Click Here</button>
+        </span>
+      </h1>
     </div>
   </section>
 
-  <!-- ===== Made to Move Together (색상 선택 후 노출) ===== -->
-  <section class="adopt-reveal" id="adoptReveal">
-    <div class="adopt-reveal-mask">
-      <div class="adopt-reveal-content">
-        <div class="adopt-move-col">
-          <h2 class="adopt-move-title">Made to Move Together</h2>
-          <p class="adopt-move-desc">
-            당신과 래시는 활동적인 일상과 새로운 야외 경험을 즐긴다는 공통점을 가지고 있어요.
-            함께 달리며 서로의 속도를 맞추고, 익숙한 길을 벗어나 새로운 장소를 탐색하며
-            자연스럽게 더 많은 시간을 바깥에서 보내게 됩니다.
-          </p>
+  <!-- ===== Studio: 360 뷰어 (Click Here 후 표시) ===== -->
+  <section class="adopt-studio" id="adoptStudio" hidden>
+    <div class="studio-stage">
+      <div class="studio-colors" id="studioColors">
+        <button class="color-dot-lg selected" type="button" data-color="gray" data-label="Gray" style="background:#8a8a8a" aria-label="Gray 선택">
+          <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="color-dot-lg" type="button" data-color="yellow" data-label="Yellow" style="background:#d1cf29" aria-label="Yellow 선택">
+          <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="color-dot-lg" type="button" data-color="navy" data-label="Navy" style="background:#232f42" aria-label="Navy 선택">
+          <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="color-dot-lg" type="button" data-color="brown" data-label="Dark Brown" style="background:#3a2e2a" aria-label="Dark Brown 선택">
+          <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="color-dot-lg" type="button" data-color="pink" data-label="Pink" style="background:#f7c5cf" aria-label="Pink 선택">
+          <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
 
-          <div class="detail-tags adopt-tags">
-            <span class="detail-tag">Cleaning</span>
-            <span class="detail-tag">Charging</span>
-            <span class="detail-tag">Modular Port</span>
-            <span class="detail-tag active">Weatherproof</span>
-          </div>
+      <div class="turn-viewport" id="turnViewport">
+        <img id="turnImg" src="assets/turn_gray/frame_01.jpg" alt="Lassie 360도 보기" draggable="false" />
+      </div>
+      <p class="turn-hint">이미지를 잡고 좌우로 밀면 돌아가요</p>
 
-          <div class="detail-buy-row adopt-buy-row">
-            <div class="qty-stepper detail-qty">
-              <button type="button" class="qty-btn" id="adoptQtyMinus" aria-label="수량 감소">−</button>
-              <span class="qty-val" id="adoptQtyVal">1</span>
-              <button type="button" class="qty-btn" id="adoptQtyPlus" aria-label="수량 증가">+</button>
-            </div>
-            <button class="detail-add-cart" type="button" id="adoptAddCart">Add to Cart</button>
-          </div>
+      <div class="adopt-accessories studio-accessories">
+        <div class="adopt-accessory-thumb"><img src="assets/adoption-accessory-1.png" alt="산책용 액세서리" /></div>
+        <div class="adopt-accessory-thumb"><img src="assets/adoption-accessory-2.png" alt="넥 컬러" /></div>
+        <div class="adopt-accessory-thumb"><img src="assets/adoption-accessory-3.png" alt="하네스" /></div>
+      </div>
+    </div>
+
+    <div class="adopt-move-wrap">
+      <div class="adopt-move-col">
+        <h2 class="adopt-move-title">Made to Move Together</h2>
+        <p class="adopt-move-desc">
+          당신과 래시는 활동적인 일상과 새로운 야외 경험을 즐긴다는 공통점을 가지고 있어요.
+          함께 달리며 서로의 속도를 맞추고, 익숙한 길을 벗어나 새로운 장소를 탐색하며
+          자연스럽게 더 많은 시간을 바깥에서 보내게 됩니다.
+        </p>
+
+        <div class="detail-tags adopt-tags">
+          <span class="detail-tag">Cleaning</span>
+          <span class="detail-tag">Charging</span>
+          <span class="detail-tag">Modular Port</span>
+          <span class="detail-tag active">Weatherproof</span>
         </div>
 
-        <div class="adopt-move-media">
-          <img src="assets/adoption-move-together.png" alt="래시 클로즈업" />
+        <div class="detail-buy-row adopt-buy-row">
+          <div class="qty-stepper detail-qty">
+            <button type="button" class="qty-btn" id="adoptQtyMinus" aria-label="수량 감소">−</button>
+            <span class="qty-val" id="adoptQtyVal">1</span>
+            <button type="button" class="qty-btn" id="adoptQtyPlus" aria-label="수량 증가">+</button>
+          </div>
+          <button class="detail-add-cart" type="button" id="adoptAddCart">Add to Cart</button>
         </div>
+      </div>
+
+      <div class="adopt-move-media">
+        <img src="assets/adoption-move-together.png" alt="래시 클로즈업" />
       </div>
     </div>
   </section>
@@ -234,12 +246,89 @@
       }
     });
 
-    // ---- 색상 선택 -> Made to Move Together 공개 ----
+    // ---- Click Here: 인트로 -> 360 스튜디오 전환 ----
     const LASSIE_PRICE = 2490000;
+    const adoptIntro = document.getElementById('adoptIntro');
+    const adoptStudio = document.getElementById('adoptStudio');
+
+    document.getElementById('clickHereBtn').addEventListener('click', () => {
+      adoptIntro.classList.add('leaving');
+      setTimeout(() => {
+        adoptIntro.hidden = true;
+        adoptStudio.hidden = false;
+        requestAnimationFrame(() => adoptStudio.classList.add('entered'));
+        window.scrollTo({ top: 0 });
+        preloadFrames('gray');
+      }, 320);
+    });
+
+    // ---- 360 턴테이블 뷰어 ----
+    // 색상별 프레임 세트: 새 색상이 나오면 여기에 추가하면 됨
+    const TURN_SETS = {
+      gray: { dir: 'assets/turn_gray', count: 91 },
+    };
+
+    const turnImg = document.getElementById('turnImg');
+    const turnViewport = document.getElementById('turnViewport');
+    let turnColor = 'gray';
+    let frameIndex = 0; // 0-based
+    const preloaded = {};
+
+    function framePath(color, i) {
+      const num = String(i + 1).padStart(2, '0');
+      return `${TURN_SETS[color].dir}/frame_${num}.jpg`;
+    }
+
+    function preloadFrames(color) {
+      if (preloaded[color]) return;
+      preloaded[color] = true;
+      const set = TURN_SETS[color];
+      for (let i = 0; i < set.count; i++) {
+        const im = new Image();
+        im.src = framePath(color, i);
+      }
+    }
+
+    function showFrame() {
+      const set = TURN_SETS[turnColor];
+      const n = set.count;
+      const idx = ((Math.round(frameIndex) % n) + n) % n;
+      turnImg.src = framePath(turnColor, idx);
+    }
+
+    // 드래그 회전: 프레임 번호가 커질수록 코가 왼쪽으로 도므로,
+    // 왼쪽으로 밀면(deltaX<0) 프레임이 증가해 미는 방향과 회전이 일치함
+    const DRAG_PX_PER_FRAME = 6;
+    let dragging = false;
+    let dragStartX = 0;
+    let dragStartFrame = 0;
+
+    turnViewport.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      dragStartX = e.clientX;
+      dragStartFrame = frameIndex;
+      turnViewport.classList.add('grabbing');
+      turnViewport.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+
+    turnViewport.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - dragStartX;
+      frameIndex = dragStartFrame - dx / DRAG_PX_PER_FRAME;
+      showFrame();
+    });
+
+    function endDrag() {
+      dragging = false;
+      turnViewport.classList.remove('grabbing');
+    }
+    turnViewport.addEventListener('pointerup', endDrag);
+    turnViewport.addEventListener('pointercancel', endDrag);
+
+    // ---- 색상 도트 (현재는 Gray 프레임만 존재, 추후 색상 추가 예정) ----
     const colorDots = document.querySelectorAll('.color-dot-lg');
-    const adoptReveal = document.getElementById('adoptReveal');
-    let selectedColor = null;
-    let revealed = false;
+    let selectedColor = { id: 'gray', label: 'Gray' };
 
     colorDots.forEach((dot) => {
       dot.addEventListener('click', () => {
@@ -247,13 +336,10 @@
         dot.classList.add('selected');
         selectedColor = { id: dot.dataset.color, label: dot.dataset.label };
 
-        if (!revealed) {
-          revealed = true;
-          adoptReveal.classList.add('open');
-          setTimeout(() => {
-            adoptReveal.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 380);
-        }
+        // 해당 색상의 프레임 세트가 있으면 교체, 없으면 Gray 유지
+        turnColor = TURN_SETS[selectedColor.id] ? selectedColor.id : 'gray';
+        preloadFrames(turnColor);
+        showFrame();
       });
     });
 
