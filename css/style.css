@@ -459,63 +459,6 @@ input { font-family: inherit; }
 
 .big-media .ph-wide { height: 47.5vw; border-radius: 24px; }
 
-/* ===== Testimonials ===== */
-.testimonials {
-  padding: 20px 0 0;
-  overflow: hidden;
-}
-
-.cards-row { width: max-content; }
-
-.cards-track {
-  display: flex;
-  width: max-content;
-  animation: cards-marquee linear infinite;
-}
-
-.cards-set {
-  display: flex;
-  gap: 32px;
-  padding-right: 32px;
-}
-
-@keyframes cards-marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-/* 두 줄이 같은 속도(약 50px/s)로 흐르도록 폭에 비례한 시간.
-   row-2는 마진 대신 음수 delay로 위상을 늦춰 시작 배치를 어긋나게 함
-   (마진으로 밀면 루프마다 왼쪽에 빈 공간이 생김) */
-.row-1 .cards-track { animation-duration: 45s; }
-.row-2 .cards-track { animation-duration: 34s; animation-delay: -26s; }
-
-.row-1,
-.row-2 { margin-left: -57px; }
-
-.row-2 { margin-top: 32px; }
-
-.card {
-  width: 530px;
-  height: 420px;
-  border: 1px solid var(--line-gray);
-  border-radius: 24px;
-  padding: 104px 42px 0;
-  background: #fff;
-}
-
-.card-body {
-  font-size: 17.5px;
-  line-height: 1.62;
-  color: #2b3648;
-}
-
-.card-author {
-  margin-top: 36px;
-  font-size: 16px;
-  color: var(--text-gray);
-}
-
 /* ===== CTA ===== */
 .cta {
   text-align: center;
@@ -1761,47 +1704,6 @@ body.detail-open { overflow: hidden; }
 }
 .cart-tab[aria-disabled="true"] { cursor: not-allowed; opacity: 0.55; }
 
-.cart-toolbar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 30px 144px 0 51px;
-}
-
-.toolbar-icon-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: 1px solid #e7e7e9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--navy);
-}
-.toolbar-icon-btn svg { width: 16px; height: 13px; }
-
-.toolbar-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 11px 18px;
-  background: #f4f4f3;
-  border-radius: 999px;
-  font-size: 14px;
-  color: var(--navy);
-}
-.toolbar-pill svg { width: 11px; height: 7px; }
-
-.toolbar-dark-pill {
-  padding: 12px 22px;
-  background: var(--navy-deep);
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  border-radius: 999px;
-}
-.toolbar-dark-pill.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
-
 .cart-body {
   display: flex;
   align-items: flex-start;
@@ -2121,7 +2023,6 @@ body.detail-open { overflow: hidden; }
   .paw-col { width: 100%; }
   .features { grid-template-columns: 1fr; }
   .feature-col { border-right: none; border-bottom: 1px solid #e2e2e0; padding: 60px 24px; min-height: 300px; }
-  .card { width: 340px; height: auto; padding: 36px 26px 44px; }
   .cta { padding-top: 200px; }
   .cta-title { font-size: 36px; }
   .cta-desc br { display: none; }

@@ -84,7 +84,6 @@
                   <circle cx="8" cy="3.2" r="1.2" fill="currentColor"/>
                   <path d="M8 6.5v6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
                 </svg>
-                <a class="menu-link" href="#">Help</a>
                 <a class="menu-link" href="faq.html">FAQ</a>
               </div>
             </div>
@@ -127,17 +126,6 @@
     <button class="cart-tab active" type="button" data-step="purchase" id="tabPurchase">Purchase</button>
     <button class="cart-tab" type="button" data-step="payment" id="tabPayment" aria-disabled="true">Payment</button>
   </nav>
-
-  <div class="cart-toolbar" id="cartToolbar">
-    <button class="toolbar-icon-btn" type="button" aria-label="필터">
-      <svg viewBox="0 0 18 14" aria-hidden="true"><path d="M1 2h16M4 7h10M7 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-    </button>
-    <button class="toolbar-pill" type="button">
-      Like
-      <svg viewBox="0 0 14 8" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <button class="toolbar-dark-pill" type="button" id="paymentDetailsBtn">Payment Details</button>
-  </div>
 
   <div class="cart-body">
     <div class="cart-items-col">
@@ -333,7 +321,6 @@
       crumbPaymentWrap: document.getElementById('crumbPaymentWrap'),
       tabPurchase: document.getElementById('tabPurchase'),
       tabPayment: document.getElementById('tabPayment'),
-      cartToolbar: document.getElementById('cartToolbar'),
       cartItems: document.getElementById('cartItems'),
       summaryInline: document.getElementById('summaryInline'),
       detailsPanel: document.getElementById('detailsPanel'),
@@ -343,7 +330,6 @@
       orderSuccess: document.getElementById('orderSuccess'),
       checkoutBtn: document.getElementById('checkoutBtn'),
       checkoutHint: document.getElementById('checkoutHint'),
-      paymentDetailsBtn: document.getElementById('paymentDetailsBtn'),
       promoInput: document.getElementById('promoInput'),
       promoMsg: document.getElementById('promoMsg'),
     };
@@ -443,7 +429,6 @@
 
       const empty = items.length === 0;
       els.checkoutBtn.classList.toggle('disabled', empty);
-      els.paymentDetailsBtn.classList.toggle('disabled', empty);
       els.checkoutHint.hidden = !empty;
     }
 
@@ -456,7 +441,6 @@
       document.querySelector('.cart-tab[data-step="details"]').classList.toggle('active', step === 'details');
       els.tabPayment.setAttribute('aria-disabled', String(!hasStartedCheckout));
 
-      els.cartToolbar.hidden = step !== 'purchase';
       els.detailsPanel.hidden = step !== 'details';
       els.orderSummary.hidden = step !== 'purchase' && step !== 'details';
       els.summaryInline.hidden = !(step === 'shipping' || step === 'card');
@@ -512,7 +496,6 @@
     }
 
     els.checkoutBtn.addEventListener('click', goToCheckout);
-    els.paymentDetailsBtn.addEventListener('click', goToCheckout);
 
     // ---- 프로모 코드 (데모: 코드 입력 시 소계의 5% 할인) ----
     document.getElementById('applyPromoBtn').addEventListener('click', () => {

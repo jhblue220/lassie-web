@@ -84,7 +84,6 @@
                   <circle cx="8" cy="3.2" r="1.2" fill="currentColor"/>
                   <path d="M8 6.5v6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
                 </svg>
-                <a class="menu-link" href="#">Help</a>
                 <a class="menu-link" href="faq.html">FAQ</a>
               </div>
             </div>
@@ -177,50 +176,6 @@
     <div class="ph ph-wide"></div>
   </section>
 
-  <!-- ===== Testimonials ===== -->
-  <section class="testimonials">
-    <div class="cards-row row-1">
-      <div class="cards-track">
-      <div class="cards-set">
-      <article class="card">
-        <p class="card-body">처음에는 로봇이 얼마나 자연스럽게 같이 다닐 수 있을지 걱정했는데, 생각보다 금방 익숙해졌어요. 특히 현관 앞에서 기다리고 있으면 괜히 한 번이라도 더 나가게 됩니다. 요즘은 퇴근 후 산책이 습관이 됐어요.</p>
-        <p class="card-author">김서윤 · Seoul, KR</p>
-      </article>
-      <article class="card">
-        <p class="card-body">러닝할 때 일정한 거리로 따라오는 게 제일 마음에 들어요. 제가 멈추면 같이 기다리고 다시 뛰기 시작하면 자연스럽게 따라와서, 기계와 운동한다기보다 러닝 메이트가 생긴 느낌입니다.</p>
-        <p class="card-author">박민재 · Busan, KR</p>
-      </article>
-      <article class="card">
-        <p class="card-body">LASSIE has completely changed my evening routine. Instead of staying home after work, I find myself going outside just because LASSIE is already waiting by the door.</p>
-        <p class="card-author">Emma Wilson · London, UK</p>
-      </article>
-      <article class="card">
-        <p class="card-body">玄関で待っているラッシーを見ると、疲れている日でも少しだけ外に出てみようと思えます。一緒に歩く時間が、毎日の小さな楽しみになりました。</p>
-        <p class="card-author">佐藤 美咲 (Sato Misaki) · Tokyo, JP</p>
-      </article>
-      </div>
-      </div>
-    </div>
-    <div class="cards-row row-2">
-      <div class="cards-track">
-      <div class="cards-set">
-      <article class="card">
-        <p class="card-body">LASSIE让我重新发现了出门散步的乐趣。它会陪着我走，也会用自己的动作回应我。现在对我来说，散步不再只是运动，而是我们一起度过的时间。</p>
-        <p class="card-author">林雨晴 (Lín Yǔqíng) · Shanghai, CN</p>
-      </article>
-      <article class="card">
-        <p class="card-body">My favorite part is discovering new places together. LASSIE gives me small reasons to take a different path, and those little detours have become the best part of my walks.</p>
-        <p class="card-author">Sophie Martin · Paris, FR</p>
-      </article>
-      <article class="card">
-        <p class="card-body">성격에 따라 반응이 조금씩 다른 게 가장 재미있어요. 꼬리나 귀의 움직임만 봐도 지금 뭘 원하는지 점점 알 것 같고, 오래 함께할수록 서로 익숙해지는 느낌이 들어요.</p>
-        <p class="card-author">정유진 · Jeju, KR</p>
-      </article>
-      </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===== CTA ===== -->
   <section class="cta">
     <svg class="cta-mark" viewBox="0 0 44 32" aria-hidden="true">
@@ -247,13 +202,6 @@
 
   <script src="assets/cart.js"></script>
   <script>
-    // 후기 카드 무한 마퀴: 각 트랙의 카드 세트를 복제해 이어붙임
-    document.querySelectorAll('.cards-track').forEach((track) => {
-      const clone = track.querySelector('.cards-set').cloneNode(true);
-      clone.setAttribute('aria-hidden', 'true');
-      track.appendChild(clone);
-    });
-
     const menuItem = document.querySelector('.menu-item');
     const menuToggle = document.querySelector('.menu-link-toggle');
 
