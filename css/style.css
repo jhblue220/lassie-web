@@ -1479,7 +1479,18 @@ body.detail-open { overflow: hidden; }
 }
 
 /* ===== Adoption page ===== */
-/* --- Intro (view 1) --- */
+/* 메뉴바는 애니메이션 없이 상단에 고정 */
+body.adoption-page { padding-top: 90px; }
+body.adoption-page .site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: #fff;
+}
+
+/* --- Intro (view 1): 텍스트 -> 버튼 -> 이미지 순서로 찰지게 팝업 --- */
 .adopt-intro {
   position: relative;
   overflow: hidden;
@@ -1505,7 +1516,7 @@ body.detail-open { overflow: hidden; }
 .adopt-intro-title {
   font-size: 6.8vw;
   line-height: 1.04;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: -0.04em;
   color: #111;
 }
@@ -1514,6 +1525,21 @@ body.detail-open { overflow: hidden; }
   display: inline-flex;
   align-items: center;
   gap: 2.2vw;
+}
+
+.intro-pop {
+  opacity: 0;
+  animation: intro-pop-in 0.62s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.adopt-intro-title span.intro-pop { display: inline-block; }
+.intro-pop-1 { animation-delay: 0.15s; }
+.intro-pop-2 { animation-delay: 0.5s; }
+.intro-pop-3 { animation-delay: 0.85s; }
+
+@keyframes intro-pop-in {
+  0% { opacity: 0; transform: translateY(28px) scale(0.94); }
+  65% { opacity: 1; transform: translateY(-5px) scale(1.015); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .click-here-btn {

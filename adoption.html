@@ -109,13 +109,13 @@
 
   <!-- ===== Intro: Meet Your Lassie ===== -->
   <section class="adopt-intro" id="adoptIntro">
-    <img class="adopt-intro-img" src="assets/adoption-hero.jpg" alt="Lassie 클로즈업" draggable="false" />
+    <img class="adopt-intro-img intro-pop intro-pop-3" src="assets/adoption-hero.jpg" alt="Lassie 클로즈업" draggable="false" />
     <div class="adopt-intro-copy">
       <h1 class="adopt-intro-title">
-        Meet Your<br />
+        <span class="intro-pop intro-pop-1">Meet Your</span><br />
         <span class="adopt-intro-row">
-          Lassie
-          <button class="click-here-btn" type="button" id="clickHereBtn">Click Here</button>
+          <span class="intro-pop intro-pop-1">Lassie</span>
+          <button class="click-here-btn intro-pop intro-pop-2" type="button" id="clickHereBtn">Click Here</button>
         </span>
       </h1>
     </div>
@@ -244,6 +244,15 @@
         searchPanelCtl.close();
         searchToggle.blur();
       }
+    });
+
+    // ---- 등장 애니메이션이 끝나면 잠긴 transform을 풀어 hover 트랜지션과 충돌 방지 ----
+    document.querySelectorAll('.intro-pop').forEach((el) => {
+      el.addEventListener('animationend', () => {
+        el.style.animation = 'none';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }, { once: true });
     });
 
     // ---- Click Here: 인트로 -> 360 스튜디오 전환 ----
