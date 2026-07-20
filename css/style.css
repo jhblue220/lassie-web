@@ -494,10 +494,209 @@ input { font-family: inherit; }
 
 .btn-explore .ic { width: 22px; height: 22px; }
 
-/* ===== Footer ===== */
-.site-footer { padding: 144px 28px 75px; }
+/* ===== Site footer (13_EndPage) ===== */
+.site-footer-lg {
+  background: #000;
+  color: #fff;
+  padding: 130px 51px 200px;
+  font-family: var(--font);
+}
 
-.ph-footer { height: 48vw; border-radius: 24px; }
+.footer-legal {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+}
+
+.footer-main {
+  margin-top: 108px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.footer-brand {
+  width: 331px;
+  flex-shrink: 0;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.footer-info {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 356px auto;
+  row-gap: 50px;
+  font-size: 18px;
+  line-height: 1.45;
+}
+.footer-info dt { font-weight: 400; color: #fff; }
+.footer-info dd { margin: 0; color: #fff; }
+.footer-info a { color: #fff; text-decoration: none; }
+.footer-info a:hover { text-decoration: underline; }
+
+.footer-ceo {
+  display: grid;
+  grid-template-columns: 130px auto;
+  gap: 8px 30px;
+}
+
+.footer-tagline {
+  margin-left: auto;
+  padding-left: 40px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* ===== Profile page (14_ProfilePage) ===== */
+.profile-hero { padding: 30px 51px 0; }
+
+.profile-welcome {
+  font-size: 7vw;
+  line-height: 1.02;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--navy);
+}
+
+.profile-tagline {
+  margin-top: 12px;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+}
+
+.profile-body {
+  position: relative;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 70px 51px 140px;
+}
+
+.profile-id {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.profile-avatar {
+  width: 128px;
+  height: 140px;
+  border-radius: 50%;
+  background: #d4d4d4;
+}
+
+.profile-name {
+  margin-top: 22px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #16202e;
+}
+
+.profile-email {
+  margin-top: 8px;
+  font-size: 16px;
+  color: #9aa1ab;
+}
+
+.profile-edit {
+  position: absolute;
+  right: 51px;
+  top: 232px;
+  background: var(--navy-deep);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 14px 34px;
+  border-radius: 999px;
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+.profile-edit:hover { background: #1a2436; transform: translateY(-1px); }
+
+.profile-form {
+  margin-top: 74px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px 46px;
+}
+
+.pf-field { min-width: 0; }
+
+.pf-field label {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: #16202e;
+  margin-bottom: 14px;
+}
+
+.pf-input {
+  width: 100%;
+  border: none;
+  background: #f4f4f3;
+  border-radius: 999px;
+  padding: 18px 24px;
+  font-size: 15px;
+  color: var(--navy);
+  outline: none;
+  font-family: inherit;
+}
+.pf-input::placeholder { color: #a7abb2; }
+.pf-input:disabled { cursor: default; color: #7a808a; }
+.profile-form.editing .pf-input { background: #eef0f1; }
+.pf-input:focus:not(:disabled) { box-shadow: 0 0 0 2px rgba(30, 42, 61, 0.25); }
+
+.pf-select-wrap { position: relative; }
+.pf-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 48px;
+}
+.pf-chevron {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 8px;
+  color: #9aa1ab;
+  pointer-events: none;
+}
+
+.profile-emails {
+  margin-top: 120px;
+  text-align: center;
+}
+.pe-title {
+  font-size: 21px;
+  font-weight: 700;
+  color: #16202e;
+}
+.pe-address {
+  margin-top: 26px;
+  font-size: 17px;
+  color: #16202e;
+}
+.pe-time {
+  margin-top: 8px;
+  font-size: 15px;
+  color: #9aa1ab;
+}
+.pe-add {
+  margin-top: 34px;
+  background: #d6f3fb;
+  color: #23c0e0;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 15px 30px;
+  border-radius: 999px;
+  transition: background 0.2s ease;
+}
+.pe-add:hover { background: #c2ecf7; }
 
 /* ===== Accessories (shop) page ===== */
 .logo-mark-only { height: 44px; opacity: 0.55; }

@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Archiving — Lassie</title>
+  <title>Profile — Lassie</title>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="archive-page">
+<body class="profile-page">
 
   <!-- ===== Header ===== -->
   <header class="site-header">
@@ -107,18 +107,94 @@
     </div>
   </header>
 
-  <!-- ===== Archiving ===== -->
-  <h1 class="archive-title">Archiving</h1>
-
-  <section class="words-strip">
-    <span class="word">Life</span>
-    <span class="word">Moves</span>
-    <span class="word">Better</span>
-    <span class="word">Together</span>
-    <span class="word word-index">Index</span>
+  <!-- ===== Profile hero ===== -->
+  <section class="profile-hero">
+    <h1 class="profile-welcome">Welcome, User1</h1>
+    <p class="profile-tagline">Every walk brings you closer!</p>
   </section>
 
-  <section class="archive-gallery" id="archiveGallery"></section>
+  <!-- ===== Profile card ===== -->
+  <section class="profile-body">
+    <div class="profile-id">
+      <div class="profile-avatar" aria-hidden="true"></div>
+      <p class="profile-name">User1</p>
+      <p class="profile-email">alex@lassie.ai</p>
+    </div>
+    <button class="profile-edit" type="button" id="profileEdit">Edit</button>
+
+    <form class="profile-form" id="profileForm" onsubmit="return false;">
+      <div class="pf-field">
+        <label for="pfFullName">Full Name</label>
+        <input class="pf-input" id="pfFullName" type="text" placeholder="Enter your full name" disabled />
+      </div>
+      <div class="pf-field">
+        <label for="pfNickName">Nick Name</label>
+        <input class="pf-input" id="pfNickName" type="text" placeholder="Enter a nickname" disabled />
+      </div>
+
+      <div class="pf-field">
+        <label for="pfGender">Gender</label>
+        <div class="pf-select-wrap">
+          <select class="pf-input pf-select" id="pfGender" disabled>
+            <option value="" selected>Choose gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Non-binary</option>
+            <option>Prefer not to say</option>
+          </select>
+          <svg viewBox="0 0 14 8" class="pf-chevron" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="pf-field">
+        <label for="pfCountry">Country</label>
+        <div class="pf-select-wrap">
+          <select class="pf-input pf-select" id="pfCountry" disabled>
+            <option value="" selected>Choose country</option>
+            <option>Republic of Korea</option>
+            <option>United States</option>
+            <option>Japan</option>
+            <option>United Kingdom</option>
+            <option>France</option>
+          </select>
+          <svg viewBox="0 0 14 8" class="pf-chevron" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <div class="pf-field">
+        <label for="pfLanguage">Language</label>
+        <div class="pf-select-wrap">
+          <select class="pf-input pf-select" id="pfLanguage" disabled>
+            <option value="" selected>Choose language</option>
+            <option>한국어</option>
+            <option>English</option>
+            <option>日本語</option>
+            <option>中文</option>
+          </select>
+          <svg viewBox="0 0 14 8" class="pf-chevron" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="pf-field">
+        <label for="pfTimezone">Time Zone</label>
+        <div class="pf-select-wrap">
+          <select class="pf-input pf-select" id="pfTimezone" disabled>
+            <option value="" selected>Choose time zone</option>
+            <option>GMT+9 Seoul</option>
+            <option>GMT-8 Los Angeles</option>
+            <option>GMT+0 London</option>
+            <option>GMT+1 Paris</option>
+          </select>
+          <svg viewBox="0 0 14 8" class="pf-chevron" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </form>
+
+    <div class="profile-emails">
+      <h2 class="pe-title">My email Address</h2>
+      <p class="pe-address">alex@lassie.ai</p>
+      <p class="pe-time">1 month ago</p>
+      <button class="pe-add" type="button">+Add Email Address</button>
+    </div>
+  </section>
 
   <!-- ===== Site footer ===== -->
   <footer class="site-footer-lg">
@@ -171,7 +247,6 @@
       menuToggle.setAttribute('aria-expanded', String(isOpen));
     });
 
-    // ---- pill 항목별 호버 팝업: Menu -> 메뉴 패널, 검색 -> 검색창, About -> 없음 ----
     function makeHoverPanel(triggerEl, panelEl, onOpen) {
       let closeTimer = null;
       function open() {
@@ -216,66 +291,22 @@
       }
     });
 
-    // ---- Archiving 갤러리: 위에서 아래로 스크롤하며 감상 ----
-    // 각 행(row)은 2단 또는 1단(전체 폭)으로 구성해 레퍼런스의 리듬을 재현
-    const galleryRows = [
-      { layout: 'two', items: [
-        { file: 'Interview_01.png', title: 'Interview 01' },
-        { file: 'Interview_02.png', title: 'Interview 02' },
-      ] },
-      { layout: 'two', items: [
-        { file: 'Research_01.png', title: 'Research 01' },
-        { file: 'Research_02.png', title: 'Research 02' },
-      ] },
-      { layout: 'one', items: [
-        { file: 'Fabric Research_01.png', title: 'Fabric Research 01' },
-      ] },
-      { layout: 'one', items: [
-        { file: 'Fabric Research_02.png', title: 'Fabric Research 02' },
-      ] },
-      { layout: 'two', items: [
-        { file: 'Fabric Research_03.png', title: 'Fabric Research 03' },
-        { file: 'Mock_Up_01.png', title: 'Mock Up 01' },
-      ] },
-      { layout: 'one', items: [
-        { file: 'Mock_Up_02.png', title: 'Mock Up 02' },
-      ] },
-      { layout: 'two', items: [
-        { file: 'Mock_Up_03.png', title: 'Mock Up 03' },
-        { file: 'Scale_01.png', title: 'Scale 01' },
-      ] },
-    ];
+    // ---- Edit 토글: 폼 입력 활성/비활성 ----
+    const profileEdit = document.getElementById('profileEdit');
+    const profileForm = document.getElementById('profileForm');
+    let editing = false;
 
-    function photoPath(file) {
-      return 'archive_photo/' + encodeURIComponent(file);
-    }
-
-    const gallery = document.getElementById('archiveGallery');
-
-    galleryRows.forEach((row) => {
-      const rowEl = document.createElement('div');
-      rowEl.className = `gallery-row gallery-row-${row.layout}`;
-
-      row.items.forEach((item) => {
-        const itemEl = document.createElement('div');
-        itemEl.className = 'gallery-item';
-
-        const img = document.createElement('img');
-        img.src = photoPath(item.file);
-        img.alt = item.title;
-        img.loading = 'lazy';
-        img.draggable = false;
-
-        const caption = document.createElement('span');
-        caption.className = 'gallery-caption';
-        caption.textContent = item.title;
-
-        itemEl.appendChild(img);
-        itemEl.appendChild(caption);
-        rowEl.appendChild(itemEl);
+    profileEdit.addEventListener('click', () => {
+      editing = !editing;
+      profileForm.querySelectorAll('.pf-input').forEach((el) => {
+        el.disabled = !editing;
       });
-
-      gallery.appendChild(rowEl);
+      profileForm.classList.toggle('editing', editing);
+      profileEdit.textContent = editing ? 'Save' : 'Edit';
+      if (editing) {
+        const first = document.getElementById('pfFullName');
+        first.focus();
+      }
     });
   </script>
 </body>
