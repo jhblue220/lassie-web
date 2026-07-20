@@ -1564,7 +1564,7 @@ body.detail-open { overflow: hidden; }
 .color-dot-lg.selected { box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(30, 42, 61, 0.5); }
 
 .turn-viewport {
-  width: min(62vw, 1100px);
+  width: min(49.6vw, 880px);
   margin: 10px auto 0;
   cursor: grab;
   touch-action: pan-y;
