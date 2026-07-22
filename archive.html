@@ -95,6 +95,7 @@
   <!-- ===== Archiving (마우스 변속 가로 스크롤 갤러리) ===== -->
   <section class="archive-stage" id="archiveStage">
     <div class="archive-track" id="archiveTrack"></div>
+    <div class="arch-cursor" id="archCursor" aria-hidden="true"></div>
   </section>
 
   <!-- ===== Archive lightbox (원본 비율 보기) ===== -->
@@ -221,45 +222,35 @@
     });
 
     // ============================================================
-    //  Archiving — 마우스 변속 가로 스크롤 + 스프링 물리 엔진
-    //  ▼▼▼ 아래 PARAMS 값만 바꾸면 속도 · 관성 · 탄성감을 튜닝할 수 있어요 ▼▼▼
+    //  Archiving — 마우스 위치 기반 변속 가로 스크롤 (기울기 없이 흐르기만)
+    //  ▼▼▼ 아래 PARAMS 값만 바꾸면 속도 · 관성을 튜닝할 수 있어요 ▼▼▼
     // ============================================================
     const PARAMS = {
-      // --- 변속 가로 스크롤 ---
-      MAX_SPEED:        1500,  // 화면 가장자리에서의 최고 스크롤 속도 (px/초)
-      DEAD_ZONE:        0.07,  // 중앙 정지 구간 (뷰포트 반폭 대비 비율, 0~1)
-      SPEED_EXP:        2.3,   // 가속 곡선 지수 (클수록 중앙은 느긋, 끝은 급가속)
-      VEL_SMOOTH:       3.0,   // 속도 추종/관성 (작을수록 더 미끄러지고 쫀득함)
-
-      // --- 흐를 때 모든 카드에 공통 적용되는 기울기 ---
-      ROT_PER_SPEED:    0.011, // 스크롤 속도 → 기울기 계수 (deg per px/s)
-      ROT_MAX:          14,    // 흐를 때 최대 기울기 (deg). 멈추면 0 = 똑바로
-
-      // --- 호버 팝업(탄성 스프링) ---
-      HOVER_STIFF:      220,   // 호버 스프링 강성 (클수록 빠릿하게 반응)
-      HOVER_DAMP:       14,    // 호버 스프링 감쇠 (작을수록 통통 튀는 elastic-out)
-      HOVER_SCALE:      0.28,  // 호버 시 추가 스케일 (1 + 0.28 배)
-      HOVER_LIFT:       28,    // 호버 시 위로 떠오르는 거리 (px)
+      // --- 마우스 위치 기반 변속 가로 스크롤 ---
+      MAX_SPEED:  1500,  // 화면 가장자리에서의 최고 스크롤 속도 (px/초)
+      DEAD_ZONE:  0.07,  // 중앙 정지 구간 (뷰포트 반폭 대비 비율, 0~1)
+      SPEED_EXP:  2.3,   // 가속 곡선 지수 (클수록 중앙은 느긋, 끝은 급가속)
+      VEL_SMOOTH: 3.0,   // 속도 추종/관성 (작을수록 더 미끄러지고 쫀득함)
 
       // --- 레이아웃 (CSS .arch-card / .archive-track 와 반드시 일치) ---
-      CARD_W:           224,
-      CARD_GAP:         46,
+      CARD_W:   224,
+      CARD_GAP: 46,
     };
 
     // Lassie 아카이브 사진 (archive_photo 원본 → assets/archive 경량 버전).
-    // 카드는 224x300 규격에 cover 로 맞추고, 클릭하면 원본 비율로 확대해서 볼 수 있음.
+    // dark: 사진이 어두우면 true → 커서 제목을 흰색(#fff), 밝으면 false → 검정(#000)
     const IMAGES = [
-      { file: 'interview-01.jpg',       title: 'Interview 01' },
-      { file: 'research-01.jpg',        title: 'Research 01' },
-      { file: 'fabric-research-01.jpg', title: 'Fabric Research 01' },
-      { file: 'mock-up-01.jpg',         title: 'Mock Up 01' },
-      { file: 'scale-01.jpg',           title: 'Scale 01' },
-      { file: 'interview-02.jpg',       title: 'Interview 02' },
-      { file: 'research-02.jpg',        title: 'Research 02' },
-      { file: 'fabric-research-02.jpg', title: 'Fabric Research 02' },
-      { file: 'mock-up-02.jpg',         title: 'Mock Up 02' },
-      { file: 'fabric-research-03.jpg', title: 'Fabric Research 03' },
-      { file: 'mock-up-03.jpg',         title: 'Mock Up 03' },
+      { file: 'interview-01.jpg',       title: 'Interview 01',       dark: true  },
+      { file: 'research-01.jpg',        title: 'Research 01',        dark: true  },
+      { file: 'fabric-research-01.jpg', title: 'Fabric Research 01', dark: true  },
+      { file: 'mock-up-01.jpg',         title: 'Mock Up 01',         dark: true  },
+      { file: 'scale-01.jpg',           title: 'Scale 01',           dark: false },
+      { file: 'interview-02.jpg',       title: 'Interview 02',       dark: true  },
+      { file: 'research-02.jpg',        title: 'Research 02',        dark: true  },
+      { file: 'fabric-research-02.jpg', title: 'Fabric Research 02', dark: false },
+      { file: 'mock-up-02.jpg',         title: 'Mock Up 02',         dark: true  },
+      { file: 'fabric-research-03.jpg', title: 'Fabric Research 03', dark: true  },
+      { file: 'mock-up-03.jpg',         title: 'Mock Up 03',         dark: false },
     ];
     const imgUrl = (file) => `assets/archive/${file}`;
 
@@ -269,13 +260,13 @@
     const step = PARAMS.CARD_W + PARAMS.CARD_GAP;
     const setWidth = IMAGES.length * step; // 한 세트의 주기(= 무한 루프 기준)
 
+    // ---- 커스텀 커서(제목) ----
+    const cursorEl = document.getElementById('archCursor');
+
     // 카드를 여러 세트 이어 붙여 이음매 없이 무한 루프
-    const cards = [];
     const COPIES = 3; // 넓은 화면에서도 이음매 없이 채워지도록 세 세트
     for (let copy = 0; copy < COPIES; copy++) {
-      IMAGES.forEach((im, i) => {
-        const idx = copy * IMAGES.length + i;
-
+      IMAGES.forEach((im) => {
         const card = document.createElement('div');
         card.className = 'arch-card';
 
@@ -288,31 +279,25 @@
         img.loading = 'lazy';
         img.draggable = false;
 
-        const title = document.createElement('div');
-        title.className = 'arch-title';
-        title.textContent = im.title;
-
         inner.appendChild(img);
         card.appendChild(inner);
-        card.appendChild(title);
         track.appendChild(card);
 
-        const c = {
-          el: card,
-          idx,
-          hover: 0, hoverVel: 0, hoverTarget: 0,
-        };
-        card.addEventListener('mouseenter', () => { c.hoverTarget = 1; hoverCount++; });
-        card.addEventListener('mouseleave', () => { c.hoverTarget = 0; hoverCount--; });
+        // 마우스가 닿으면: 채도 복귀(CSS) + 커서를 이 사진의 제목으로 표시
+        card.addEventListener('mouseenter', () => {
+          cursorEl.textContent = im.title;
+          cursorEl.classList.add('show');
+        });
+        card.addEventListener('mouseleave', () => {
+          cursorEl.classList.remove('show');
+        });
         card.addEventListener('click', () => openLightbox(im)); // 클릭 → 원본 비율로 확대
-        cards.push(c);
       });
     }
 
     // ---- 입력 상태 ----
     let pointerX = 0, stageW = stage.clientWidth || window.innerWidth;
     let pointerInside = false;
-    let hoverCount = 0;              // 호버 중인 카드 수(>0 이면 자동 스크롤 일시정지)
     let pos = 0;                     // 누적 스크롤 위치
     let vel = 0;                     // 현재 속도(px/초) — 관성 포함
 
@@ -321,8 +306,13 @@
       pointerX = e.clientX - r.left;
       stageW = r.width;
       pointerInside = true;
+      // 커스텀 커서를 마우스 위치로 이동 (뷰포트 기준 고정)
+      cursorEl.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
     });
-    stage.addEventListener('mouseleave', () => { pointerInside = false; });
+    stage.addEventListener('mouseleave', () => {
+      pointerInside = false;
+      cursorEl.classList.remove('show');
+    });
     window.addEventListener('resize', () => { stageW = stage.clientWidth; });
 
     // ---- 라이트박스: 카드 클릭 시 원본 비율로 확대 ----
@@ -336,6 +326,7 @@
       lightboxCap.textContent = im.title;
       lightbox.classList.add('open');
       lightbox.setAttribute('aria-hidden', 'false');
+      cursorEl.classList.remove('show'); // 확대 보기 중엔 커스텀 커서 숨김
     }
     function closeLightbox() {
       lightbox.classList.remove('open');
@@ -349,9 +340,7 @@
       if (e.key === 'Escape') closeLightbox();
     });
 
-    const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
-
-    // ---- 물리 루프 ----
+    // ---- 스크롤 루프 (기울기 없이 가로 이동만) ----
     let last = performance.now();
     function frame(now) {
       let dt = (now - last) / 1000;
@@ -360,7 +349,7 @@
 
       // 1) 마우스 위치 → 목표 속도 (중앙 데드존, 지수 가속 곡선)
       let targetVel = 0;
-      if (pointerInside && hoverCount === 0) {
+      if (pointerInside) {
         const half = stageW / 2;
         const dx = (pointerX - half) / half;      // -1 ~ 1
         const adx = Math.abs(dx);
@@ -376,36 +365,7 @@
 
       pos += vel * dt;
       pos = ((pos % setWidth) + setWidth) % setWidth;
-      const translateX = -pos;
-      track.style.transform = `translate3d(${translateX}px, -50%, 0)`;
-
-      // 3) 스크롤 속도 → 모든 카드에 '동일한' 기울기 (흐를 때 일관된 각도, 멈추면 0 = 똑바로)
-      const flowRot = clamp(-vel * PARAMS.ROT_PER_SPEED, -PARAMS.ROT_MAX, PARAMS.ROT_MAX);
-
-      // 4) 카드별 스프링/회전/스케일 적용 (회전은 전부 동일, 호버 카드만 팝업)
-      for (const c of cards) {
-        // 호버 스프링 (underdamped → elastic-out 오버슈트)
-        const F = PARAMS.HOVER_STIFF * (c.hoverTarget - c.hover);
-        c.hoverVel += (F - PARAMS.HOVER_DAMP * c.hoverVel) * dt;
-        c.hover += c.hoverVel * dt;
-        const h = c.hover;
-
-        const hClamp = clamp(h, 0, 1.2);
-        // 모든 카드가 같은 각도로 흐르고, 호버 카드는 0도로 펴짐
-        const rot = flowRot * (1 - clamp(h, 0, 1));
-        const scale = 1 + PARAMS.HOVER_SCALE * hClamp;
-        const lift = -PARAMS.HOVER_LIFT * hClamp;
-
-        c.el.style.transform = `translateY(${lift}px) rotate(${rot}deg) scale(${scale})`;
-
-        if (h > 0.015) {
-          c.el.classList.add('is-hover');
-          c.el.style.zIndex = String(50 + Math.round(hClamp * 20));
-        } else {
-          c.el.classList.remove('is-hover');
-          c.el.style.zIndex = '1';
-        }
-      }
+      track.style.transform = `translate3d(${-pos}px, -50%, 0)`;
 
       requestAnimationFrame(frame);
     }
