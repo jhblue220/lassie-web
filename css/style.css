@@ -99,7 +99,6 @@ input { font-family: inherit; }
 
 .nav-about {
   background: #38455c;
-  border: 1px solid rgba(255, 255, 255, 0.55);
   padding: 9px 22px;
 }
 
@@ -1631,7 +1630,7 @@ body.detail-open { overflow: hidden; }
   transition: background 0.2s ease;
 }
 .detail-add-cart:hover { background: #1a2436; }
-.detail-add-cart.added { background: #4caf6f; }
+.detail-add-cart.added { background: #d1cf29; }
 
 .detail-also-title {
   margin-top: 120px;

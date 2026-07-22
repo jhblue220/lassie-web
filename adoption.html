@@ -21,16 +21,11 @@
         <nav class="nav-pill">
           <button class="nav-item" type="button" id="menuNavToggle">
             Menu
-            <svg viewBox="0 0 20 20" class="ic" aria-hidden="true">
-              <path d="M3 5h14M3 10h14M3 15h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
+            <img class="ic" src="Icon/Menu_List.png" alt="" aria-hidden="true" draggable="false" />
           </button>
           <span class="nav-divider"></span>
           <button class="nav-item nav-search" type="button" id="searchToggle" aria-label="Search">
-            <svg viewBox="0 0 20 20" class="ic" aria-hidden="true">
-              <circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.8" fill="none"/>
-              <path d="M13.5 13.5 17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
+            <img class="ic" src="Icon/Menu_Searching.png" alt="" aria-hidden="true" draggable="false" />
           </button>
           <button class="nav-item nav-about" type="button">About</button>
 
@@ -80,10 +75,7 @@
                 <a class="menu-link" href="#">Meet Space</a>
               </div>
               <div class="menu-group">
-                <svg viewBox="0 0 16 16" class="menu-group-ic" aria-hidden="true">
-                  <circle cx="8" cy="3.2" r="1.2" fill="currentColor"/>
-                  <path d="M8 6.5v6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                </svg>
+                <img class="menu-group-ic" src="Icon/Menu_i_icon.png" alt="" aria-hidden="true" draggable="false" />
                 <a class="menu-link" href="faq.html">FAQ</a>
               </div>
             </div>
@@ -173,10 +165,10 @@
         </p>
 
         <div class="detail-tags adopt-tags">
-          <span class="detail-tag">Cleaning</span>
-          <span class="detail-tag">Charging</span>
-          <span class="detail-tag">Modular Port</span>
-          <span class="detail-tag active">Weatherproof</span>
+          <button class="detail-tag" type="button">Cleaning</button>
+          <button class="detail-tag" type="button">Charging</button>
+          <button class="detail-tag" type="button">Modular Port</button>
+          <button class="detail-tag active" type="button">Weatherproof</button>
         </div>
 
         <div class="detail-buy-row adopt-buy-row">
@@ -401,6 +393,13 @@
         turnColor = TURN_SETS[selectedColor.id] ? selectedColor.id : 'gray';
         preloadFrames(turnColor);
         showFrame();
+      });
+    });
+
+    // ---- 기능 태그 선택 (Cleaning / Charging / Modular Port / Weatherproof) ----
+    document.querySelectorAll('.adopt-tags .detail-tag').forEach((tag) => {
+      tag.addEventListener('click', () => {
+        tag.classList.toggle('active');
       });
     });
 
