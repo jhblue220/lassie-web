@@ -25,7 +25,7 @@
           </button>
           <span class="nav-divider"></span>
           <button class="nav-item nav-search" type="button" id="searchToggle" aria-label="Search">
-            <img class="ic" src="Icon/Menu_Searching.png" alt="" aria-hidden="true" draggable="false" />
+            <img class="ic" src="Icon/Icon_SVG/Menu_Searching.svg" alt="" aria-hidden="true" draggable="false" />
           </button>
           <button class="nav-item nav-about" type="button">About</button>
 
@@ -83,25 +83,18 @@
         </div>
       </div>
       <a class="icon-btn" href="cart.html" aria-label="Cart">
-        <img class="ic" src="Icon/Cart_Icon.png" alt="" aria-hidden="true" draggable="false" />
+        <img class="ic" src="Icon/Icon_SVG/Cart_Icon.svg" alt="" aria-hidden="true" draggable="false" />
         <span class="cart-badge" id="cartBadge"></span>
       </a>
       <a class="icon-btn" href="profile.html" aria-label="Account">
-        <img class="ic" src="Icon/Profile_Icon.png" alt="" aria-hidden="true" draggable="false" />
+        <img class="ic" src="Icon/Icon_SVG/Profile_Icon.svg" alt="" aria-hidden="true" draggable="false" />
       </a>
     </div>
   </header>
 
   <!-- ===== Archiving (마우스 변속 가로 스크롤 갤러리) ===== -->
   <section class="archive-stage" id="archiveStage">
-    <div class="archive-head">
-      <span>Field</span>
-      <span class="cur">Archive</span>
-      <span>Motion</span>
-      <span>People</span>
-    </div>
     <div class="archive-track" id="archiveTrack"></div>
-    <p class="archive-hint">Move your cursor left or right to travel · hover to hold · click to enlarge</p>
   </section>
 
   <!-- ===== Archive lightbox (원본 비율 보기) ===== -->
@@ -238,12 +231,9 @@
       SPEED_EXP:        2.3,   // 가속 곡선 지수 (클수록 중앙은 느긋, 끝은 급가속)
       VEL_SMOOTH:       3.0,   // 속도 추종/관성 (작을수록 더 미끄러지고 쫀득함)
 
-      // --- 스크롤에 따른 카드 기울기(출렁) ---
+      // --- 흐를 때 모든 카드에 공통 적용되는 기울기 ---
       ROT_PER_SPEED:    0.011, // 스크롤 속도 → 기울기 계수 (deg per px/s)
-      ROT_MAX:          15,    // 출렁이는 최대 각도 (deg)
-      BASE_ROT:         9,     // 카드 기본 불규칙 회전 범위 (±deg)
-      CENTER_STRAIGHTEN:0.6,   // 화면 중앙 근처 카드가 똑바로 펴지는 정도 (0~1)
-      CENTER_RADIUS:    380,   // 중앙 정렬이 작동하는 반경 (px)
+      ROT_MAX:          14,    // 흐를 때 최대 기울기 (deg). 멈추면 0 = 똑바로
 
       // --- 호버 팝업(탄성 스프링) ---
       HOVER_STIFF:      220,   // 호버 스프링 강성 (클수록 빠릿하게 반응)
@@ -279,13 +269,7 @@
     const step = PARAMS.CARD_W + PARAMS.CARD_GAP;
     const setWidth = IMAGES.length * step; // 한 세트의 주기(= 무한 루프 기준)
 
-    // 결정론적 의사난수(seed) — 새로고침해도 카드 회전값이 동일하게 유지
-    function seeded(n) {
-      const x = Math.sin(n * 127.1 + 3.7) * 43758.5453;
-      return x - Math.floor(x); // 0~1
-    }
-
-    // 카드 2세트를 이어 붙여 이음매 없이 무한 루프
+    // 카드를 여러 세트 이어 붙여 이음매 없이 무한 루프
     const cards = [];
     const COPIES = 3; // 넓은 화면에서도 이음매 없이 채워지도록 세 세트
     for (let copy = 0; copy < COPIES; copy++) {
@@ -316,7 +300,6 @@
         const c = {
           el: card,
           idx,
-          baseRot: (seeded(i + 1) * 2 - 1) * PARAMS.BASE_ROT, // ±BASE_ROT
           hover: 0, hoverVel: 0, hoverTarget: 0,
         };
         card.addEventListener('mouseenter', () => { c.hoverTarget = 1; hoverCount++; });
@@ -396,11 +379,10 @@
       const translateX = -pos;
       track.style.transform = `translate3d(${translateX}px, -50%, 0)`;
 
-      // 3) 스크롤 속도 → 공통 출렁 각도 (진행 방향 반대로 살짝 누움)
-      const extraRot = clamp(-vel * PARAMS.ROT_PER_SPEED, -PARAMS.ROT_MAX, PARAMS.ROT_MAX);
-      const centerX = stageW / 2;
+      // 3) 스크롤 속도 → 모든 카드에 '동일한' 기울기 (흐를 때 일관된 각도, 멈추면 0 = 똑바로)
+      const flowRot = clamp(-vel * PARAMS.ROT_PER_SPEED, -PARAMS.ROT_MAX, PARAMS.ROT_MAX);
 
-      // 4) 카드별 스프링/회전/스케일 적용
+      // 4) 카드별 스프링/회전/스케일 적용 (회전은 전부 동일, 호버 카드만 팝업)
       for (const c of cards) {
         // 호버 스프링 (underdamped → elastic-out 오버슈트)
         const F = PARAMS.HOVER_STIFF * (c.hoverTarget - c.hover);
@@ -408,13 +390,9 @@
         c.hover += c.hoverVel * dt;
         const h = c.hover;
 
-        // 화면 중앙 근처면 회전을 펴 줌(레퍼런스의 가운데 카드 느낌)
-        const screenC = translateX + c.idx * step + PARAMS.CARD_W / 2;
-        const cf = Math.max(0, 1 - Math.abs(screenC - centerX) / PARAMS.CENTER_RADIUS);
-        const straighten = 1 - PARAMS.CENTER_STRAIGHTEN * cf;
-
         const hClamp = clamp(h, 0, 1.2);
-        const rot = (c.baseRot + extraRot) * straighten * (1 - clamp(h, 0, 1));
+        // 모든 카드가 같은 각도로 흐르고, 호버 카드는 0도로 펴짐
+        const rot = flowRot * (1 - clamp(h, 0, 1));
         const scale = 1 + PARAMS.HOVER_SCALE * hClamp;
         const lift = -PARAMS.HOVER_LIFT * hClamp;
 

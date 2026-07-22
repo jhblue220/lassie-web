@@ -992,7 +992,8 @@ input { font-family: inherit; }
 
 .faq-item {
   border: 1px solid #e5e5e7;
-  border-radius: 18px;
+  /* 접힌 상태(약 70px)에서 끝이 완전히 둥근 pill. 펼쳐도 이 R값을 유지하며 중앙만 길어짐 */
+  border-radius: 34px;
   overflow: hidden;
 }
 
@@ -1331,34 +1332,6 @@ input { font-family: inherit; }
   overflow: hidden;
 }
 
-/* 상단 데코 라벨 (레퍼런스의 INTRO/VISION… 자리) */
-.archive-head {
-  position: absolute;
-  top: 30px; left: 0; right: 0;
-  display: flex;
-  justify-content: center;
-  gap: 34px;
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #cdcdd0;
-  pointer-events: none;
-  z-index: 4;
-}
-.archive-head .cur { color: var(--navy); }
-
-/* 하단 안내 문구 */
-.archive-hint {
-  position: absolute;
-  left: 0; right: 0; bottom: 34px;
-  text-align: center;
-  font-size: 12.5px;
-  letter-spacing: 0.08em;
-  color: #b9b9bc;
-  pointer-events: none;
-  z-index: 4;
-}
-
 /* 카드가 얹히는 가로 트랙 (JS가 translateX 로 이동) */
 .archive-track {
   position: absolute;
@@ -1383,7 +1356,7 @@ input { font-family: inherit; }
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 16px;
+  border-radius: 0;
   overflow: hidden;
   background: #ededed;
   cursor: zoom-in;
@@ -1461,7 +1434,7 @@ input { font-family: inherit; }
   width: auto;
   height: auto;               /* 원본 비율 유지 */
   object-fit: contain;
-  border-radius: 10px;
+  border-radius: 0;
   background: #111;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
   -webkit-user-drag: none;
@@ -1821,10 +1794,11 @@ body.adoption-page .site-header {
   background: #fff;
 }
 
-/* --- Intro (view 1): 텍스트 -> 버튼 -> 이미지 순서로 찰지게 팝업 --- */
+/* --- Intro (view 1): 이미지 + 텍스트가 한 화면(뷰포트)에 모두 보이도록 --- */
 .adopt-intro {
   position: relative;
   overflow: hidden;
+  height: calc(100vh - 90px); /* 헤더(90px) 아래로 한 화면을 정확히 채움 */
   transition: opacity 0.32s ease;
 }
 .adopt-intro.leaving { opacity: 0; }
@@ -1832,7 +1806,9 @@ body.adoption-page .site-header {
 .adopt-intro-img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
   -webkit-user-drag: none;
   user-select: none;
 }
@@ -1840,7 +1816,7 @@ body.adoption-page .site-header {
 .adopt-intro-copy {
   position: absolute;
   left: 51px;
-  bottom: 4.5vw;
+  bottom: 48px;
   z-index: 2;
 }
 
@@ -2387,9 +2363,8 @@ body.adoption-page .site-header {
 .pay-brands {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between; /* 첫/마지막 로고가 입력칸 좌우 끝에 정렬 */
   margin: 20px 0 6px;
-  flex-wrap: wrap;
 }
 .brand-logo {
   display: flex;
