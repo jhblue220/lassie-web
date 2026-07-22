@@ -20,8 +20,8 @@
       <div class="menu-wrap">
         <nav class="nav-pill">
           <button class="nav-item" type="button" id="menuNavToggle">
-            Menu
-            <img class="ic" src="Icon/Menu_List.png" alt="" aria-hidden="true" draggable="false" />
+            Archive
+            <img class="ic" src="Icon/Archivie_Icon.png" alt="" aria-hidden="true" draggable="false" />
           </button>
           <span class="nav-divider"></span>
           <button class="nav-item nav-search" type="button" id="searchToggle" aria-label="Search">
@@ -83,34 +83,37 @@
         </div>
       </div>
       <a class="icon-btn" href="cart.html" aria-label="Cart">
-        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
-          <path d="M3 4h2l2.4 12.2a1.5 1.5 0 0 0 1.47 1.2h8.9a1.5 1.5 0 0 0 1.46-1.14L21 9H6" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="10" cy="20.6" r="1.4" fill="currentColor"/>
-          <circle cx="17.5" cy="20.6" r="1.4" fill="currentColor"/>
-        </svg>
+        <img class="ic" src="Icon/Cart_Icon.png" alt="" aria-hidden="true" draggable="false" />
         <span class="cart-badge" id="cartBadge"></span>
       </a>
       <a class="icon-btn" href="profile.html" aria-label="Account">
-        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
-          <circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.7" fill="none"/>
-          <path d="M5 20c1.2-3.4 3.9-5 7-5s5.8 1.6 7 5" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/>
-        </svg>
+        <img class="ic" src="Icon/Profile_Icon.png" alt="" aria-hidden="true" draggable="false" />
       </a>
     </div>
   </header>
 
-  <!-- ===== Archiving ===== -->
-  <h1 class="archive-title">Archiving</h1>
-
-  <section class="words-strip">
-    <span class="word">Life</span>
-    <span class="word">Moves</span>
-    <span class="word">Better</span>
-    <span class="word">Together</span>
-    <span class="word word-index">Index</span>
+  <!-- ===== Archiving (마우스 변속 가로 스크롤 갤러리) ===== -->
+  <section class="archive-stage" id="archiveStage">
+    <div class="archive-head">
+      <span>Field</span>
+      <span class="cur">Archive</span>
+      <span>Motion</span>
+      <span>People</span>
+    </div>
+    <div class="archive-track" id="archiveTrack"></div>
+    <p class="archive-hint">Move your cursor left or right to travel · hover to hold · click to enlarge</p>
   </section>
 
-  <section class="archive-gallery" id="archiveGallery"></section>
+  <!-- ===== Archive lightbox (원본 비율 보기) ===== -->
+  <div class="arch-lightbox" id="archLightbox" aria-hidden="true">
+    <button class="arch-lightbox-close" type="button" aria-label="닫기">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4l12 12M16 4 4 16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+    </button>
+    <figure class="arch-lightbox-fig">
+      <img id="archLightboxImg" src="" alt="" draggable="false" />
+      <figcaption id="archLightboxCap"></figcaption>
+    </figure>
+  </div>
 
   <!-- ===== Site footer ===== -->
   <footer class="site-footer-lg">
@@ -152,123 +155,283 @@
   <script>
     const menuItem = document.querySelector('.menu-item');
     const menuToggle = document.querySelector('.menu-link-toggle');
-
-    function closeSubmenu() {
-      menuItem.classList.remove('open');
-      menuToggle.setAttribute('aria-expanded', 'false');
-    }
-
-    menuToggle.addEventListener('click', () => {
-      const isOpen = menuItem.classList.toggle('open');
-      menuToggle.setAttribute('aria-expanded', String(isOpen));
-    });
-
-    // ---- pill 항목별 호버 팝업: Menu -> 메뉴 패널, 검색 -> 검색창, About -> 없음 ----
-    function makeHoverPanel(triggerEl, panelEl, onOpen) {
-      let closeTimer = null;
-      function open() {
-        clearTimeout(closeTimer);
-        panelEl.classList.add('open');
-        if (onOpen) onOpen();
-      }
-      function scheduleClose() {
-        clearTimeout(closeTimer);
-        closeTimer = setTimeout(() => panelEl.classList.remove('open'), 160);
-      }
-      triggerEl.addEventListener('mouseenter', open);
-      triggerEl.addEventListener('mouseleave', scheduleClose);
-      triggerEl.addEventListener('focus', open);
-      triggerEl.addEventListener('blur', scheduleClose);
-      panelEl.addEventListener('mouseenter', open);
-      panelEl.addEventListener('mouseleave', scheduleClose);
-      return { close: () => panelEl.classList.remove('open') };
-    }
-
+    const menuWrap = document.querySelector('.menu-wrap');
     const menuNavToggle = document.getElementById('menuNavToggle');
     const menuPanel = document.querySelector('.menu-panel');
     const searchToggle = document.getElementById('searchToggle');
     const searchPanel = document.getElementById('searchPanel');
     const searchInput = document.getElementById('searchInput');
 
-    const menuPanelCtl = makeHoverPanel(menuNavToggle, menuPanel, () => searchPanelCtl.close());
-    const searchPanelCtl = makeHoverPanel(searchToggle, searchPanel, () => {
-      menuPanelCtl.close();
+    function closeSubmenu() {
+      menuItem.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+    function closeMenu() {
+      menuPanel.classList.remove('open');
       closeSubmenu();
+    }
+    function closeSearch() {
+      searchPanel.classList.remove('open');
+    }
+
+    // Shop 아코디언 (V자는 열렸을 때만 위를 향해 노출)
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuItem.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
     });
 
-    document.querySelector('.menu-close').addEventListener('click', () => {
-      menuPanelCtl.close();
-      closeSubmenu();
+    // Menu: 클릭하면 열리고, X 또는 바깥 영역 클릭 전까지 유지
+    menuNavToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (menuPanel.classList.contains('open')) {
+        closeMenu();
+      } else {
+        menuPanel.classList.add('open');
+        closeSearch();
+      }
     });
 
-    searchInput.addEventListener('keydown', (e) => {
+    // 검색: 클릭 토글
+    searchToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (searchPanel.classList.contains('open')) {
+        closeSearch();
+      } else {
+        searchPanel.classList.add('open');
+        closeMenu();
+        searchInput.focus();
+      }
+    });
+
+    // 팝업 창의 X(닫기) 버튼
+    document.querySelector('.menu-close').addEventListener('click', closeMenu);
+
+    // About 클릭 시에도 열린 팝업 닫기
+    const navAbout = document.querySelector('.nav-about');
+    if (navAbout) navAbout.addEventListener('click', () => { closeMenu(); closeSearch(); });
+
+    // 팝업 바깥(메뉴 영역 밖)을 클릭하면 닫기
+    document.addEventListener('click', (e) => {
+      if (!menuWrap.contains(e.target)) {
+        closeMenu();
+        closeSearch();
+      }
+    });
+
+    // ESC로 닫기
+    document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        searchPanelCtl.close();
+        closeMenu();
+        closeSearch();
         searchToggle.blur();
       }
     });
 
-    // ---- Archiving 갤러리: 위에서 아래로 스크롤하며 감상 ----
-    // 각 행(row)은 2단 또는 1단(전체 폭)으로 구성해 레퍼런스의 리듬을 재현
-    const galleryRows = [
-      { layout: 'two', items: [
-        { file: 'Interview_01.png', title: 'Interview 01' },
-        { file: 'Interview_02.png', title: 'Interview 02' },
-      ] },
-      { layout: 'two', items: [
-        { file: 'Research_01.png', title: 'Research 01' },
-        { file: 'Research_02.png', title: 'Research 02' },
-      ] },
-      { layout: 'one', items: [
-        { file: 'Fabric Research_01.png', title: 'Fabric Research 01' },
-      ] },
-      { layout: 'one', items: [
-        { file: 'Fabric Research_02.png', title: 'Fabric Research 02' },
-      ] },
-      { layout: 'two', items: [
-        { file: 'Fabric Research_03.png', title: 'Fabric Research 03' },
-        { file: 'Mock_Up_01.png', title: 'Mock Up 01' },
-      ] },
-      { layout: 'one', items: [
-        { file: 'Mock_Up_02.png', title: 'Mock Up 02' },
-      ] },
-      { layout: 'two', items: [
-        { file: 'Mock_Up_03.png', title: 'Mock Up 03' },
-        { file: 'Scale_01.png', title: 'Scale 01' },
-      ] },
-    ];
+    // ============================================================
+    //  Archiving — 마우스 변속 가로 스크롤 + 스프링 물리 엔진
+    //  ▼▼▼ 아래 PARAMS 값만 바꾸면 속도 · 관성 · 탄성감을 튜닝할 수 있어요 ▼▼▼
+    // ============================================================
+    const PARAMS = {
+      // --- 변속 가로 스크롤 ---
+      MAX_SPEED:        1500,  // 화면 가장자리에서의 최고 스크롤 속도 (px/초)
+      DEAD_ZONE:        0.07,  // 중앙 정지 구간 (뷰포트 반폭 대비 비율, 0~1)
+      SPEED_EXP:        2.3,   // 가속 곡선 지수 (클수록 중앙은 느긋, 끝은 급가속)
+      VEL_SMOOTH:       3.0,   // 속도 추종/관성 (작을수록 더 미끄러지고 쫀득함)
 
-    function photoPath(file) {
-      return 'archive_photo/' + encodeURIComponent(file);
+      // --- 스크롤에 따른 카드 기울기(출렁) ---
+      ROT_PER_SPEED:    0.011, // 스크롤 속도 → 기울기 계수 (deg per px/s)
+      ROT_MAX:          15,    // 출렁이는 최대 각도 (deg)
+      BASE_ROT:         9,     // 카드 기본 불규칙 회전 범위 (±deg)
+      CENTER_STRAIGHTEN:0.6,   // 화면 중앙 근처 카드가 똑바로 펴지는 정도 (0~1)
+      CENTER_RADIUS:    380,   // 중앙 정렬이 작동하는 반경 (px)
+
+      // --- 호버 팝업(탄성 스프링) ---
+      HOVER_STIFF:      220,   // 호버 스프링 강성 (클수록 빠릿하게 반응)
+      HOVER_DAMP:       14,    // 호버 스프링 감쇠 (작을수록 통통 튀는 elastic-out)
+      HOVER_SCALE:      0.28,  // 호버 시 추가 스케일 (1 + 0.28 배)
+      HOVER_LIFT:       28,    // 호버 시 위로 떠오르는 거리 (px)
+
+      // --- 레이아웃 (CSS .arch-card / .archive-track 와 반드시 일치) ---
+      CARD_W:           224,
+      CARD_GAP:         46,
+    };
+
+    // Lassie 아카이브 사진 (archive_photo 원본 → assets/archive 경량 버전).
+    // 카드는 224x300 규격에 cover 로 맞추고, 클릭하면 원본 비율로 확대해서 볼 수 있음.
+    const IMAGES = [
+      { file: 'interview-01.jpg',       title: 'Interview 01' },
+      { file: 'research-01.jpg',        title: 'Research 01' },
+      { file: 'fabric-research-01.jpg', title: 'Fabric Research 01' },
+      { file: 'mock-up-01.jpg',         title: 'Mock Up 01' },
+      { file: 'scale-01.jpg',           title: 'Scale 01' },
+      { file: 'interview-02.jpg',       title: 'Interview 02' },
+      { file: 'research-02.jpg',        title: 'Research 02' },
+      { file: 'fabric-research-02.jpg', title: 'Fabric Research 02' },
+      { file: 'mock-up-02.jpg',         title: 'Mock Up 02' },
+      { file: 'fabric-research-03.jpg', title: 'Fabric Research 03' },
+      { file: 'mock-up-03.jpg',         title: 'Mock Up 03' },
+    ];
+    const imgUrl = (file) => `assets/archive/${file}`;
+
+    const stage = document.getElementById('archiveStage');
+    const track = document.getElementById('archiveTrack');
+
+    const step = PARAMS.CARD_W + PARAMS.CARD_GAP;
+    const setWidth = IMAGES.length * step; // 한 세트의 주기(= 무한 루프 기준)
+
+    // 결정론적 의사난수(seed) — 새로고침해도 카드 회전값이 동일하게 유지
+    function seeded(n) {
+      const x = Math.sin(n * 127.1 + 3.7) * 43758.5453;
+      return x - Math.floor(x); // 0~1
     }
 
-    const gallery = document.getElementById('archiveGallery');
+    // 카드 2세트를 이어 붙여 이음매 없이 무한 루프
+    const cards = [];
+    const COPIES = 3; // 넓은 화면에서도 이음매 없이 채워지도록 세 세트
+    for (let copy = 0; copy < COPIES; copy++) {
+      IMAGES.forEach((im, i) => {
+        const idx = copy * IMAGES.length + i;
 
-    galleryRows.forEach((row) => {
-      const rowEl = document.createElement('div');
-      rowEl.className = `gallery-row gallery-row-${row.layout}`;
+        const card = document.createElement('div');
+        card.className = 'arch-card';
 
-      row.items.forEach((item) => {
-        const itemEl = document.createElement('div');
-        itemEl.className = 'gallery-item';
+        const inner = document.createElement('div');
+        inner.className = 'arch-card-inner';
 
         const img = document.createElement('img');
-        img.src = photoPath(item.file);
-        img.alt = item.title;
+        img.src = imgUrl(im.file);
+        img.alt = im.title;
         img.loading = 'lazy';
         img.draggable = false;
 
-        const caption = document.createElement('span');
-        caption.className = 'gallery-caption';
-        caption.textContent = item.title;
+        const title = document.createElement('div');
+        title.className = 'arch-title';
+        title.textContent = im.title;
 
-        itemEl.appendChild(img);
-        itemEl.appendChild(caption);
-        rowEl.appendChild(itemEl);
+        inner.appendChild(img);
+        card.appendChild(inner);
+        card.appendChild(title);
+        track.appendChild(card);
+
+        const c = {
+          el: card,
+          idx,
+          baseRot: (seeded(i + 1) * 2 - 1) * PARAMS.BASE_ROT, // ±BASE_ROT
+          hover: 0, hoverVel: 0, hoverTarget: 0,
+        };
+        card.addEventListener('mouseenter', () => { c.hoverTarget = 1; hoverCount++; });
+        card.addEventListener('mouseleave', () => { c.hoverTarget = 0; hoverCount--; });
+        card.addEventListener('click', () => openLightbox(im)); // 클릭 → 원본 비율로 확대
+        cards.push(c);
       });
+    }
 
-      gallery.appendChild(rowEl);
+    // ---- 입력 상태 ----
+    let pointerX = 0, stageW = stage.clientWidth || window.innerWidth;
+    let pointerInside = false;
+    let hoverCount = 0;              // 호버 중인 카드 수(>0 이면 자동 스크롤 일시정지)
+    let pos = 0;                     // 누적 스크롤 위치
+    let vel = 0;                     // 현재 속도(px/초) — 관성 포함
+
+    stage.addEventListener('mousemove', (e) => {
+      const r = stage.getBoundingClientRect();
+      pointerX = e.clientX - r.left;
+      stageW = r.width;
+      pointerInside = true;
     });
+    stage.addEventListener('mouseleave', () => { pointerInside = false; });
+    window.addEventListener('resize', () => { stageW = stage.clientWidth; });
+
+    // ---- 라이트박스: 카드 클릭 시 원본 비율로 확대 ----
+    const lightbox = document.getElementById('archLightbox');
+    const lightboxImg = document.getElementById('archLightboxImg');
+    const lightboxCap = document.getElementById('archLightboxCap');
+
+    function openLightbox(im) {
+      lightboxImg.src = imgUrl(im.file);
+      lightboxImg.alt = im.title;
+      lightboxCap.textContent = im.title;
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+    }
+    lightbox.addEventListener('click', (e) => {
+      // 배경 또는 닫기 버튼 클릭 시 닫기 (이미지 자체 클릭은 유지)
+      if (e.target === lightbox || e.target.closest('.arch-lightbox-close')) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+
+    // ---- 물리 루프 ----
+    let last = performance.now();
+    function frame(now) {
+      let dt = (now - last) / 1000;
+      last = now;
+      dt = Math.min(dt, 0.032); // 탭 전환 등으로 dt가 튀는 것 방지
+
+      // 1) 마우스 위치 → 목표 속도 (중앙 데드존, 지수 가속 곡선)
+      let targetVel = 0;
+      if (pointerInside && hoverCount === 0) {
+        const half = stageW / 2;
+        const dx = (pointerX - half) / half;      // -1 ~ 1
+        const adx = Math.abs(dx);
+        if (adx > PARAMS.DEAD_ZONE) {
+          const t = (adx - PARAMS.DEAD_ZONE) / (1 - PARAMS.DEAD_ZONE);
+          targetVel = Math.sign(dx) * Math.pow(t, PARAMS.SPEED_EXP) * PARAMS.MAX_SPEED;
+        }
+      }
+
+      // 2) 속도 추종(관성) — 지수 감쇠로 부드럽게 따라가고, 멈추면 미끄러지며 정지
+      vel += (targetVel - vel) * Math.min(1, PARAMS.VEL_SMOOTH * dt);
+      if (targetVel === 0 && Math.abs(vel) < 0.6) vel = 0; // 스냅 정지
+
+      pos += vel * dt;
+      pos = ((pos % setWidth) + setWidth) % setWidth;
+      const translateX = -pos;
+      track.style.transform = `translate3d(${translateX}px, -50%, 0)`;
+
+      // 3) 스크롤 속도 → 공통 출렁 각도 (진행 방향 반대로 살짝 누움)
+      const extraRot = clamp(-vel * PARAMS.ROT_PER_SPEED, -PARAMS.ROT_MAX, PARAMS.ROT_MAX);
+      const centerX = stageW / 2;
+
+      // 4) 카드별 스프링/회전/스케일 적용
+      for (const c of cards) {
+        // 호버 스프링 (underdamped → elastic-out 오버슈트)
+        const F = PARAMS.HOVER_STIFF * (c.hoverTarget - c.hover);
+        c.hoverVel += (F - PARAMS.HOVER_DAMP * c.hoverVel) * dt;
+        c.hover += c.hoverVel * dt;
+        const h = c.hover;
+
+        // 화면 중앙 근처면 회전을 펴 줌(레퍼런스의 가운데 카드 느낌)
+        const screenC = translateX + c.idx * step + PARAMS.CARD_W / 2;
+        const cf = Math.max(0, 1 - Math.abs(screenC - centerX) / PARAMS.CENTER_RADIUS);
+        const straighten = 1 - PARAMS.CENTER_STRAIGHTEN * cf;
+
+        const hClamp = clamp(h, 0, 1.2);
+        const rot = (c.baseRot + extraRot) * straighten * (1 - clamp(h, 0, 1));
+        const scale = 1 + PARAMS.HOVER_SCALE * hClamp;
+        const lift = -PARAMS.HOVER_LIFT * hClamp;
+
+        c.el.style.transform = `translateY(${lift}px) rotate(${rot}deg) scale(${scale})`;
+
+        if (h > 0.015) {
+          c.el.classList.add('is-hover');
+          c.el.style.zIndex = String(50 + Math.round(hClamp * 20));
+        } else {
+          c.el.classList.remove('is-hover');
+          c.el.style.zIndex = '1';
+        }
+      }
+
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
   </script>
 </body>
 </html>

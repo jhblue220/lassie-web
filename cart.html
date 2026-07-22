@@ -83,18 +83,11 @@
         </div>
       </div>
       <a class="icon-btn" href="cart.html" aria-label="Cart">
-        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
-          <path d="M3 4h2l2.4 12.2a1.5 1.5 0 0 0 1.47 1.2h8.9a1.5 1.5 0 0 0 1.46-1.14L21 9H6" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="10" cy="20.6" r="1.4" fill="currentColor"/>
-          <circle cx="17.5" cy="20.6" r="1.4" fill="currentColor"/>
-        </svg>
+        <img class="ic" src="Icon/Cart_Icon.png" alt="" aria-hidden="true" draggable="false" />
         <span class="cart-badge" id="cartBadge"></span>
       </a>
       <a class="icon-btn" href="profile.html" aria-label="Account">
-        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
-          <circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.7" fill="none"/>
-          <path d="M5 20c1.2-3.4 3.9-5 7-5s5.8 1.6 7 5" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/>
-        </svg>
+        <img class="ic" src="Icon/Profile_Icon.png" alt="" aria-hidden="true" draggable="false" />
       </a>
     </div>
   </header>
@@ -164,18 +157,51 @@
         </div>
         <input required placeholder="Address" id="shipAddress" />
         <input placeholder="Apartment, suite, etc (optional)" id="shipApt" />
-        <input required placeholder="City" id="shipCityText" />
         <div class="form-row three">
           <div class="select-like">
-            <input required placeholder="City" id="shipCity" />
+            <select required id="shipCity" class="select-field">
+              <option value="" disabled selected hidden>City</option>
+              <option>서울특별시</option>
+              <option>부산광역시</option>
+              <option>인천광역시</option>
+              <option>대구광역시</option>
+              <option>대전광역시</option>
+              <option>광주광역시</option>
+              <option>울산광역시</option>
+              <option>세종특별자치시</option>
+              <option>경기도</option>
+              <option>강원특별자치도</option>
+              <option>충청북도</option>
+              <option>충청남도</option>
+              <option>전북특별자치도</option>
+              <option>전라남도</option>
+              <option>경상북도</option>
+              <option>경상남도</option>
+              <option>제주특별자치도</option>
+            </select>
             <svg viewBox="0 0 14 8" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="select-like">
-            <input required placeholder="Zipcode" id="shipZip" />
+            <select required id="shipZip" class="select-field">
+              <option value="" disabled selected hidden>Zipcode</option>
+              <option>03187</option>
+              <option>04524</option>
+              <option>06236</option>
+              <option>07327</option>
+              <option>13529</option>
+              <option>21554</option>
+              <option>34126</option>
+              <option>48058</option>
+              <option>61945</option>
+              <option>63122</option>
+            </select>
             <svg viewBox="0 0 14 8" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="select-like">
-            <input required placeholder="Country" id="shipCountry" />
+            <select required id="shipCountry" class="select-field">
+              <option value="" disabled selected hidden>Country</option>
+              <option>대한민국</option>
+            </select>
             <svg viewBox="0 0 14 8" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
         </div>
@@ -197,23 +223,33 @@
         <input required placeholder="Card Number" id="cardNumber" inputmode="numeric" autocomplete="off" />
         <div class="form-row three">
           <div class="select-like">
-            <input required placeholder="Month" id="cardMonth" inputmode="numeric" />
+            <select required id="cardMonth" class="select-field">
+              <option value="" disabled selected hidden>Month</option>
+              <option>01</option><option>02</option><option>03</option><option>04</option>
+              <option>05</option><option>06</option><option>07</option><option>08</option>
+              <option>09</option><option>10</option><option>11</option><option>12</option>
+            </select>
             <svg viewBox="0 0 14 8" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="select-like">
-            <input required placeholder="Year" id="cardYear" inputmode="numeric" />
+            <select required id="cardYear" class="select-field">
+              <option value="" disabled selected hidden>Year</option>
+              <option>2026</option><option>2027</option><option>2028</option><option>2029</option>
+              <option>2030</option><option>2031</option><option>2032</option><option>2033</option>
+              <option>2034</option><option>2035</option>
+            </select>
             <svg viewBox="0 0 14 8" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <input required placeholder="CVC" id="cardCvc" inputmode="numeric" autocomplete="off" />
         </div>
         <input placeholder="Optional" id="cardOptional" />
 
-        <div class="pay-brands" aria-hidden="true">
-          <span class="brand brand-visa">VISA</span>
-          <span class="brand brand-mc">Mastercard</span>
-          <span class="brand brand-pp">PayPal</span>
-          <span class="brand brand-ap">Apple Pay</span>
-          <span class="brand brand-gp">Google Pay</span>
+        <div class="pay-brands" id="payBrands">
+          <button type="button" class="brand-logo" data-brand="samsung" aria-label="Samsung Pay"><img src="Icon/Payment_01_Samsung.png" alt="Samsung Pay" draggable="false" /></button>
+          <button type="button" class="brand-logo" data-brand="gpay" aria-label="Google Pay"><img src="Icon/Payment_02_Gpay.png" alt="Google Pay" draggable="false" /></button>
+          <button type="button" class="brand-logo" data-brand="master" aria-label="Mastercard"><img src="Icon/Payment_03Master.png" alt="Mastercard" draggable="false" /></button>
+          <button type="button" class="brand-logo" data-brand="visa" aria-label="Visa"><img src="Icon/Payment_04_Visa.png" alt="Visa" draggable="false" /></button>
+          <button type="button" class="brand-logo" data-brand="applepay" aria-label="Apple Pay"><img src="Icon/Payment_05_Applepay.png" alt="Apple Pay" draggable="false" /></button>
         </div>
 
         <label class="toggle-row">
@@ -281,57 +317,74 @@
     // ---- 메뉴 드롭다운 ----
     const menuItem = document.querySelector('.menu-item');
     const menuToggle = document.querySelector('.menu-link-toggle');
-
-    function closeSubmenu() {
-      menuItem.classList.remove('open');
-      menuToggle.setAttribute('aria-expanded', 'false');
-    }
-
-    menuToggle.addEventListener('click', () => {
-      const isOpen = menuItem.classList.toggle('open');
-      menuToggle.setAttribute('aria-expanded', String(isOpen));
-    });
-
-    function makeHoverPanel(triggerEl, panelEl, onOpen) {
-      let closeTimer = null;
-      function open() {
-        clearTimeout(closeTimer);
-        panelEl.classList.add('open');
-        if (onOpen) onOpen();
-      }
-      function scheduleClose() {
-        clearTimeout(closeTimer);
-        closeTimer = setTimeout(() => panelEl.classList.remove('open'), 160);
-      }
-      triggerEl.addEventListener('mouseenter', open);
-      triggerEl.addEventListener('mouseleave', scheduleClose);
-      triggerEl.addEventListener('focus', open);
-      triggerEl.addEventListener('blur', scheduleClose);
-      panelEl.addEventListener('mouseenter', open);
-      panelEl.addEventListener('mouseleave', scheduleClose);
-      return { close: () => panelEl.classList.remove('open') };
-    }
-
+    const menuWrap = document.querySelector('.menu-wrap');
     const menuNavToggle = document.getElementById('menuNavToggle');
     const menuPanel = document.querySelector('.menu-panel');
     const searchToggle = document.getElementById('searchToggle');
     const searchPanel = document.getElementById('searchPanel');
     const searchInput = document.getElementById('searchInput');
 
-    const menuPanelCtl = makeHoverPanel(menuNavToggle, menuPanel, () => searchPanelCtl.close());
-    const searchPanelCtl = makeHoverPanel(searchToggle, searchPanel, () => {
-      menuPanelCtl.close();
+    function closeSubmenu() {
+      menuItem.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+    function closeMenu() {
+      menuPanel.classList.remove('open');
       closeSubmenu();
+    }
+    function closeSearch() {
+      searchPanel.classList.remove('open');
+    }
+
+    // Shop 아코디언 (V자는 열렸을 때만 위를 향해 노출)
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuItem.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
     });
 
-    document.querySelector('.menu-close').addEventListener('click', () => {
-      menuPanelCtl.close();
-      closeSubmenu();
+    // Menu: 클릭하면 열리고, X 또는 바깥 영역 클릭 전까지 유지
+    menuNavToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (menuPanel.classList.contains('open')) {
+        closeMenu();
+      } else {
+        menuPanel.classList.add('open');
+        closeSearch();
+      }
     });
 
-    searchInput.addEventListener('keydown', (e) => {
+    // 검색: 클릭 토글
+    searchToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (searchPanel.classList.contains('open')) {
+        closeSearch();
+      } else {
+        searchPanel.classList.add('open');
+        closeMenu();
+        searchInput.focus();
+      }
+    });
+
+    // 팝업 창의 X(닫기) 버튼
+    document.querySelector('.menu-close').addEventListener('click', closeMenu);
+
+    // About 클릭 시에도 열린 팝업 닫기
+    const navAbout = document.querySelector('.nav-about');
+    if (navAbout) navAbout.addEventListener('click', () => { closeMenu(); closeSearch(); });
+
+    // 팝업 바깥(메뉴 영역 밖)을 클릭하면 닫기
+    document.addEventListener('click', (e) => {
+      if (!menuWrap.contains(e.target)) {
+        closeMenu();
+        closeSearch();
+      }
+    });
+
+    // ESC로 닫기
+    document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        searchPanelCtl.close();
+        closeMenu();
+        closeSearch();
         searchToggle.blur();
       }
     });
@@ -389,7 +442,7 @@
             <div class="cart-item-top">
               <h3>${item.name}</h3>
               <button class="cart-item-delete" type="button" aria-label="삭제" data-id="${item.id}">
-                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 6h12M8 6V4.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1V6m-7 0 .6 10a1.5 1.5 0 0 0 1.5 1.4h3.8a1.5 1.5 0 0 0 1.5-1.4L15 6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <img src="Icon/Trashcan_Icon.png" alt="삭제" draggable="false" />
               </button>
             </div>
             ${item.color ? `<p class="cart-item-color">Color: <span>${item.color}</span></p>` : ''}
@@ -556,6 +609,27 @@
       step = 'success';
       render();
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ---- 작성/선택 완료된 칸에 D1CF29 30% 배경 표시 ----
+    function wireFilledState(form) {
+      form.querySelectorAll('input, select').forEach((el) => {
+        if (el.type === 'checkbox') return;
+        const update = () => el.classList.toggle('filled', (el.value || '').trim() !== '');
+        el.addEventListener('input', update);
+        el.addEventListener('change', update);
+        update();
+      });
+    }
+    wireFilledState(els.shippingForm);
+    wireFilledState(els.paymentForm);
+
+    // ---- 카드사 로고 선택 (단일 선택) ----
+    document.querySelectorAll('#payBrands .brand-logo').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#payBrands .brand-logo').forEach((b) => b.classList.remove('selected'));
+        btn.classList.add('selected');
+      });
     });
 
     render();

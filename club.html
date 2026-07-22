@@ -20,8 +20,8 @@
       <div class="menu-wrap">
         <nav class="nav-pill">
           <button class="nav-item" type="button" id="menuNavToggle">
-            Menu
-            <img class="ic" src="Icon/Menu_List.png" alt="" aria-hidden="true" draggable="false" />
+            Club
+            <img class="ic" src="Icon/Club_Icon.png" alt="" aria-hidden="true" draggable="false" />
           </button>
           <span class="nav-divider"></span>
           <button class="nav-item nav-search" type="button" id="searchToggle" aria-label="Search">
@@ -83,25 +83,18 @@
         </div>
       </div>
       <a class="icon-btn" href="cart.html" aria-label="Cart">
-        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
-          <path d="M3 4h2l2.4 12.2a1.5 1.5 0 0 0 1.47 1.2h8.9a1.5 1.5 0 0 0 1.46-1.14L21 9H6" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="10" cy="20.6" r="1.4" fill="currentColor"/>
-          <circle cx="17.5" cy="20.6" r="1.4" fill="currentColor"/>
-        </svg>
+        <img class="ic" src="Icon/Cart_Icon.png" alt="" aria-hidden="true" draggable="false" />
         <span class="cart-badge" id="cartBadge"></span>
       </a>
       <a class="icon-btn" href="profile.html" aria-label="Account">
-        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
-          <circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.7" fill="none"/>
-          <path d="M5 20c1.2-3.4 3.9-5 7-5s5.8 1.6 7 5" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/>
-        </svg>
+        <img class="ic" src="Icon/Profile_Icon.png" alt="" aria-hidden="true" draggable="false" />
       </a>
     </div>
   </header>
 
   <!-- ===== Club hero ===== -->
   <section class="club-hero">
-    <h1 class="club-title">CLUB</h1>
+    <h1 class="club-title">Club</h1>
     <p class="club-subtitle">Every walk brings you closer!</p>
     <p class="club-desc">
       Lassie Club은 래시와 함께한 활동을 기반으로 등급이 성장하는 멤버십 프로그램입니다.<br />
@@ -203,58 +196,74 @@
   <script>
     const menuItem = document.querySelector('.menu-item');
     const menuToggle = document.querySelector('.menu-link-toggle');
-
-    function closeSubmenu() {
-      menuItem.classList.remove('open');
-      menuToggle.setAttribute('aria-expanded', 'false');
-    }
-
-    menuToggle.addEventListener('click', () => {
-      const isOpen = menuItem.classList.toggle('open');
-      menuToggle.setAttribute('aria-expanded', String(isOpen));
-    });
-
-    // ---- pill 항목별 호버 팝업: Menu -> 메뉴 패널, 검색 -> 검색창, About -> 없음 ----
-    function makeHoverPanel(triggerEl, panelEl, onOpen) {
-      let closeTimer = null;
-      function open() {
-        clearTimeout(closeTimer);
-        panelEl.classList.add('open');
-        if (onOpen) onOpen();
-      }
-      function scheduleClose() {
-        clearTimeout(closeTimer);
-        closeTimer = setTimeout(() => panelEl.classList.remove('open'), 160);
-      }
-      triggerEl.addEventListener('mouseenter', open);
-      triggerEl.addEventListener('mouseleave', scheduleClose);
-      triggerEl.addEventListener('focus', open);
-      triggerEl.addEventListener('blur', scheduleClose);
-      panelEl.addEventListener('mouseenter', open);
-      panelEl.addEventListener('mouseleave', scheduleClose);
-      return { close: () => panelEl.classList.remove('open') };
-    }
-
+    const menuWrap = document.querySelector('.menu-wrap');
     const menuNavToggle = document.getElementById('menuNavToggle');
     const menuPanel = document.querySelector('.menu-panel');
     const searchToggle = document.getElementById('searchToggle');
     const searchPanel = document.getElementById('searchPanel');
     const searchInput = document.getElementById('searchInput');
 
-    const menuPanelCtl = makeHoverPanel(menuNavToggle, menuPanel, () => searchPanelCtl.close());
-    const searchPanelCtl = makeHoverPanel(searchToggle, searchPanel, () => {
-      menuPanelCtl.close();
+    function closeSubmenu() {
+      menuItem.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+    function closeMenu() {
+      menuPanel.classList.remove('open');
       closeSubmenu();
+    }
+    function closeSearch() {
+      searchPanel.classList.remove('open');
+    }
+
+    // Shop 아코디언 (V자는 열렸을 때만 위를 향해 노출)
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuItem.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
     });
 
-    document.querySelector('.menu-close').addEventListener('click', () => {
-      menuPanelCtl.close();
-      closeSubmenu();
+    // Menu: 클릭하면 열리고, X 또는 바깥 영역 클릭 전까지 유지
+    menuNavToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (menuPanel.classList.contains('open')) {
+        closeMenu();
+      } else {
+        menuPanel.classList.add('open');
+        closeSearch();
+      }
     });
 
-    searchInput.addEventListener('keydown', (e) => {
+    // 검색: 클릭 토글
+    searchToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (searchPanel.classList.contains('open')) {
+        closeSearch();
+      } else {
+        searchPanel.classList.add('open');
+        closeMenu();
+        searchInput.focus();
+      }
+    });
+
+    // 팝업 창의 X(닫기) 버튼
+    document.querySelector('.menu-close').addEventListener('click', closeMenu);
+
+    // About 클릭 시에도 열린 팝업 닫기
+    const navAbout = document.querySelector('.nav-about');
+    if (navAbout) navAbout.addEventListener('click', () => { closeMenu(); closeSearch(); });
+
+    // 팝업 바깥(메뉴 영역 밖)을 클릭하면 닫기
+    document.addEventListener('click', (e) => {
+      if (!menuWrap.contains(e.target)) {
+        closeMenu();
+        closeSearch();
+      }
+    });
+
+    // ESC로 닫기
+    document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        searchPanelCtl.close();
+        closeMenu();
+        closeSearch();
         searchToggle.blur();
       }
     });

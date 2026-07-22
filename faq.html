@@ -20,8 +20,8 @@
       <div class="menu-wrap">
         <nav class="nav-pill">
           <button class="nav-item" type="button" id="menuNavToggle">
-            Menu
-            <img class="ic" src="Icon/Menu_List.png" alt="" aria-hidden="true" draggable="false" />
+            FAQ
+            <img class="ic" src="Icon/FAQ_Icon.png" alt="" aria-hidden="true" draggable="false" />
           </button>
           <span class="nav-divider"></span>
           <button class="nav-item nav-search" type="button" id="searchToggle" aria-label="Search">
@@ -83,18 +83,11 @@
         </div>
       </div>
       <a class="icon-btn" href="cart.html" aria-label="Cart">
-        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
-          <path d="M3 4h2l2.4 12.2a1.5 1.5 0 0 0 1.47 1.2h8.9a1.5 1.5 0 0 0 1.46-1.14L21 9H6" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="10" cy="20.6" r="1.4" fill="currentColor"/>
-          <circle cx="17.5" cy="20.6" r="1.4" fill="currentColor"/>
-        </svg>
+        <img class="ic" src="Icon/Cart_Icon.png" alt="" aria-hidden="true" draggable="false" />
         <span class="cart-badge" id="cartBadge"></span>
       </a>
       <a class="icon-btn" href="profile.html" aria-label="Account">
-        <svg viewBox="0 0 24 24" class="ic" aria-hidden="true">
-          <circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.7" fill="none"/>
-          <path d="M5 20c1.2-3.4 3.9-5 7-5s5.8 1.6 7 5" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/>
-        </svg>
+        <img class="ic" src="Icon/Profile_Icon.png" alt="" aria-hidden="true" draggable="false" />
       </a>
     </div>
   </header>
@@ -182,10 +175,8 @@
         <p class="chat-status"><span class="status-dot"></span>Online</p>
       </div>
       <div class="chat-header-actions">
-        <button class="chat-icon-btn" type="button" aria-label="전화 문의">
-          <svg viewBox="0 0 20 20" aria-hidden="true">
-            <path d="M4.5 3h2.7l1.2 3.4-1.6 1.4a9.6 9.6 0 0 0 4.4 4.4l1.4-1.6 3.4 1.2v2.7a1.5 1.5 0 0 1-1.6 1.5A13.5 13.5 0 0 1 3 4.6 1.5 1.5 0 0 1 4.5 3Z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
-          </svg>
+        <button class="chat-icon-btn chat-phone" type="button" aria-label="전화 문의">
+          <img src="Icon/FAQ_telephone_Icon.png" alt="전화 문의" draggable="false" />
         </button>
         <button class="chat-icon-btn chat-close" type="button" id="chatClose" aria-label="채팅 닫기">
           <svg viewBox="0 0 14 14" aria-hidden="true">
@@ -215,14 +206,14 @@
 
       <div class="chat-messages" id="chatMessages">
         <div class="msg msg-bot">
-          <span class="msg-avatar"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8.5c1 0 1.8-1 1.8-2.2S7 4 6 4s-1.8 1-1.8 2.2S5 8.5 6 8.5Zm8 0c1 0 1.8-1 1.8-2.2S15 4 14 4s-1.8 1-1.8 2.2S13 8.5 14 8.5ZM8.7 6.3c.8 0 1.5-.9 1.5-2S9.5 2.3 8.7 2.3s-1.5.9-1.5 2 .7 2 1.5 2Zm2.6 0c.8 0 1.5-.9 1.5-2s-.7-2-1.5-2-1.5.9-1.5 2 .7 2 1.5 2ZM10 9.3c-2.6 0-5.4 2-5.4 4.6 0 1.5 1.2 2.4 2.7 2 .8-.2 1.7-.5 2.7-.5s1.9.3 2.7.5c1.5.4 2.7-.5 2.7-2 0-2.6-2.8-4.6-5.4-4.6Z" fill="currentColor"/></svg></span>
+          <span class="msg-avatar"><img src="Icon/FAQ_Profile%20file.png" alt="상담원" draggable="false" /></span>
           <div class="msg-bubble">안녕하세요, Lassie Support입니다.<br />어떤 도움이 필요하신가요?</div>
         </div>
         <div class="msg msg-user">
           <div class="msg-bubble">안녕하세요. 입양하면 언제 받을 수 있나요?</div>
         </div>
         <div class="msg msg-bot">
-          <span class="msg-avatar"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8.5c1 0 1.8-1 1.8-2.2S7 4 6 4s-1.8 1-1.8 2.2S5 8.5 6 8.5Zm8 0c1 0 1.8-1 1.8-2.2S15 4 14 4s-1.8 1-1.8 2.2S13 8.5 14 8.5ZM8.7 6.3c.8 0 1.5-.9 1.5-2S9.5 2.3 8.7 2.3s-1.5.9-1.5 2 .7 2 1.5 2Zm2.6 0c.8 0 1.5-.9 1.5-2s-.7-2-1.5-2-1.5.9-1.5 2 .7 2 1.5 2ZM10 9.3c-2.6 0-5.4 2-5.4 4.6 0 1.5 1.2 2.4 2.7 2 .8-.2 1.7-.5 2.7-.5s1.9.3 2.7.5c1.5.4 2.7-.5 2.7-2 0-2.6-2.8-4.6-5.4-4.6Z" fill="currentColor"/></svg></span>
+          <span class="msg-avatar"><img src="Icon/FAQ_Profile%20file.png" alt="상담원" draggable="false" /></span>
           <div class="msg-bubble">
             주문 완료 후 배송 지역과 설치 일정에 따라 예상 일정을 안내해 드립니다.<br />
             배송은 평일기준 약 3~5일 소요 되십니다.
@@ -233,17 +224,15 @@
 
     <form class="chat-input-row" id="chatForm">
       <button class="chat-attach" type="button" aria-label="파일 첨부">
-        <svg viewBox="0 0 20 20" aria-hidden="true">
-          <path d="M12.5 4 6.6 9.9a2.6 2.6 0 0 0 3.7 3.7l5.6-5.6a4.2 4.2 0 0 0-5.9-5.9L4.3 7.8a5.7 5.7 0 0 0 8.1 8.1l5.3-5.3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <img src="Icon/FAQ%20Chat_Clip%20Icon.png" alt="파일 첨부" draggable="false" />
       </button>
       <input class="chat-input" type="text" id="chatInput" placeholder="메시지를 입력하세요" autocomplete="off" />
       <button class="chat-send" type="submit" aria-label="전송">
-        <svg viewBox="0 0 20 20" aria-hidden="true">
-          <path d="M17.5 2.5 9.2 10.8M17.5 2.5 12 17.5l-2.8-6.7-6.7-2.8 15-5.5Z" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <img src="Icon/FAQ_Send%20Icon.png" alt="전송" draggable="false" />
       </button>
     </form>
+
+    <span class="chat-scroll-dot" id="chatScrollDot" aria-hidden="true"></span>
   </div>
 
   <!-- ===== Site footer ===== -->
@@ -287,58 +276,74 @@
     // ---- 메뉴 드롭다운 ----
     const menuItem = document.querySelector('.menu-item');
     const menuToggle = document.querySelector('.menu-link-toggle');
-
-    function closeSubmenu() {
-      menuItem.classList.remove('open');
-      menuToggle.setAttribute('aria-expanded', 'false');
-    }
-
-    menuToggle.addEventListener('click', () => {
-      const isOpen = menuItem.classList.toggle('open');
-      menuToggle.setAttribute('aria-expanded', String(isOpen));
-    });
-
-    // ---- pill 항목별 호버 팝업: Menu -> 메뉴 패널, 검색 -> 검색창, About -> 없음 ----
-    function makeHoverPanel(triggerEl, panelEl, onOpen) {
-      let closeTimer = null;
-      function open() {
-        clearTimeout(closeTimer);
-        panelEl.classList.add('open');
-        if (onOpen) onOpen();
-      }
-      function scheduleClose() {
-        clearTimeout(closeTimer);
-        closeTimer = setTimeout(() => panelEl.classList.remove('open'), 160);
-      }
-      triggerEl.addEventListener('mouseenter', open);
-      triggerEl.addEventListener('mouseleave', scheduleClose);
-      triggerEl.addEventListener('focus', open);
-      triggerEl.addEventListener('blur', scheduleClose);
-      panelEl.addEventListener('mouseenter', open);
-      panelEl.addEventListener('mouseleave', scheduleClose);
-      return { close: () => panelEl.classList.remove('open') };
-    }
-
+    const menuWrap = document.querySelector('.menu-wrap');
     const menuNavToggle = document.getElementById('menuNavToggle');
     const menuPanel = document.querySelector('.menu-panel');
     const searchToggle = document.getElementById('searchToggle');
     const searchPanel = document.getElementById('searchPanel');
     const searchInput = document.getElementById('searchInput');
 
-    const menuPanelCtl = makeHoverPanel(menuNavToggle, menuPanel, () => searchPanelCtl.close());
-    const searchPanelCtl = makeHoverPanel(searchToggle, searchPanel, () => {
-      menuPanelCtl.close();
+    function closeSubmenu() {
+      menuItem.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+    function closeMenu() {
+      menuPanel.classList.remove('open');
       closeSubmenu();
+    }
+    function closeSearch() {
+      searchPanel.classList.remove('open');
+    }
+
+    // Shop 아코디언 (V자는 열렸을 때만 위를 향해 노출)
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuItem.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
     });
 
-    document.querySelector('.menu-close').addEventListener('click', () => {
-      menuPanelCtl.close();
-      closeSubmenu();
+    // Menu: 클릭하면 열리고, X 또는 바깥 영역 클릭 전까지 유지
+    menuNavToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (menuPanel.classList.contains('open')) {
+        closeMenu();
+      } else {
+        menuPanel.classList.add('open');
+        closeSearch();
+      }
     });
 
-    searchInput.addEventListener('keydown', (e) => {
+    // 검색: 클릭 토글
+    searchToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (searchPanel.classList.contains('open')) {
+        closeSearch();
+      } else {
+        searchPanel.classList.add('open');
+        closeMenu();
+        searchInput.focus();
+      }
+    });
+
+    // 팝업 창의 X(닫기) 버튼
+    document.querySelector('.menu-close').addEventListener('click', closeMenu);
+
+    // About 클릭 시에도 열린 팝업 닫기
+    const navAbout = document.querySelector('.nav-about');
+    if (navAbout) navAbout.addEventListener('click', () => { closeMenu(); closeSearch(); });
+
+    // 팝업 바깥(메뉴 영역 밖)을 클릭하면 닫기
+    document.addEventListener('click', (e) => {
+      if (!menuWrap.contains(e.target)) {
+        closeMenu();
+        closeSearch();
+      }
+    });
+
+    // ESC로 닫기
+    document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        searchPanelCtl.close();
+        closeMenu();
+        closeSearch();
         searchToggle.blur();
       }
     });
@@ -370,6 +375,7 @@
       chatWidget.classList.add('open');
       chatWidget.setAttribute('aria-hidden', 'false');
       chatBody.scrollTop = chatBody.scrollHeight;
+      updateScrollDot();
     }
     function closeChat() {
       chatWidget.classList.remove('open');
@@ -384,7 +390,27 @@
       document.getElementById('faq-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    const botAvatarSvg = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 8.5c1 0 1.8-1 1.8-2.2S7 4 6 4s-1.8 1-1.8 2.2S5 8.5 6 8.5Zm8 0c1 0 1.8-1 1.8-2.2S15 4 14 4s-1.8 1-1.8 2.2S13 8.5 14 8.5ZM8.7 6.3c.8 0 1.5-.9 1.5-2S9.5 2.3 8.7 2.3s-1.5.9-1.5 2 .7 2 1.5 2Zm2.6 0c.8 0 1.5-.9 1.5-2s-.7-2-1.5-2-1.5.9-1.5 2 .7 2 1.5 2ZM10 9.3c-2.6 0-5.4 2-5.4 4.6 0 1.5 1.2 2.4 2.7 2 .8-.2 1.7-.5 2.7-.5s1.9.3 2.7.5c1.5.4 2.7-.5 2.7-2 0-2.6-2.8-4.6-5.4-4.6Z" fill="currentColor"/></svg>';
+    // ---- 커스텀 스크롤 위치 인디케이터 (D1CF29 도트) ----
+    const chatScrollDot = document.getElementById('chatScrollDot');
+    function updateScrollDot() {
+      const maxScroll = chatBody.scrollHeight - chatBody.clientHeight;
+      if (maxScroll <= 4) {
+        chatScrollDot.classList.remove('visible');
+        return;
+      }
+      chatScrollDot.classList.add('visible');
+      const ratio = Math.min(1, Math.max(0, chatBody.scrollTop / maxScroll));
+      const trackTop = chatBody.offsetTop + 12;
+      const trackLen = chatBody.clientHeight - 24;
+      chatScrollDot.style.top = (trackTop + ratio * trackLen) + 'px';
+    }
+    chatBody.addEventListener('scroll', updateScrollDot);
+    window.addEventListener('resize', updateScrollDot);
+    if (window.ResizeObserver) {
+      new ResizeObserver(updateScrollDot).observe(chatMessages);
+    }
+
+    const botAvatarSvg = '<img src="Icon/FAQ_Profile%20file.png" alt="상담원" draggable="false" />';
 
     /* ============================================================
        래시 케어봇 응답 엔진
