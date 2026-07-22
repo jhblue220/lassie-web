@@ -75,7 +75,9 @@ input { font-family: inherit; }
   border-radius: 999px;
   padding: 5px;
   color: #fff;
+  transition: background 0.5s ease;
 }
+.nav-about { transition: background 0.5s ease; }
 
 .nav-item {
   display: flex;
@@ -302,30 +304,139 @@ input { font-family: inherit; }
 }
 .icon-btn .ic { width: 21px; height: 21px; }
 
-/* ===== Hero ===== */
+/* ===== Hero (리브랜딩: 대형 Lassie 워드마크 + 태그라인) ===== */
 .hero {
   position: relative;
   height: 61vw;
   min-height: 560px;
-  padding-top: 7.3vw;
+  padding: 2vw 37px 0;
 }
 
-.hero-dog {
-  display: block;
-  width: 27.6vw;
-  min-width: 300px;
-  margin: 0 auto;
-}
-
-.hero-title {
+/* 홈: 헤더를 히어로 위에 겹쳐 영상이 최상단(로고 단)까지 채워지도록 */
+.home-page .site-header {
   position: absolute;
-  left: 37px;
-  bottom: 11vw;
-  font-size: 5.6vw;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+}
+.home-page .hero { padding-top: 92px; }
+
+/* 영상이 덮이면 헤더 로고가 흰색으로 (어두운 영상 위에서 보이도록) */
+.logo-wordmark, .logo-mark { transition: filter 0.5s ease; }
+body.hero-revealed .logo-wordmark,
+body.hero-revealed .logo-mark { filter: brightness(0) invert(1); }
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+  transition: opacity 0.55s ease;
+}
+/* 영상이 덮이면 히어로 카피는 숨기고, 축소되며 다시 페이드인 */
+body.hero-revealed .hero-copy { opacity: 0; }
+
+.hero-wordmark {
+  display: block;
+  width: 72.8vw; /* 기존 91vw에서 20% 축소 */
+  max-width: 1296px;
+  height: auto;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.hero-tagline {
+  margin-top: 1.6vw; /* Lassie 워드마크와 행간 확보 */
+  font-size: 3.5vw;
   line-height: 1.06;
   font-weight: 600;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.04em;
   color: var(--navy);
+}
+
+/* 진입 애니메이션: 좌→우로 열리며 아래에서 위로 팝업 (워드마크·태그라인 동시) */
+@keyframes hero-pop-in {
+  0%   { opacity: 0; clip-path: inset(0 100% 0 0); transform: translateY(38px); }
+  100% { opacity: 1; clip-path: inset(0 0 0 0);    transform: translateY(0); }
+}
+@keyframes hero-nav-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* 메인 페이지에서만 적용: 메뉴가 먼저 페이드인 → 이어서 글자 팝업 */
+.home-page .site-header { animation: hero-nav-fade 0.45s ease 0.1s both; }
+.home-page .hero-wordmark,
+.home-page .hero-tagline {
+  animation: hero-pop-in 0.66s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
+}
+
+/* 히어로 영역에서는 기본 커서를 숨기고 Click & See 커서를 표시 */
+.home-page .hero { cursor: none; }
+
+.hero-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 350;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+}
+.hero-cursor.show { opacity: 1; }
+
+/* 클릭 시 확장되는 영상 레이어 (clip-path 로 박스 → 전체 확장) */
+/* bottom 여백을 남겨 하단의 "See all features"가 영상에 덮이지 않도록 함 */
+.hero-reveal {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  bottom: 8vw;
+  z-index: 5;
+  overflow: hidden;
+  clip-path: inset(50% 50% 50% 50%); /* 기본은 접힌 상태(보이지 않음) */
+  transition: clip-path 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.hero-reveal.open {
+  pointer-events: auto;
+  cursor: pointer;
+}
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 영상이 덮이는 동안 메뉴바가 진해지고, 카트/프로필 아이콘도 어두운 버전으로 */
+body.hero-revealed .nav-pill { background: #0E1624; }
+body.hero-revealed .nav-about { background: #1a2331; }
+
+.hero-cursor-box {
+  display: block;
+  width: 160px;
+  height: 96px;
+  background: #1D2737;
+  margin: -48px 0 0 -80px; /* 포인터에 박스 중앙 정렬 */
+  transform-origin: center; /* 커서 지점(박스 중앙)에서 확장 */
+}
+.hero-cursor-label {
+  display: block;
+  margin: 9px 0 0 -80px;   /* 박스 좌측에 맞춰 아래에 표기 */
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: #1D2737;
+  white-space: nowrap;
+  transform-origin: center;
+}
+
+/* 커서가 나타날 때 커서 끝에서 확장되듯 팝업 */
+.hero-cursor.show .hero-cursor-box {
+  animation: cursor-pop 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-cursor.show .hero-cursor-label {
+  animation: cursor-pop 0.34s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+}
+@keyframes cursor-pop {
+  0%   { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 .hero-scroll {
@@ -2418,8 +2529,9 @@ body.adoption-page .site-header {
 /* ===== Small screens: keep it from breaking badly ===== */
 @media (max-width: 900px) {
   .hero { height: auto; min-height: 0; padding-bottom: 90px; }
-  .hero-title { position: static; font-size: 52px; margin: 24px 24px 0; }
-  .hero-scroll { bottom: 24px; }
+  .hero-wordmark { width: 94vw; margin-left: 0; }
+  .hero-tagline { font-size: 30px; }
+  .hero-scroll { position: static; margin: 40px auto 0; transform: none; }
   .words-strip { flex-wrap: wrap; gap: 18px; }
   .words-strip .word { margin-right: 24px !important; }
   .paw-col { width: 100%; }

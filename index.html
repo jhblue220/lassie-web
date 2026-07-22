@@ -7,7 +7,7 @@
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+<body class="home-page">
 
   <!-- ===== Header ===== -->
   <header class="site-header">
@@ -94,14 +94,27 @@
 
   <!-- ===== Hero ===== -->
   <section class="hero" id="top">
-    <img class="hero-dog" src="assets/hero-dog.png" alt="Lassie 로봇 강아지" />
-    <h1 class="hero-title">Step outside,<br />together</h1>
+    <div class="hero-copy">
+      <img class="hero-wordmark" src="assets/logo-wordmark.png" alt="Lassie" draggable="false" />
+      <p class="hero-tagline">Step outside,<br />together</p>
+    </div>
     <a class="hero-scroll" href="#features">
       See all features
       <svg viewBox="0 0 16 20" class="ic-down" aria-hidden="true">
         <path d="M8 2v14M2.8 11 8 16.4 13.2 11" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </a>
+
+    <!-- 클릭 시 박스가 확장되어 영역을 덮으며 재생되는 영상 -->
+    <div class="hero-reveal" id="heroReveal" aria-hidden="true">
+      <video class="hero-video" id="heroVideo" src="Video/Main/Main_Video_01.mp4" muted playsinline preload="metadata"></video>
+    </div>
+
+    <!-- 히어로 영역 전용 커스텀 커서 (Click & See) -->
+    <div class="hero-cursor" id="heroCursor" aria-hidden="true">
+      <span class="hero-cursor-box"></span>
+      <span class="hero-cursor-label">Click &amp; See</span>
+    </div>
   </section>
 
   <!-- ===== Gallery placeholders ===== -->
@@ -290,6 +303,130 @@
         closeSearch();
         searchToggle.blur();
       }
+    });
+
+    // ---- 히어로 커스텀 커서 (Click & See) + 클릭 시 영상 확장 ----
+    const heroSection = document.getElementById('top');
+    const heroCursor = document.getElementById('heroCursor');
+    const heroReveal = document.getElementById('heroReveal');
+    const heroVideo = document.getElementById('heroVideo');
+    const cartIc = document.querySelector('.icon-btn[aria-label="Cart"] img');
+    const profIc = document.querySelector('.icon-btn[aria-label="Account"] img');
+
+    const ICON = {
+      cart:  { on: 'Icon/Icon_SVG/Cart_Icon.svg',    dark: 'Icon/Icon_SVG/Darker/cart.svg' },
+      prof:  { on: 'Icon/Icon_SVG/Profile_Icon.svg', dark: 'Icon/Icon_SVG/Darker/Profile.svg' },
+    };
+
+    function isRevealed() { return document.body.classList.contains('hero-revealed'); }
+
+    // 마우스 위치 추적 (영상 중에도 계속 갱신 → 종료 시 그 위치로 축소)
+    let lastMouseX = window.innerWidth / 2, lastMouseY = window.innerHeight / 2;
+    document.addEventListener('mousemove', (e) => {
+      lastMouseX = e.clientX; lastMouseY = e.clientY;
+    });
+
+    // 특정 화면 좌표에서 '커서 박스' 크기의 clip-path inset 문자열 (영상 레이어 기준)
+    function boxInsetAt(cx, cy) {
+      const r = heroReveal.getBoundingClientRect();
+      const x = Math.max(0, Math.min(r.width, cx - r.left));
+      const y = Math.max(0, Math.min(r.height, cy - r.top));
+      const hw = 80, hh = 48; // 커서 박스 절반 (CSS .hero-cursor-box 와 일치)
+      const top = Math.max(0, y - hh);
+      const right = Math.max(0, r.width - (x + hw));
+      const bottom = Math.max(0, r.height - (y + hh));
+      const left = Math.max(0, x - hw);
+      return `inset(${top}px ${right}px ${bottom}px ${left}px)`;
+    }
+
+    let collapseRAF = null;
+    let collapsing = false; // 축소(사라지는) 중에는 Click & See 커서를 잠시 감춤
+
+    function openReveal(cx, cy) {
+      cancelAnimationFrame(collapseRAF);
+      collapsing = false;
+      // 시작: 커서 박스 크기로 고정(트랜지션 없이) → 다음 프레임에 전체로 확장
+      heroReveal.style.transition = 'none';
+      heroReveal.style.clipPath = boxInsetAt(cx, cy);
+      heroReveal.classList.add('open');
+      heroReveal.setAttribute('aria-hidden', 'false');
+      heroCursor.classList.remove('show');
+      document.body.classList.add('hero-revealed');
+      cartIc.src = ICON.cart.dark;
+      profIc.src = ICON.prof.dark;
+
+      try { heroVideo.currentTime = 0; } catch (e) {}
+      heroVideo.play().catch(() => {});
+
+      void heroReveal.offsetWidth; // 리플로우 강제
+      heroReveal.style.transition = '';
+      heroReveal.style.clipPath = 'inset(0px 0px 0px 0px)';
+    }
+
+    function closeReveal() {
+      if (!isRevealed()) return;
+      cancelAnimationFrame(collapseRAF);
+      collapsing = true;
+
+      // 메뉴/로고/아이콘 원복 + Lassie·태그라인 동시 페이드인
+      document.body.classList.remove('hero-revealed');
+      cartIc.src = ICON.cart.on;
+      profIc.src = ICON.prof.on;
+      heroReveal.classList.remove('open');
+      heroReveal.style.transition = 'none'; // 매 프레임 직접 갱신 (마우스 추적)
+
+      const DURATION = 600; // ms
+      const startT = performance.now();
+      function shrink(now) {
+        let t = (now - startT) / DURATION;
+        if (t > 1) t = 1;
+        const e = 1 - Math.pow(1 - t, 3); // easeOutCubic
+        const r = heroReveal.getBoundingClientRect();
+        // 매 프레임 '현재' 마우스 위치를 향해 축소 → 마우스를 따라 움직이며 사라짐
+        const mx = Math.max(0, Math.min(r.width, lastMouseX - r.left));
+        const my = Math.max(0, Math.min(r.height, lastMouseY - r.top));
+        heroReveal.style.clipPath =
+          `inset(${e * my}px ${e * (r.width - mx)}px ${e * (r.height - my)}px ${e * mx}px)`;
+
+        if (t < 1) {
+          collapseRAF = requestAnimationFrame(shrink);
+        } else {
+          // 커서 위치의 한 점으로 완전히 사라짐 → 영상 정지
+          heroReveal.setAttribute('aria-hidden', 'true');
+          try { heroVideo.pause(); heroVideo.currentTime = 0; } catch (err) {}
+          collapsing = false;
+          // 사라진 뒤, Click & See 커서를 커서 위치에서 확장 등장
+          const hr = heroSection.getBoundingClientRect();
+          if (lastMouseX >= hr.left && lastMouseX <= hr.right && lastMouseY >= hr.top && lastMouseY <= hr.bottom) {
+            heroCursor.style.transform = `translate(${lastMouseX}px, ${lastMouseY}px)`;
+            heroCursor.classList.remove('show');
+            void heroCursor.offsetWidth; // 팝업 애니메이션 재생을 위한 리셋
+            heroCursor.classList.add('show');
+          }
+        }
+      }
+      collapseRAF = requestAnimationFrame(shrink);
+    }
+
+    // 영상이 끝나면 자동으로 원상복귀
+    heroVideo.addEventListener('ended', closeReveal);
+
+    heroSection.addEventListener('mousemove', (e) => {
+      if (isRevealed() || collapsing) return;
+      heroCursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      heroCursor.classList.add('show');
+    });
+    heroSection.addEventListener('mouseleave', () => {
+      heroCursor.classList.remove('show');
+    });
+
+    heroSection.addEventListener('click', (e) => {
+      if (e.target.closest('.hero-scroll')) return; // "See all features" 는 그대로 스크롤
+      if (isRevealed()) closeReveal();
+      else openReveal(e.clientX, e.clientY);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeReveal();
     });
   </script>
 </body>
