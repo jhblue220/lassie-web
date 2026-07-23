@@ -6,6 +6,7 @@
   <title>Archiving — Lassie</title>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
   <link rel="stylesheet" href="css/style.css" />
+  <script src="assets/transition.js"></script>
 </head>
 <body class="archive-page">
 
@@ -92,10 +93,9 @@
     </div>
   </header>
 
-  <!-- ===== Archiving (마우스 변속 가로 스크롤 갤러리) ===== -->
+  <!-- ===== Archiving (center-focus 코버플로우 / 드래그 스크롤) ===== -->
   <section class="archive-stage" id="archiveStage">
     <div class="archive-track" id="archiveTrack"></div>
-    <div class="arch-cursor" id="archCursor" aria-hidden="true"></div>
   </section>
 
   <!-- ===== Archive lightbox (원본 비율 보기) ===== -->
@@ -105,7 +105,6 @@
     </button>
     <figure class="arch-lightbox-fig">
       <img id="archLightboxImg" src="" alt="" draggable="false" />
-      <figcaption id="archLightboxCap"></figcaption>
     </figure>
   </div>
 
@@ -222,153 +221,148 @@
     });
 
     // ============================================================
-    //  Archiving — 마우스 위치 기반 변속 가로 스크롤 (기울기 없이 흐르기만)
-    //  ▼▼▼ 아래 PARAMS 값만 바꾸면 속도 · 관성을 튜닝할 수 있어요 ▼▼▼
+    //  Archiving — center-focus 코버플로우 + 드래그 스크롤
+    //  스크롤 진행에 따라 '가장 큰 카드' 초점이 왼쪽→중앙→오른쪽으로 이동,
+    //  초점에서 멀수록 작아지고 여백이 넓어짐. 카드 클릭 시 원본 비율.
+    //  ▼ P 값으로 카드 크기 / 낙폭 / 감도 튜닝
     // ============================================================
-    const PARAMS = {
-      // --- 마우스 위치 기반 변속 가로 스크롤 ---
-      MAX_SPEED:  1500,  // 화면 가장자리에서의 최고 스크롤 속도 (px/초)
-      DEAD_ZONE:  0.07,  // 중앙 정지 구간 (뷰포트 반폭 대비 비율, 0~1)
-      SPEED_EXP:  2.3,   // 가속 곡선 지수 (클수록 중앙은 느긋, 끝은 급가속)
-      VEL_SMOOTH: 3.0,   // 속도 추종/관성 (작을수록 더 미끄러지고 쫀득함)
-
-      // --- 레이아웃 (CSS .arch-card / .archive-track 와 반드시 일치) ---
-      CARD_W:   224,
-      CARD_GAP: 46,
+    const P = {
+      CARD_H:  0.72,  // 최대 카드 높이 (스테이지 높이 대비)
+      RATIO:   0.78,  // 카드 가로/세로 비 (직사각형)
+      GAP:     26,    // 슬롯 간격 (최대 크기 기준, px)
+      MIN_S:   0.24,  // 초점에서 가장 먼 카드의 최소 스케일
+      SPREAD:  3.0,   // 낙폭 폭 (슬롯 수 기준, 클수록 완만)
+      CURVE:   1.25,  // 낙폭 곡선 지수
+      FOCAL_L: 0.17,  // 시작 초점 x (뷰포트 폭 비율) — 왼쪽
+      FOCAL_R: 0.83,  // 끝 초점 x — 오른쪽
+      EASE:    0.14,  // 스크롤 추종 부드러움 (0~1)
+      DRAG:    1.15,  // 드래그 이동 배율
+      WHEEL:   0.9,   // 휠 스크롤 배율
     };
 
-    // Lassie 아카이브 사진 (archive_photo 원본 → assets/archive 경량 버전).
-    // dark: 사진이 어두우면 true → 커서 제목을 흰색(#fff), 밝으면 false → 검정(#000)
-    const IMAGES = [
-      { file: 'interview-01.jpg',       title: 'Interview 01',       dark: true  },
-      { file: 'research-01.jpg',        title: 'Research 01',        dark: true  },
-      { file: 'fabric-research-01.jpg', title: 'Fabric Research 01', dark: true  },
-      { file: 'mock-up-01.jpg',         title: 'Mock Up 01',         dark: true  },
-      { file: 'scale-01.jpg',           title: 'Scale 01',           dark: false },
-      { file: 'interview-02.jpg',       title: 'Interview 02',       dark: true  },
-      { file: 'research-02.jpg',        title: 'Research 02',        dark: true  },
-      { file: 'fabric-research-02.jpg', title: 'Fabric Research 02', dark: false },
-      { file: 'mock-up-02.jpg',         title: 'Mock Up 02',         dark: true  },
-      { file: 'fabric-research-03.jpg', title: 'Fabric Research 03', dark: true  },
-      { file: 'mock-up-03.jpg',         title: 'Mock Up 03',         dark: false },
-    ];
-    const imgUrl = (file) => `assets/archive/${file}`;
+    const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+    const N = 26;
+    const imgUrl = (i) => `assets/archive/${String(i + 1).padStart(2, '0')}.jpg`;
 
     const stage = document.getElementById('archiveStage');
     const track = document.getElementById('archiveTrack');
 
-    const step = PARAMS.CARD_W + PARAMS.CARD_GAP;
-    const setWidth = IMAGES.length * step; // 한 세트의 주기(= 무한 루프 기준)
-
-    // ---- 커스텀 커서(제목) ----
-    const cursorEl = document.getElementById('archCursor');
-
-    // 카드를 여러 세트 이어 붙여 이음매 없이 무한 루프
-    const COPIES = 3; // 넓은 화면에서도 이음매 없이 채워지도록 세 세트
-    for (let copy = 0; copy < COPIES; copy++) {
-      IMAGES.forEach((im) => {
-        const card = document.createElement('div');
-        card.className = 'arch-card';
-
-        const inner = document.createElement('div');
-        inner.className = 'arch-card-inner';
-
-        const img = document.createElement('img');
-        img.src = imgUrl(im.file);
-        img.alt = im.title;
-        img.loading = 'lazy';
-        img.draggable = false;
-
-        inner.appendChild(img);
-        card.appendChild(inner);
-        track.appendChild(card);
-
-        // 마우스가 닿으면: 채도 복귀(CSS) + 커서를 이 사진의 제목으로 표시
-        card.addEventListener('mouseenter', () => {
-          cursorEl.textContent = im.title;
-          cursorEl.classList.add('show');
-        });
-        card.addEventListener('mouseleave', () => {
-          cursorEl.classList.remove('show');
-        });
-        card.addEventListener('click', () => openLightbox(im)); // 클릭 → 원본 비율로 확대
-      });
+    // 카드 생성 (동일 규격 직사각형, 순서대로)
+    const cards = [];
+    for (let i = 0; i < N; i++) {
+      const card = document.createElement('div');
+      card.className = 'arch-card';
+      const img = document.createElement('img');
+      img.src = imgUrl(i);
+      img.alt = '';
+      img.draggable = false;
+      img.loading = 'lazy';
+      card.appendChild(img);
+      track.appendChild(card);
+      card.addEventListener('click', () => { if (!dragged) openLightbox(i); });
+      cards.push({ el: card, baseX: 0 });
     }
 
-    // ---- 입력 상태 ----
-    let pointerX = 0, stageW = stage.clientWidth || window.innerWidth;
-    let pointerInside = false;
-    let pos = 0;                     // 누적 스크롤 위치
-    let vel = 0;                     // 현재 속도(px/초) — 관성 포함
+    // ---- 레이아웃 ----
+    let vw = 0, cardW = 0, cardH = 0, slot = 0, minScroll = 0, maxScroll = 0;
+    let scroll = 0, targetScroll = 0;
 
-    stage.addEventListener('mousemove', (e) => {
-      const r = stage.getBoundingClientRect();
-      pointerX = e.clientX - r.left;
-      stageW = r.width;
-      pointerInside = true;
-      // 커스텀 커서를 마우스 위치로 이동 (뷰포트 기준 고정)
-      cursorEl.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+    function layout() {
+      vw = stage.clientWidth;
+      const vh = stage.clientHeight;
+      cardH = vh * P.CARD_H;
+      cardW = cardH * P.RATIO;
+      slot = cardW + P.GAP;
+      cards.forEach((c, i) => {
+        c.baseX = i * slot;
+        c.el.style.width = cardW + 'px';
+        c.el.style.height = cardH + 'px';
+        c.el.style.top = '50%';
+        c.el.style.marginTop = (-cardH / 2) + 'px';
+      });
+      // 첫 카드 중앙 = FOCAL_L*vw, 마지막 카드 중앙 = FOCAL_R*vw 가 되도록 스크롤 범위 설정
+      minScroll = cardW / 2 - P.FOCAL_L * vw;
+      maxScroll = (N - 1) * slot + cardW / 2 - P.FOCAL_R * vw;
+      if (maxScroll < minScroll) maxScroll = minScroll;
+      scroll = clamp(scroll, minScroll, maxScroll);
+      targetScroll = clamp(targetScroll, minScroll, maxScroll);
+    }
+
+    // ---- 렌더 ----
+    function render() {
+      const denom = (maxScroll - minScroll) || 1;
+      const p = clamp((scroll - minScroll) / denom, 0, 1);
+      const focalX = P.FOCAL_L * vw + p * (P.FOCAL_R - P.FOCAL_L) * vw;
+      track.style.transform = `translate3d(${-scroll}px, 0, 0)`;
+      for (const c of cards) {
+        const centerX = c.baseX + cardW / 2 - scroll;
+        const nd = Math.abs(centerX - focalX) / slot;       // 슬롯 단위 거리
+        const f = clamp(1 - nd / P.SPREAD, 0, 1);
+        const s = P.MIN_S + (1 - P.MIN_S) * Math.pow(f, P.CURVE);
+        c.el.style.transform = `scale(${s})`;
+        c.el.style.left = c.baseX + 'px';
+        c.el.style.zIndex = String(Math.round(s * 100));
+      }
+    }
+
+    // ---- 드래그 스크롤 ----
+    let dragging = false, dragged = false, startX = 0, startScroll = 0;
+
+    stage.addEventListener('pointerdown', (e) => {
+      dragging = true; dragged = false;
+      startX = e.clientX; startScroll = targetScroll;
+      stage.classList.add('dragging');
+      stage.setPointerCapture(e.pointerId);
     });
-    stage.addEventListener('mouseleave', () => {
-      pointerInside = false;
-      cursorEl.classList.remove('show');
+    stage.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 6) dragged = true;
+      targetScroll = clamp(startScroll - dx * P.DRAG, minScroll, maxScroll);
     });
-    window.addEventListener('resize', () => { stageW = stage.clientWidth; });
+    function endDrag() { dragging = false; stage.classList.remove('dragging'); }
+    stage.addEventListener('pointerup', endDrag);
+    stage.addEventListener('pointercancel', endDrag);
+
+    // 휠로도 좌우 스크롤
+    stage.addEventListener('wheel', (e) => {
+      const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      targetScroll = clamp(targetScroll + d * P.WHEEL, minScroll, maxScroll);
+      e.preventDefault();
+    }, { passive: false });
+
+    window.addEventListener('resize', layout);
 
     // ---- 라이트박스: 카드 클릭 시 원본 비율로 확대 ----
     const lightbox = document.getElementById('archLightbox');
     const lightboxImg = document.getElementById('archLightboxImg');
-    const lightboxCap = document.getElementById('archLightboxCap');
 
-    function openLightbox(im) {
-      lightboxImg.src = imgUrl(im.file);
-      lightboxImg.alt = im.title;
-      lightboxCap.textContent = im.title;
+    function openLightbox(i) {
+      lightboxImg.src = imgUrl(i);
       lightbox.classList.add('open');
       lightbox.setAttribute('aria-hidden', 'false');
-      cursorEl.classList.remove('show'); // 확대 보기 중엔 커스텀 커서 숨김
     }
     function closeLightbox() {
       lightbox.classList.remove('open');
       lightbox.setAttribute('aria-hidden', 'true');
     }
     lightbox.addEventListener('click', (e) => {
-      // 배경 또는 닫기 버튼 클릭 시 닫기 (이미지 자체 클릭은 유지)
       if (e.target === lightbox || e.target.closest('.arch-lightbox-close')) closeLightbox();
     });
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeLightbox();
     });
 
-    // ---- 스크롤 루프 (기울기 없이 가로 이동만) ----
-    let last = performance.now();
-    function frame(now) {
-      let dt = (now - last) / 1000;
-      last = now;
-      dt = Math.min(dt, 0.032); // 탭 전환 등으로 dt가 튀는 것 방지
-
-      // 1) 마우스 위치 → 목표 속도 (중앙 데드존, 지수 가속 곡선)
-      let targetVel = 0;
-      if (pointerInside) {
-        const half = stageW / 2;
-        const dx = (pointerX - half) / half;      // -1 ~ 1
-        const adx = Math.abs(dx);
-        if (adx > PARAMS.DEAD_ZONE) {
-          const t = (adx - PARAMS.DEAD_ZONE) / (1 - PARAMS.DEAD_ZONE);
-          targetVel = Math.sign(dx) * Math.pow(t, PARAMS.SPEED_EXP) * PARAMS.MAX_SPEED;
-        }
-      }
-
-      // 2) 속도 추종(관성) — 지수 감쇠로 부드럽게 따라가고, 멈추면 미끄러지며 정지
-      vel += (targetVel - vel) * Math.min(1, PARAMS.VEL_SMOOTH * dt);
-      if (targetVel === 0 && Math.abs(vel) < 0.6) vel = 0; // 스냅 정지
-
-      pos += vel * dt;
-      pos = ((pos % setWidth) + setWidth) % setWidth;
-      track.style.transform = `translate3d(${-pos}px, -50%, 0)`;
-
+    // ---- 루프 ----
+    function frame() {
+      scroll += (targetScroll - scroll) * P.EASE;
+      if (Math.abs(targetScroll - scroll) < 0.1) scroll = targetScroll;
+      render();
       requestAnimationFrame(frame);
     }
+    layout();
+    scroll = targetScroll = minScroll; // 첫 카드가 왼쪽에서 가장 크게 시작
+    render();
     requestAnimationFrame(frame);
   </script>
 </body>

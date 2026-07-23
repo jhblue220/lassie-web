@@ -6,8 +6,12 @@
   <title>Accessories — Lassie</title>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
   <link rel="stylesheet" href="css/style.css" />
+  <script src="assets/transition.js"></script>
 </head>
 <body class="shop-page">
+
+  <!-- Try on 색상이 화면 전체로 번지는 배경 레이어 -->
+  <div class="tryon-fill" id="tryonFill" aria-hidden="true"></div>
 
   <!-- ===== Header ===== -->
   <header class="site-header">
@@ -148,62 +152,19 @@
       <h1 class="shop-title">Accessories</h1>
 
       <div class="shop-meta">
-        <span class="shop-count">Showing 1-10 of 100 Products</span>
-        <span class="shop-sort">
-          Sort by: <strong>Most Popular</strong>
-          <svg viewBox="0 0 14 8" class="sort-chevron" aria-hidden="true">
-            <path d="M1 1 7 6.6 13 1" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
+        <button class="tryon-btn" id="tryOnBtn" type="button">Try on</button>
+        <div class="shop-meta-right">
+          <span class="shop-count">Showing 1-9 of 9 Products</span>
+          <span class="shop-sort">
+            Sort by: <strong>Most Popular</strong>
+            <svg viewBox="0 0 14 8" class="sort-chevron" aria-hidden="true">
+              <path d="M1 1 7 6.6 13 1" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </div>
       </div>
 
-      <div class="product-grid">
-        <article class="product" data-id="lassie-loop" data-name="Lassie Loop" data-price="39000" data-desc="컬러 포인트 넥 밴드">
-          <div class="product-media"><span>컬러 포인트 넥 밴드</span></div>
-          <h3 class="product-name">Lassie Loop</h3>
-          <p class="product-price">₩39,000</p>
-        </article>
-        <article class="product" data-id="trail-harness" data-name="Trail Harness" data-price="89000" data-desc="하네스 프레임">
-          <div class="product-media"><span>하네스 프레임</span></div>
-          <h3 class="product-name">Trail Harness</h3>
-          <p class="product-price">₩89,000</p>
-        </article>
-        <article class="product" data-id="paw-guard" data-name="Paw Guard" data-price="41300" data-desc="발 모듈 보호 커버 4개 세트">
-          <div class="product-media"><span>발 모듈 보호 커버 4개 세트</span></div>
-          <h3 class="product-name">Paw Guard</h3>
-          <p class="product-price">₩41,300 <s>₩59,000</s> <em class="sale-badge">-30%</em></p>
-        </article>
-        <article class="product" data-id="glow-tag" data-name="Glow Tag" data-price="23200" data-desc="야간 산책용 LED 태그">
-          <div class="product-media"><span>야간 산책용 LED 태그</span></div>
-          <h3 class="product-name">Glow Tag</h3>
-          <p class="product-price">₩23,200 <s>₩29,000</s> <em class="sale-badge">-20%</em></p>
-        </article>
-        <article class="product" data-id="carry-pack" data-name="Carry Pack" data-price="69000" data-desc="작은 물건을 담는 미니 사이드백">
-          <div class="product-media"><span>작은 물건을 담는 미니 사이드백</span></div>
-          <h3 class="product-name">Carry Pack</h3>
-          <p class="product-price">₩69,000</p>
-        </article>
-        <article class="product" data-id="rain-shell" data-name="Rain Shell" data-price="79000" data-desc="우천 활동용 방수 커버">
-          <div class="product-media"><span>우천 활동용 방수 커버</span></div>
-          <h3 class="product-name">Rain Shell</h3>
-          <p class="product-price">₩79,000</p>
-        </article>
-        <article class="product" data-id="trail-bell" data-name="Trail Bell" data-price="24000" data-desc="움직임에 반응하는 사운드 액세서리">
-          <div class="product-media"><span>움직임에 반응하는 사운드 액세서리</span></div>
-          <h3 class="product-name">Trail Bell</h3>
-          <p class="product-price">₩24,000</p>
-        </article>
-        <article class="product" data-id="lassie-scarf" data-name="Lassie Scarf" data-price="32000" data-desc="시즌 컬러 패브릭 스카프">
-          <div class="product-media"><span>시즌 컬러 패브릭 스카프</span></div>
-          <h3 class="product-name">Lassie Scarf</h3>
-          <p class="product-price">₩32,000</p>
-        </article>
-        <article class="product" data-id="adventure-cape" data-name="Adventure Cape" data-price="59000" data-desc="활동성과 개성을 더하는 아웃도어 케이프">
-          <div class="product-media"><span>활동성과 개성을 더하는 아웃도어 케이프</span></div>
-          <h3 class="product-name">Adventure Cape</h3>
-          <p class="product-price">₩59,000</p>
-        </article>
-      </div>
+      <div class="product-grid" id="productGrid"></div>
 
       <!-- Pagination -->
       <nav class="pagination" aria-label="페이지 이동">
@@ -251,8 +212,8 @@
 
         <div class="detail-columns">
           <div class="detail-media-col">
-            <div class="detail-media"></div>
-            <div class="detail-media"></div>
+            <div class="detail-media" id="detailMedia1"></div>
+            <div class="detail-media" id="detailMedia2"></div>
             <div class="detail-media"></div>
           </div>
 
@@ -326,55 +287,72 @@
 
   <script src="assets/cart.js"></script>
   <script>
-    // ---- 상품 상세 슬라이드 패널 ----
-    const productDetails = {
-      'lassie-loop': {
-        story: '컬러 포인트가 들어간 넥 밴드로, 래시의 첫인상을 바꿔주는 가장 쉬운 방법이에요. 부드러운 패브릭 소재라 착용 부위에 흠집을 남기지 않고, 원터치 버클로 산책 전 준비 시간이 짧아집니다.',
-        tags: ['Cleaning', 'Charging', 'Modular Port', 'Weatherproof'],
-      },
-      'trail-harness': {
-        story: '험한 길에서도 몸체를 안정적으로 잡아주는 하네스 프레임입니다. 하중을 고르게 분산하는 구조라 오래 착용해도 관절 모듈에 무리가 가지 않아요.',
-        tags: ['Outdoor', 'Trail', 'Modular Port', 'Weatherproof'],
-      },
-      'paw-guard': {
-        story: '발 모듈을 보호하는 커버 4개 세트예요. 거친 노면이나 뜨거운 아스팔트에서 발끝 마모를 줄여주고, 미끄럼 방지 패턴으로 접지력도 높여줍니다.',
-        tags: ['Cleaning', 'Outdoor', 'Weatherproof'],
-      },
-      'glow-tag': {
-        story: '야간 산책용 LED 태그입니다. 움직임을 감지해 자동으로 켜지고, 200m 밖에서도 래시의 위치를 확인할 수 있어 어두운 길에서도 안심이에요.',
-        tags: ['Safety', 'Night Walk', 'Charging'],
-      },
-      'carry-pack': {
-        story: '작은 물건을 담을 수 있는 미니 사이드백이에요. 래시의 등 모듈에 딱 맞게 설계되어 흔들림이 적고, 산책 중 간식이나 열쇠 같은 소지품을 맡기기 좋아요.',
-        tags: ['Carry', 'Outdoor', 'Modular Port'],
-      },
-      'rain-shell': {
-        story: '우천 활동용 방수 커버입니다. 본체의 통풍구는 살리면서 수분에 약한 관절 부위만 정확히 덮어주는 재단으로, 비 오는 날에도 산책을 포기하지 않아도 돼요.',
-        tags: ['Weatherproof', 'Outdoor', 'Cleaning'],
-      },
-      'trail-bell': {
-        story: '움직임에 반응해 은은한 소리를 내는 사운드 액세서리예요. 래시가 다가오는 것을 주변에서 자연스럽게 알 수 있고, 소리 톤은 앱에서 조절할 수 있습니다.',
-        tags: ['Safety', 'Trail', 'Sound'],
-      },
-      'lassie-scarf': {
-        story: '시즌 컬러로 제작된 패브릭 스카프입니다. 계절마다 새로운 컬러웨이가 출시되어 래시의 스타일을 가장 가볍게 바꿀 수 있는 아이템이에요.',
-        tags: ['Style', 'Fabric', 'Season'],
-      },
-      'adventure-cape': {
-        story: '활동성과 개성을 동시에 챙기는 아웃도어 케이프예요. 가벼운 소재로 움직임을 방해하지 않으면서, 바람에 날리는 실루엣이 산책길의 시선을 사로잡습니다.',
-        tags: ['Style', 'Outdoor', 'Weatherproof'],
-      },
-    };
+    // ---- 제품 데이터 (Accessories 폴더 기반) ----
+    const IMGROOT = 'assets/acc';
+    const won = (n) => '₩' + n.toLocaleString('ko-KR');
+    const imgP = (num, file) => `${IMGROOT}/${num}/${file}`;
+    function isDark(hex) {
+      const r = parseInt(hex.slice(0, 2), 16), g = parseInt(hex.slice(2, 4), 16), b = parseInt(hex.slice(4, 6), 16);
+      return (0.299 * r + 0.587 * g + 0.114 * b) < 140;
+    }
 
-    const detailColorSet = ['#8a8a8a', '#d1cf29', '#232f42', '#3a2e2a', '#f7c5cf'];
+    const PRODUCTS = [
+      { num: 1, id: 'style-bag',      name: 'Style Bag',      price: 54000,  colors: ['95926B','99B9D1','EAD299'],          story: '컬러 포인트가 들어간 데일리 스타일 백이에요. 가벼운 소재로 산책길 룩에 포인트를 더합니다.' },
+      { num: 2, id: 'sport-bag',      name: 'Sport Bag',      price: 66000,  colors: ['2F2F2F','80623E','E1E1DF'],          story: '활동적인 산책에 맞춘 스포츠 백입니다. 흔들림을 줄인 구조로 러닝에도 잘 맞아요.' },
+      { num: 3, id: 'lassie-bag',     name: 'Lassie Bag',     price: 75000,  colors: ['33302E','BDB8B2'],                   story: '래시 전용으로 설계된 시그니처 백이에요. 등 모듈에 밀착되어 안정적으로 고정됩니다.' },
+      { num: 4, id: 'sport-leash',    name: 'Sport Leash',    price: 56000,  colors: ['3A6CA9','F4717F','FF7342'],          story: '가볍고 튼튼한 스포츠 리쉬입니다. 선명한 컬러로 시야 확보에도 도움이 돼요.' },
+      { num: 5, id: 'leather-leash',  name: 'Leather Leash',  price: 106000, colors: ['343334','7E2325','B9AFA5','BC5E23'], story: '고급 가죽으로 마감한 리쉬예요. 사용할수록 자연스럽게 길드는 질감이 매력입니다.' },
+      { num: 6, id: 'rope-leash',     name: 'Rope Leash',     price: 76000,  colors: ['8CB4D3','969886','E9C0BB'],          story: '손에 부드럽게 감기는 로프 리쉬입니다. 장시간 산책에도 손이 편안해요.' },
+      { num: 7, id: 'boots',          name: 'Boots',          price: 65000,  colors: ['A2B1BC','C7C4CA'],                   story: '발 모듈을 보호하는 부츠예요. 거친 노면과 뜨거운 아스팔트로부터 발끝을 지켜줍니다.' },
+      { num: 8, id: 'rain-coat',      name: 'Rain Coat',      price: 126000, colors: ['363635','897A5E','C8D6CB'],          story: '우천 산책용 레인 코트입니다. 관절 부위를 정확히 덮어 비 오는 날에도 산책을 이어갈 수 있어요.' },
+      { num: 9, id: 'technical-vest', name: 'Technical Vest', price: 96000,  colors: ['363535','A59A94','D5B2A7'],          story: '기능성 아웃도어 베스트예요. 활동성과 개성을 동시에 챙겨 주는 시그니처 아이템입니다.' },
+    ];
 
-    const catalog = [...document.querySelectorAll('.product')].map((p) => ({
-      id: p.dataset.id,
-      name: p.dataset.name,
-      price: Number(p.dataset.price),
-      desc: p.dataset.desc,
-      priceHtml: p.querySelector('.product-price').innerHTML,
-    }));
+    // ---- 그리드 렌더 (처음엔 01_Basic) ----
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML = PRODUCTS.map((p) => `
+      <article class="product" data-id="${p.id}">
+        <div class="product-media"><img class="product-img" src="${imgP(p.num, '01.jpg')}" alt="${p.name}"
+             data-basic="${imgP(p.num, '01.jpg')}" data-tryon="${imgP(p.num, '02.jpg')}" /></div>
+        <h3 class="product-name">${p.name}</h3>
+        <p class="product-price">${won(p.price)}</p>
+      </article>`).join('');
+
+    const catalog = PRODUCTS;
+
+    // ---- Try on / Take off: 버튼 색이 화면 전체로 번짐(느렸다 빨라짐) ----
+    const tryOnBtn = document.getElementById('tryOnBtn');
+    const tryonFill = document.getElementById('tryonFill');
+    let triedOn = false, fillAnim = null;
+
+    function setGridImages(tryon) {
+      document.querySelectorAll('.product-img').forEach((img) => {
+        img.src = tryon ? img.dataset.tryon : img.dataset.basic;
+      });
+    }
+    tryOnBtn.addEventListener('click', () => {
+      const r = tryOnBtn.getBoundingClientRect();
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      const maxR = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy));
+      if (fillAnim) fillAnim.cancel();
+      if (!triedOn) {
+        fillAnim = tryonFill.animate(
+          [{ clipPath: `circle(0px at ${cx}px ${cy}px)` }, { clipPath: `circle(${maxR}px at ${cx}px ${cy}px)` }],
+          { duration: 720, easing: 'cubic-bezier(0.6, 0, 0.9, 0.35)', fill: 'forwards' });
+        fillAnim.finished.then(() => setGridImages(true));  // 번진 뒤 2_Basic 으로 교체
+        triedOn = true;
+        tryOnBtn.textContent = 'Take off';
+        tryOnBtn.classList.add('active');
+      } else {
+        setGridImages(false);                                // 원상태(1_Basic) 복귀
+        fillAnim = tryonFill.animate(
+          [{ clipPath: `circle(${maxR}px at ${cx}px ${cy}px)` }, { clipPath: `circle(0px at ${cx}px ${cy}px)` }],
+          { duration: 560, easing: 'cubic-bezier(0.4, 0, 0.3, 1)', fill: 'forwards' });
+        triedOn = false;
+        tryOnBtn.textContent = 'Try on';
+        tryOnBtn.classList.remove('active');
+      }
+    });
 
     const overlay = document.getElementById('detailOverlay');
     const detailEls = {
@@ -395,37 +373,45 @@
     function openDetail(id) {
       const item = catalog.find((c) => c.id === id);
       if (!item) return;
-      const extra = productDetails[id] || { story: item.desc, tags: [] };
-
       detailCurrent = item;
       detailQty = 1;
       detailEls.qtyVal.textContent = '1';
 
       detailEls.name.innerHTML = item.name.replace(' ', '<br />');
       detailEls.watchers.textContent = 12 + Math.floor(Math.random() * 70);
-      detailEls.price.textContent = '₩' + item.price.toLocaleString('ko-KR');
-      detailEls.desc.textContent = extra.story;
+      detailEls.price.textContent = won(item.price);
+      detailEls.desc.textContent = item.story;
 
-      detailEls.colors.innerHTML = detailColorSet.map((c, i) => `
-        <button type="button" class="color-dot${i === 0 ? ' selected' : ''}" style="background:${c}" aria-label="색상 선택">
-          <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>`).join('');
+      // 색상 칩 = 제품 실제 색상, 선택 시 03·04 이미지 팝업 교체
+      const media1 = document.getElementById('detailMedia1');
+      const media2 = document.getElementById('detailMedia2');
+      function applyColor(c) {
+        media1.innerHTML = `<img src="${imgP(item.num, '03_' + c + '.jpg')}" alt="${item.name}" />`;
+        media2.innerHTML = `<img src="${imgP(item.num, '04_' + c + '.jpg')}" alt="${item.name}" />`;
+      }
+      detailEls.colors.innerHTML = item.colors.map((c, i) => {
+        const stroke = isDark(c) ? '#fff' : '#1e2a3d';
+        return `<button type="button" class="color-dot${i === 0 ? ' selected' : ''}" style="background:#${c}" data-color="${c}" aria-label="색상 #${c}">
+          <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="${stroke}" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>`;
+      }).join('');
+      applyColor(item.colors[0]);
       detailEls.colors.querySelectorAll('.color-dot').forEach((dot) => {
         dot.addEventListener('click', () => {
           detailEls.colors.querySelectorAll('.color-dot').forEach((d) => d.classList.remove('selected'));
           dot.classList.add('selected');
+          applyColor(dot.dataset.color);
         });
       });
 
-      detailEls.tags.innerHTML = extra.tags.map((t, i) =>
-        `<span class="detail-tag${i === extra.tags.length - 1 ? ' active' : ''}">${t}</span>`).join('');
+      detailEls.tags.style.display = 'none';
 
       const others = catalog.filter((c) => c.id !== id).slice(0, 2);
       detailEls.also.innerHTML = others.map((o) => `
         <button type="button" class="also-card" data-id="${o.id}">
-          <span class="also-media"></span>
+          <span class="also-media" style="background-image:url('${imgP(o.num, '01.jpg')}')"></span>
           <span class="also-name">${o.name}</span>
-          <span class="also-price">₩${o.price.toLocaleString('ko-KR')}</span>
+          <span class="also-price">${won(o.price)}</span>
         </button>`).join('');
       detailEls.also.querySelectorAll('.also-card').forEach((card) => {
         card.addEventListener('click', () => openDetail(card.dataset.id));
@@ -468,7 +454,8 @@
         id: detailCurrent.id,
         name: detailCurrent.name,
         price: detailCurrent.price,
-        desc: detailCurrent.desc,
+        desc: detailCurrent.name,
+        image: imgP(detailCurrent.num, '01.jpg'),
         qty: detailQty,
       });
       detailEls.addCart.textContent = 'Added ✓';
