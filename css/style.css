@@ -2520,57 +2520,6 @@ body.adoption-page .site-header {
   .cta-desc br { display: none; }
 }
 
-/* ============================================================
-   페이지 전환 시제품 (Club 진입) — 헤더 고정 / 흰 대지 / 그림자 카드
-   나가는 옛 카드 + 들어오는 빈 카드를 동시에(싱크) 재생. 안무는 assets/transition.js
-   ============================================================ */
-html.pt-preload body { opacity: 0; }                 /* 진입 직전 깜빡임 방지 */
-
-/* 전환 중 헤더/로고는 항상 위에 고정 */
-.pt-active .site-header { z-index: 10001; }
-/* 이동 중에는 메뉴바 조작 비활성화 */
-.pt-active .site-header { pointer-events: none; }
-
-/* 링크 클릭 시 메뉴/검색 팝업을 빠르게 닫기 위한 트랜지션 단축 */
-.pt-menuclosing .menu-panel { transition-duration: 0.2s, 0.14s !important; }
-.pt-menuclosing .menu-panel-inner { transition-duration: 0.2s !important; }
-.pt-menuclosing .search-panel { transition-duration: 0.2s, 0.14s !important; }
-
-/* 흰 대지(카드 뒤 배경) — 헤더 아래 영역만 덮음 */
-.pt-backdrop {
-  position: fixed;
-  left: 0; right: 0; bottom: 0;   /* top 은 JS가 헤더 높이로 지정 */
-  z-index: 9998;
-  background: #ffffff;
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* 헤더 아래 콘텐츠를 감싸는 카드 스테이지 */
-.pt-stage {
-  position: relative;
-  z-index: 9999;
-  transform-origin: top center;
-  transition: box-shadow 0.4s ease;
-  will-change: transform, opacity;
-}
-.pt-stage.pt-carding { box-shadow: 0 30px 90px rgba(20, 22, 28, 0.22); }
-
-/* 카드 흰 배경(콘텐츠 뒤) */
-.pt-cardbg { position: absolute; inset: 0; z-index: -1; background: #fff; }
-
-/* 나가는 페이지에서 오른쪽에서 들어오는 '빈' 그림자 카드 */
-.pt-incoming {
-  position: fixed;
-  z-index: 9999;
-  background: #fff;
-  box-shadow: 0 30px 90px rgba(20, 22, 28, 0.22);
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html.pt-preload body { opacity: 1; }
-}
 /* ===== Accessories: 실제 제품 이미지 + Try on ===== */
 .product-media { padding: 0; overflow: hidden; }
 .product-img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -2590,15 +2539,6 @@ html.pt-preload body { opacity: 0; }                 /* 진입 직전 깜빡임 
 .tryon-btn:hover { transform: translateY(-1px); }
 .tryon-btn.active { background: #2b2b2b; color: #fff; }
 
-/* 버튼 색이 화면 전체로 번지는 레이어 (콘텐츠 뒤) */
-.tryon-fill {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background: #D7D133;
-  clip-path: circle(0px at 50% 50%);
-  pointer-events: none;
-}
 
 .detail-media { overflow: hidden; }
 .detail-media img { width: 100%; height: 100%; object-fit: cover; display: block; }

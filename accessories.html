@@ -6,12 +6,8 @@
   <title>Accessories — Lassie</title>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
   <link rel="stylesheet" href="css/style.css" />
-  <script src="assets/transition.js"></script>
 </head>
 <body class="shop-page">
-
-  <!-- Try on 색상이 화면 전체로 번지는 배경 레이어 -->
-  <div class="tryon-fill" id="tryonFill" aria-hidden="true"></div>
 
   <!-- ===== Header ===== -->
   <header class="site-header">
@@ -320,10 +316,9 @@
 
     const catalog = PRODUCTS;
 
-    // ---- Try on / Take off: 버튼 색이 화면 전체로 번짐(느렸다 빨라짐) ----
+    // ---- Try on / Take off: 버튼 색상만 바뀌고 이미지 교체 ----
     const tryOnBtn = document.getElementById('tryOnBtn');
-    const tryonFill = document.getElementById('tryonFill');
-    let triedOn = false, fillAnim = null;
+    let triedOn = false;
 
     function setGridImages(tryon) {
       document.querySelectorAll('.product-img').forEach((img) => {
@@ -331,27 +326,10 @@
       });
     }
     tryOnBtn.addEventListener('click', () => {
-      const r = tryOnBtn.getBoundingClientRect();
-      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-      const maxR = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy));
-      if (fillAnim) fillAnim.cancel();
-      if (!triedOn) {
-        fillAnim = tryonFill.animate(
-          [{ clipPath: `circle(0px at ${cx}px ${cy}px)` }, { clipPath: `circle(${maxR}px at ${cx}px ${cy}px)` }],
-          { duration: 720, easing: 'cubic-bezier(0.6, 0, 0.9, 0.35)', fill: 'forwards' });
-        fillAnim.finished.then(() => setGridImages(true));  // 번진 뒤 2_Basic 으로 교체
-        triedOn = true;
-        tryOnBtn.textContent = 'Take off';
-        tryOnBtn.classList.add('active');
-      } else {
-        setGridImages(false);                                // 원상태(1_Basic) 복귀
-        fillAnim = tryonFill.animate(
-          [{ clipPath: `circle(${maxR}px at ${cx}px ${cy}px)` }, { clipPath: `circle(0px at ${cx}px ${cy}px)` }],
-          { duration: 560, easing: 'cubic-bezier(0.4, 0, 0.3, 1)', fill: 'forwards' });
-        triedOn = false;
-        tryOnBtn.textContent = 'Try on';
-        tryOnBtn.classList.remove('active');
-      }
+      triedOn = !triedOn;
+      setGridImages(triedOn);
+      tryOnBtn.textContent = triedOn ? 'Take off' : 'Try on';
+      tryOnBtn.classList.toggle('active', triedOn);
     });
 
     const overlay = document.getElementById('detailOverlay');
