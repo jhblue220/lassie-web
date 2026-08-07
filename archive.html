@@ -234,9 +234,10 @@
       CURVE:   1.25,  // 낙폭 곡선 지수
       FOCAL_L: 0.17,  // 시작 초점 x (뷰포트 폭 비율) — 왼쪽
       FOCAL_R: 0.83,  // 끝 초점 x — 오른쪽
-      EASE:    0.14,  // 스크롤 추종 부드러움 (0~1)
-      DRAG:    1.15,  // 드래그 이동 배율
-      WHEEL:   0.9,   // 휠 스크롤 배율
+      EASE:     0.10, // 관성 감속/정착 부드러움 (작을수록 더 스르륵)
+      DRAG:     1.15, // 드래그 이동 배율
+      WHEEL:    0.9,  // 휠 스크롤 배율
+      MOMENTUM: 22,   // 놓았을 때 관성 투영량 (클수록 멀리 미끄러짐)
     };
 
     const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
@@ -263,7 +264,7 @@
     }
 
     // ---- 레이아웃 ----
-    let vw = 0, cardW = 0, cardH = 0, slot = 0, minScroll = 0, maxScroll = 0;
+    let vw = 0, cardW = 0, cardH = 0, slot = 0, minScroll = 0, maxScroll = 0, snapStep = 1;
     let scroll = 0, targetScroll = 0;
 
     function layout() {
@@ -283,8 +284,16 @@
       minScroll = cardW / 2 - P.FOCAL_L * vw;
       maxScroll = (N - 1) * slot + cardW / 2 - P.FOCAL_R * vw;
       if (maxScroll < minScroll) maxScroll = minScroll;
+      snapStep = (N > 1) ? (maxScroll - minScroll) / (N - 1) : 1; // 카드 한 장당 스크롤량
       scroll = clamp(scroll, minScroll, maxScroll);
       targetScroll = clamp(targetScroll, minScroll, maxScroll);
+    }
+
+    // 가장 가까운 '카드 정착' 위치 (한 이미지에 걸려 멈추도록)
+    function snapNearest(pos) {
+      if (maxScroll <= minScroll) return minScroll;
+      const i = clamp(Math.round((pos - minScroll) / snapStep), 0, N - 1);
+      return minScroll + i * snapStep;
     }
 
     // ---- 렌더 ----
@@ -304,12 +313,14 @@
       }
     }
 
-    // ---- 드래그 스크롤 ----
+    // ---- 드래그 스크롤 (관성 + 카드 스냅) ----
     let dragging = false, dragged = false, startX = 0, startScroll = 0;
+    let vel = 0, prevScroll = 0;
 
     stage.addEventListener('pointerdown', (e) => {
       dragging = true; dragged = false;
-      startX = e.clientX; startScroll = targetScroll;
+      startX = e.clientX; startScroll = scroll;
+      vel = 0; prevScroll = scroll;
       stage.classList.add('dragging');
       stage.setPointerCapture(e.pointerId);
     });
@@ -317,16 +328,22 @@
       if (!dragging) return;
       const dx = e.clientX - startX;
       if (Math.abs(dx) > 6) dragged = true;
-      targetScroll = clamp(startScroll - dx * P.DRAG, minScroll, maxScroll);
+      scroll = clamp(startScroll - dx * P.DRAG, minScroll, maxScroll); // 드래그 중 직접 추종
     });
-    function endDrag() { dragging = false; stage.classList.remove('dragging'); }
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      stage.classList.remove('dragging');
+      // 놓는 순간 속도만큼 앞으로 투영 → 가까운 카드에 정착 (플릭 세기만큼 더 넘어감)
+      targetScroll = snapNearest(scroll + vel * P.MOMENTUM);
+    }
     stage.addEventListener('pointerup', endDrag);
     stage.addEventListener('pointercancel', endDrag);
 
-    // 휠로도 좌우 스크롤
+    // 휠로도 좌우 이동 (역시 카드에 정착)
     stage.addEventListener('wheel', (e) => {
       const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-      targetScroll = clamp(targetScroll + d * P.WHEEL, minScroll, maxScroll);
+      targetScroll = snapNearest(clamp(targetScroll + d * P.WHEEL, minScroll, maxScroll));
       e.preventDefault();
     }, { passive: false });
 
@@ -354,13 +371,19 @@
 
     // ---- 루프 ----
     function frame() {
-      scroll += (targetScroll - scroll) * P.EASE;
-      if (Math.abs(targetScroll - scroll) < 0.1) scroll = targetScroll;
+      if (!dragging) {
+        // 관성 감속하며 정착 위치로 스르륵 이동 → 카드 하나에 걸려 멈춤
+        scroll += (targetScroll - scroll) * P.EASE;
+        if (Math.abs(targetScroll - scroll) < 0.3) scroll = targetScroll;
+      }
+      scroll = clamp(scroll, minScroll, maxScroll);
       render();
+      vel = scroll - prevScroll; // 이번 프레임 속도 (놓을 때 관성 투영에 사용)
+      prevScroll = scroll;
       requestAnimationFrame(frame);
     }
     layout();
-    scroll = targetScroll = minScroll; // 첫 카드가 왼쪽에서 가장 크게 시작
+    scroll = targetScroll = prevScroll = minScroll; // 첫 카드가 왼쪽에서 가장 크게 시작
     render();
     requestAnimationFrame(frame);
   </script>

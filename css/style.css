@@ -308,55 +308,51 @@ input { font-family: inherit; }
 }
 .icon-btn .ic { width: 21px; height: 21px; }
 
-/* ===== Hero (리브랜딩: 대형 Lassie 워드마크 + 태그라인) ===== */
+/* ===== Hero (배경 이미지 + Click & See 영상 재생) ===== */
 .hero {
   position: relative;
-  height: 61vw;
-  min-height: 560px;
-  padding: 2vw 37px 0;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  background: #f2f2f0;
+  cursor: none; /* 기본 커서 숨기고 Click & See 커서 표시 */
 }
 
-/* 홈: 헤더를 히어로 위에 겹쳐 영상이 최상단(로고 단)까지 채워지도록 + 스크롤해도 고정 */
+/* 홈: 헤더를 히어로 위에 겹쳐 뜨고, 스크롤해도 고정 */
 .home-page .site-header {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 400;
   background: transparent;
 }
-.home-page .hero { padding-top: 92px; }
 
-/* 영상이 덮이면 헤더 로고가 흰색으로 (어두운 영상 위에서 보이도록) */
-.logo-wordmark, .logo-mark { transition: filter 0.5s ease; }
-body.hero-revealed .logo-wordmark,
-body.hero-revealed .logo-mark { filter: brightness(0) invert(1); }
-
-.hero-copy {
-  position: relative;
-  z-index: 1;
-  transition: opacity 0.55s ease;
-}
-/* 영상이 덮이면 히어로 카피는 숨기고, 축소되며 다시 페이드인 */
-body.hero-revealed .hero-copy { opacity: 0; }
-
-.hero-wordmark {
+/* 배경 이미지: 히어로 전체를 채움 */
+.hero-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  width: 72.8vw; /* 기존 91vw에서 20% 축소 */
-  max-width: 1296px;
-  height: auto;
+  z-index: 0;
   -webkit-user-drag: none;
   user-select: none;
 }
 
+/* 좌측 하단 태그라인 (Pretendard SemiBold) — 레퍼런스 기준 */
 .hero-tagline {
-  margin-top: 1.6vw; /* Lassie 워드마크와 행간 확보 */
-  font-size: 3.5vw;
-  line-height: 1.06;
+  position: absolute;
+  left: 40px;
+  bottom: 4.5vh;
+  z-index: 2;
+  font-size: 5vw;
+  line-height: 1.05;
   font-weight: 600;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
   color: var(--navy);
 }
 
-/* 진입 애니메이션: 좌→우로 열리며 아래에서 위로 팝업 (워드마크·태그라인 동시) */
+/* 진입 팝업 애니메이션 */
 @keyframes hero-pop-in {
   0%   { opacity: 0; clip-path: inset(0 100% 0 0); transform: translateY(38px); }
   100% { opacity: 1; clip-path: inset(0 0 0 0);    transform: translateY(0); }
@@ -365,17 +361,28 @@ body.hero-revealed .hero-copy { opacity: 0; }
   from { opacity: 0; }
   to   { opacity: 1; }
 }
-
-/* 메인 페이지에서만 적용: 메뉴가 먼저 페이드인 → 이어서 글자 팝업 */
 .home-page .site-header { animation: hero-nav-fade 0.45s ease 0.1s both; }
-.home-page .hero-wordmark,
-.home-page .hero-tagline {
-  animation: hero-pop-in 0.66s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
+.home-page .hero-tagline { animation: hero-pop-in 0.66s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both; }
+
+/* 클릭 시 커서 위치에서 확장되어 재생되는 영상 레이어 */
+.hero-reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  overflow: hidden;
+  clip-path: inset(50% 50% 50% 50%); /* 기본은 접힌 상태 */
+  transition: clip-path 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.hero-reveal.open { pointer-events: auto; }
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-/* 히어로 영역에서는 기본 커서를 숨기고 Click & See 커서를 표시 */
-.home-page .hero { cursor: none; }
-
+/* Click & See 커서 */
 .hero-cursor {
   position: fixed;
   top: 0; left: 0;
@@ -385,45 +392,17 @@ body.hero-revealed .hero-copy { opacity: 0; }
   will-change: transform;
 }
 .hero-cursor.show { opacity: 1; }
-
-/* 클릭 시 확장되는 영상 레이어 (clip-path 로 박스 → 전체 확장) */
-/* bottom 여백을 남겨 하단의 "See all features"가 영상에 덮이지 않도록 함 */
-.hero-reveal {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  bottom: 8vw;
-  z-index: 5;
-  overflow: hidden;
-  clip-path: inset(50% 50% 50% 50%); /* 기본은 접힌 상태(보이지 않음) */
-  transition: clip-path 0.62s cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
-}
-.hero-reveal.open {
-  pointer-events: auto;
-  cursor: pointer;
-}
-.hero-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* 영상이 덮이는 동안 메뉴바가 진해지고, 카트/프로필 아이콘도 어두운 버전으로 */
-body.hero-revealed .nav-pill { background: #0E1624; }
-body.hero-revealed .nav-about { background: #1a2331; }
-
 .hero-cursor-box {
   display: block;
   width: 160px;
   height: 96px;
   background: #1D2737;
   margin: -48px 0 0 -80px; /* 포인터에 박스 중앙 정렬 */
-  transform-origin: center; /* 커서 지점(박스 중앙)에서 확장 */
+  transform-origin: center;
 }
 .hero-cursor-label {
   display: block;
-  margin: 9px 0 0 -80px;   /* 박스 좌측에 맞춰 아래에 표기 */
+  margin: 9px 0 0 -80px;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.01em;
@@ -431,35 +410,12 @@ body.hero-revealed .nav-about { background: #1a2331; }
   white-space: nowrap;
   transform-origin: center;
 }
-
-/* 커서가 나타날 때 커서 끝에서 확장되듯 팝업 */
-.hero-cursor.show .hero-cursor-box {
-  animation: cursor-pop 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-.hero-cursor.show .hero-cursor-label {
-  animation: cursor-pop 0.34s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
-}
+.hero-cursor.show .hero-cursor-box { animation: cursor-pop 0.34s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.hero-cursor.show .hero-cursor-label { animation: cursor-pop 0.34s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both; }
 @keyframes cursor-pop {
   0%   { transform: scale(0); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
 }
-
-.hero-scroll {
-  position: absolute;
-  left: 50%;
-  bottom: 4.8vw;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  text-decoration: none;
-  color: var(--navy);
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.ic-down { width: 16px; height: 20px; }
 
 /* ===== Gallery ===== */
 .gallery {
@@ -1319,6 +1275,19 @@ body.hero-revealed .nav-about { background: #1a2331; }
   padding: 12px 16px;
 }
 
+/* 이스터에그: 이미지 말풍선 */
+.msg-bubble.msg-image {
+  padding: 0;
+  background: transparent;
+  max-width: 210px;
+}
+.msg-bubble.msg-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+}
+
 .msg-bot .msg-bubble {
   background: #f1f1f0;
   color: #24303f;
@@ -1464,9 +1433,8 @@ body.hero-revealed .nav-about { background: #1a2331; }
   position: absolute;
   transform-origin: center center;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 0;
   background: #ededed;
-  box-shadow: 0 20px 50px rgba(20, 22, 28, 0.14);
   cursor: pointer;
   will-change: transform;
 }
@@ -2506,10 +2474,8 @@ body.adoption-page .site-header {
 
 /* ===== Small screens: keep it from breaking badly ===== */
 @media (max-width: 900px) {
-  .hero { height: auto; min-height: 0; padding-bottom: 90px; }
-  .hero-wordmark { width: 94vw; margin-left: 0; }
-  .hero-tagline { font-size: 30px; }
-  .hero-scroll { position: static; margin: 40px auto 0; transform: none; }
+  .hero { height: 82vh; min-height: 480px; }
+  .hero-tagline { font-size: 40px; left: 24px; bottom: 3.5vh; top: auto; }
   .words-strip { flex-wrap: wrap; gap: 18px; }
   .words-strip .word { margin-right: 24px !important; }
   .paw-col { width: 100%; }

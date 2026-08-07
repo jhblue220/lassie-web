@@ -808,11 +808,62 @@
       });
     }
 
+    // ---- 이스터에그: 특정 이름 입력 시 인적사항 + 프로필 + 인스타 팝업 ----
+    const EGG_ROOT = 'assets/faq_egg';
+    const EASTER = [
+      { keys: ['김정현', '정현', 'kimjunghyun', 'kim junghyun', 'junghyun'], file: 'Kimjunghyun',
+        bio: 'Kim Junghyun — Samsung Design Membership 34기, ID(Industrial Design) 부문.' },
+      { keys: ['박정민', '정민', 'parkjungmin', 'park jungmin', 'jungmin'], file: 'Parkjungmin',
+        bio: 'Park Jungmin — Samsung Design Membership 32기, ID(Industrial Design) 부문.' },
+      { keys: ['양현지', '현지', 'yanghyunji', 'yang hyunji', 'hyunji'], file: 'Yanghyunji',
+        bio: 'Yang Hyunji — Samsung Design Membership 33기, ID(Industrial Design) 부문.' },
+      { keys: ['장별', '별', 'jangbyul', 'jang byeol', 'jang byul', 'byul'], file: 'Jangbyul',
+        bio: 'Jang Byul — Samsung Design Membership 32기, VD(Visual Design) · Project Leader, UX 겸무.' },
+    ];
+    function findEasterEgg(text) {
+      const t = normalize(text);
+      return EASTER.find((e) => e.keys.some((k) => t.includes(normalize(k))));
+    }
+
+    function addImageMessage(src, alt) {
+      const row = document.createElement('div');
+      row.className = 'msg msg-bot';
+      row.innerHTML = `<span class="msg-avatar">${botAvatarSvg}</span><div class="msg-bubble msg-image"><img src="${src}" alt="${alt || ''}" draggable="false" /></div>`;
+      chatMessages.appendChild(row);
+      chatBody.scrollTop = chatBody.scrollHeight;
+      return row;
+    }
+
+    // 텍스트/이미지 파트를 타이핑 인디케이터와 함께 순차 출력
+    function playSequence(parts) {
+      let delay = 500 + Math.random() * 300;
+      let typingRow = addTyping();
+      parts.forEach((part, i) => {
+        setTimeout(() => {
+          typingRow.remove();
+          if (part.type === 'image') addImageMessage(part.value, part.alt);
+          else addMessage(part.value, 'bot');
+          if (i < parts.length - 1) typingRow = addTyping();
+        }, delay);
+        delay += 700 + Math.random() * 300;
+      });
+    }
+
+    function sendEasterEgg(egg) {
+      playSequence([
+        { type: 'text',  value: egg.bio },                                            // 1) 인적사항 먼저
+        { type: 'image', value: `${EGG_ROOT}/${egg.file}_Profile.jpg`, alt: '프로필' }, // 2) 프로필 사진
+        { type: 'image', value: `${EGG_ROOT}/${egg.file}_Insta.jpg`,   alt: '인스타그램' }, // 3) 인스타
+      ]);
+    }
+
     function submitQuestion(text) {
       const trimmed = text.trim();
       if (!trimmed) return;
       clearSuggestions();
       addMessage(trimmed, 'user');
+      const egg = findEasterEgg(trimmed);
+      if (egg) { sendEasterEgg(egg); return; }
       sendBotReply(findReply(trimmed));
     }
 
