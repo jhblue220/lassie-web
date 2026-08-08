@@ -106,9 +106,10 @@
 
   <!-- ===== Club body ===== -->
   <section class="club-body">
-    <!-- Video/Club 1~10을 순서대로 반복 재생 -->
+    <!-- 1~10을 이어붙인 루핑 영상 -->
     <div class="club-media">
-      <video class="club-video" id="clubVideo" muted playsinline autoplay preload="auto"></video>
+      <video class="club-video" id="clubVideo" src="Video/Club/루핑.mp4"
+             muted playsinline autoplay loop preload="auto"></video>
     </div>
 
     <div class="club-table">
@@ -306,28 +307,13 @@
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(apply);
     })();
 
-    // ---- 좌측 영상: Video/Club 1~10 순차 재생 후 다시 1번으로 ----
+    // ---- 좌측 영상: 1~10을 이어붙인 루핑 영상을 반복 재생 ----
     (function initClubVideo() {
       const video = document.getElementById('clubVideo');
       if (!video) return;
-      const ORDER = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-      let idx = 0;
-      let misses = 0;   // 없는 파일(현재 4영상.mp4)은 건너뛰기 위한 카운터
-
-      function play(next) {
-        idx = ((next % ORDER.length) + ORDER.length) % ORDER.length;
-        video.src = `Video/Club/${ORDER[idx]}영상.mp4`;
-        video.load();
-        video.play().catch(() => {});
-      }
-
-      video.addEventListener('ended', () => { misses = 0; play(idx + 1); });
-      video.addEventListener('error', () => {
-        if (++misses >= ORDER.length) return;   // 전부 실패하면 중단
-        play(idx + 1);
-      });
-
-      play(0);
+      const play = () => video.play().catch(() => {});
+      if (video.readyState >= 2) play();
+      else video.addEventListener('loadeddata', play, { once: true });
     })();
   </script>
 </body>
