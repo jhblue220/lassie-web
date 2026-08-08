@@ -17,3 +17,7 @@ assets/040404_Black/
 Accessories/
 # 원본 아카이브 사진 — 변환된 assets/archive/만 커밋
 archive_photo/
+# Adoption 우측 이미지 박스 원본(대용량 PNG) — 로컬에만 보관
+Adoption_Photo/
+# Club 좌측 순환 영상(대용량 MP4) — 로컬에만 보관
+Video/Club/

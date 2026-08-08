@@ -136,7 +136,7 @@
       <div class="turn-viewport" id="turnViewport">
         <img id="turnImg" src="assets/lassie_turn/Gray_Turn/0330.bip.276.1.png" alt="Lassie 360도 보기" draggable="false" />
       </div>
-      <p class="turn-hint">이미지를 잡고 좌우로 밀면 돌아가요</p>
+      <p class="turn-hint">래시를 좌우로 돌려보세요</p>
 
       <div class="adopt-accessories studio-accessories">
         <div class="adopt-accessory-thumb"><img src="assets/acc/1/01.jpg" alt="Style Bag" /></div>
@@ -169,13 +169,10 @@
           </div>
           <button class="detail-add-cart" type="button" id="adoptAddCart">Add to Cart</button>
         </div>
-
-        <p class="adopt-plan-note" id="adoptPlanNote" hidden></p>
       </div>
 
-      <div class="adopt-move-media">
-        <img src="assets/adoption-move-together.png" alt="래시 클로즈업" />
-      </div>
+      <!-- Adoption_Photo 1~9가 페이드 인/아웃으로 순환 (JS에서 생성) -->
+      <div class="adopt-move-media" id="adoptMoveMedia" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -329,14 +326,7 @@
     // Plans에서 선택한 플랜 불러오기 → 금액·하단 표시에 사용
     let selectedPlan = null;
     try { selectedPlan = JSON.parse(localStorage.getItem('lassie_plan') || 'null'); } catch (e) {}
-    const wonKR = (n) => '₩' + Number(n).toLocaleString('ko-KR');
-    (function showPlanNote() {
-      const note = document.getElementById('adoptPlanNote');
-      if (!note || !selectedPlan) return;
-      note.innerHTML = '<span class="pnote-dot"></span>선택한 플랜 · <strong>' + selectedPlan.name +
-        '</strong> · <span class="pnote-price">' + wonKR(selectedPlan.price) + '</span>';
-      note.hidden = false;
-    })();
+    // 선택한 플랜은 이 화면에 표시하지 않고, 장바구니 담기에만 반영한다
     const adoptIntro = document.getElementById('adoptIntro');
     const adoptStudio = document.getElementById('adoptStudio');
 
@@ -368,6 +358,32 @@
         preloadFrames('gray');
       }, 320);
     });
+
+    // ---- 우측 이미지 박스: Adoption_Photo 1~9 페이드 순환 ----
+    (function initMovePhotos() {
+      const box = document.getElementById('adoptMoveMedia');
+      if (!box) return;
+      const PHOTO_N = 9;
+      const HOLD_MS = 3200;            // 한 장이 머무는 시간 (페이드 1.1s 포함)
+
+      const imgs = [];
+      for (let i = 1; i <= PHOTO_N; i++) {
+        const im = new Image();
+        im.src = `Adoption_Photo/${i}.png`;
+        im.alt = '';
+        im.draggable = false;
+        box.appendChild(im);
+        imgs.push(im);
+      }
+      imgs[0].classList.add('is-active');
+
+      let cur = 0;
+      setInterval(() => {
+        imgs[cur].classList.remove('is-active');       // fade out
+        cur = (cur + 1) % PHOTO_N;
+        imgs[cur].classList.add('is-active');          // fade in
+      }, HOLD_MS);
+    })();
 
     // ---- 360 턴테이블 뷰어 ----
     // 색상별 프레임 세트: 새 색상이 나오면 여기에 추가하면 됨

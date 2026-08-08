@@ -106,9 +106,9 @@
 
   <!-- ===== Club body ===== -->
   <section class="club-body">
+    <!-- Video/Club 1~10을 순서대로 반복 재생 -->
     <div class="club-media">
-      <div class="ph club-media-a"></div>
-      <div class="ph club-media-b"></div>
+      <video class="club-video" id="clubVideo" muted playsinline autoplay preload="auto"></video>
     </div>
 
     <div class="club-table">
@@ -290,6 +290,45 @@
       });
       document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLang(); });
     }
+
+    // ---- 좌측 영상 폭: 상단 설명글의 실제 우측 끝선에 맞춘다 ----
+    (function syncClubMediaWidth() {
+      const desc = document.querySelector('.club-desc');
+      const media = document.querySelector('.club-media');
+      if (!desc || !media) return;
+      const apply = () => {
+        media.style.width = desc.getBoundingClientRect().width + 'px';
+      };
+      apply();
+      window.addEventListener('resize', apply);
+      if (window.ResizeObserver) new ResizeObserver(apply).observe(desc);
+      // 웹폰트 로드 후 폭이 바뀌므로 한 번 더 보정
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(apply);
+    })();
+
+    // ---- 좌측 영상: Video/Club 1~10 순차 재생 후 다시 1번으로 ----
+    (function initClubVideo() {
+      const video = document.getElementById('clubVideo');
+      if (!video) return;
+      const ORDER = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+      let idx = 0;
+      let misses = 0;   // 없는 파일(현재 4영상.mp4)은 건너뛰기 위한 카운터
+
+      function play(next) {
+        idx = ((next % ORDER.length) + ORDER.length) % ORDER.length;
+        video.src = `Video/Club/${ORDER[idx]}영상.mp4`;
+        video.load();
+        video.play().catch(() => {});
+      }
+
+      video.addEventListener('ended', () => { misses = 0; play(idx + 1); });
+      video.addEventListener('error', () => {
+        if (++misses >= ORDER.length) return;   // 전부 실패하면 중단
+        play(idx + 1);
+      });
+
+      play(0);
+    })();
   </script>
 </body>
 </html>
