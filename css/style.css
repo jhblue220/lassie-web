@@ -26,7 +26,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 input { font-family: inherit; }
 
 .ic { width: 20px; height: 20px; display: block; }
-.nav-ic-95 { width: 19px; height: 19px; }   /* Club/Archive/FAQ nav 아이콘 5% 축소 */
+.nav-ic-13 { width: 13px; height: 13px; }   /* Plans (기존 20px의 2/3) */
+.nav-ic-14 { width: 14px; height: 14px; }   /* Archive·FAQ (기존 19px의 3/4) */
+.nav-ic-15 { width: 15px; height: 15px; }   /* Club (기존 19px의 4/5) */
+
+/* 현재 페이지의 우측 아이콘(장바구니·프로필)만 15% 투명 — 배지 숫자는 제외 */
+.icon-btn.icon-current .ic { opacity: 0.15; }
+.icon-btn.icon-current { border-color: rgba(30, 42, 61, 0.075); }
 
 /* Placeholder boxes */
 .ph {
@@ -53,15 +59,11 @@ input { font-family: inherit; }
   text-decoration: none;
 }
 
-.logo-wordmark {
+/* 로고: 상·하 끝을 우측 메뉴바(nav-pill) 높이와 동일하게 맞춤 */
+.logo-typo,
+.logo-symbol {
   display: block;
-  height: 26px;
-  width: auto;
-}
-
-.logo-mark {
-  display: block;
-  height: 26.4px;
+  height: 42px;   /* nav-pill 높이와 동일 (상·하 끝 일치) */
   width: auto;
 }
 
@@ -79,7 +81,7 @@ input { font-family: inherit; }
   width: 284px;              /* 고정 shell 폭 — 페이지 타이틀 길이와 무관하게 항상 동일 */
   background: #1D2737;
   border-radius: 999px;
-  padding: 4px;              /* 얇고 일정한 내부 inset (About을 컨테이너에 밀착) */
+  padding: 2px;              /* About과 외곽선 사이 상·하·우 여백 2px */
   color: #fff;
   transition: background 0.5s ease;
 }
@@ -121,16 +123,18 @@ input { font-family: inherit; }
 /* About: 돋보기의 우측 auto가 밀어줘 항상 오른쪽 끝에 고정 */
 .nav-about {
   flex: 0 0 auto;
+  align-self: stretch;   /* 상·하 여백을 컨테이너 padding(4px)과 동일하게 */
   background: #3F4755;
   padding: 9px 20px;
 }
 
 /* Menu dropdown */
-.menu-wrap { position: relative; }
+/* 팝업창은 nav-pill보다 좌우 10px씩 넓다 → 우측 아이콘과도 같은 10px 간격이 되도록 8px 더 띄움 */
+.menu-wrap { position: relative; margin-right: 8px; }
 
 .menu-panel {
   position: absolute;
-  top: 0;
+  top: -30px;                 /* 팝업 상단을 화면 맨 위까지 연장 (Reference 05_Menubar) */
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% + 20px);
@@ -160,15 +164,15 @@ input { font-family: inherit; }
   background-size: 160px 160px, auto;
   backdrop-filter: blur(22px) saturate(150%);
   -webkit-backdrop-filter: blur(22px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  border: 1px solid #E1E1E1;   /* stroke 1px #E1E1E1 */
   border-radius: 14px;
-  box-shadow: 0 18px 44px rgba(30, 42, 61, 0.12);
+  box-shadow: none;            /* 그림자 제거 */
   transform: translateY(-16px);
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .menu-panel-content {
-  padding: 62px 34px 44px;
+  padding: 92px 34px 44px;     /* 상단 연장(-30px)만큼 콘텐츠 위치 보정 */
 }
 
 .menu-panel.open .menu-panel-inner {
@@ -225,7 +229,7 @@ input { font-family: inherit; }
 
 .menu-close {
   position: absolute;
-  top: 57px;
+  top: 87px;
   right: 20px;
   width: 26px;
   height: 26px;
@@ -315,14 +319,56 @@ input { font-family: inherit; }
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: #fff;
-  border: 1px solid var(--line-gray);
+  background: transparent;                    /* 흰 배경 제거 → 투명 */
+  border: 1px solid rgba(30, 42, 61, 0.5);    /* 스트로크 50% */
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--navy);
 }
 .icon-btn .ic { width: 21px; height: 21px; }
+
+/* 언어 선택: 아이콘 아래로 펼쳐지는 다크 세로 캡슐 (Reference 09_LanguageSelect) */
+.lang-wrap { position: relative; display: flex; }
+.lang-btn { position: relative; z-index: 2; transition: border-color 0.25s ease; }
+.lang-wrap.open .lang-btn { border-color: transparent; }
+.lang-wrap.open .lang-btn .ic { filter: brightness(0) invert(1); }
+
+.lang-panel {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 1;
+  width: 46px;
+  padding: 54px 0 16px;
+  background: #1D2737;
+  border-radius: 999px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(-10px);
+  transition: opacity 0.28s ease, transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.28s;
+}
+.lang-panel.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.lang-opt {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  padding: 2px 0;
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+.lang-opt:hover { opacity: 1; }
+.lang-div { width: 18px; height: 1px; background: rgba(255, 255, 255, 0.3); }
 
 /* ===== Hero (배경 이미지 + Click & See 영상 재생) ===== */
 .hero {
@@ -343,6 +389,56 @@ input { font-family: inherit; }
   z-index: 0;
   pointer-events: none;
 }
+
+/* 영상 종료 후 나타나는 하단 CTA 바 (Reference 06_Main_Down) */
+.home-cta {
+  position: absolute;
+  left: 50%;
+  bottom: 40px;
+  transform: translateX(-50%) translateY(14px);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 44px;
+  width: min(1140px, calc(100vw - 80px));
+  padding: 20px 44px 20px 20px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-radius: 999px;
+  box-shadow: 0 20px 50px rgba(30, 42, 61, 0.10);
+  text-decoration: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.home-cta.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+
+.home-cta-avatar {
+  flex-shrink: 0;
+  width: 116px;
+  height: 116px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #e6e6e6;
+}
+.home-cta-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.home-cta-title {
+  flex-shrink: 0;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--navy);
+}
+
+.home-cta-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.home-cta-head { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; color: var(--navy); }
+.home-cta-sub { font-size: 16px; color: #9aa1ab; letter-spacing: -0.01em; }
+
+.home-cta-arrow { flex-shrink: 0; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; }
+.home-cta-arrow img { width: 100%; height: 100%; display: block; }
 
 /* 홈: 헤더를 히어로 위에 겹쳐 뜨고, 스크롤해도 고정 */
 .home-page .site-header {
@@ -1156,9 +1252,9 @@ input { font-family: inherit; }
   background-size: 160px 160px, auto;
   backdrop-filter: blur(22px) saturate(150%);
   -webkit-backdrop-filter: blur(22px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  border: 1px solid #E1E1E1;   /* 메뉴 팝업과 동일한 stroke */
   border-radius: 22px;
-  box-shadow: 0 18px 44px rgba(30, 42, 61, 0.14);
+  box-shadow: none;            /* 그림자 제거 */
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -1826,24 +1922,32 @@ body.adoption-page .site-header {
   position: relative;
   overflow: hidden;
   height: calc(100vh - 90px); /* 헤더(90px) 아래로 한 화면을 정확히 채움 */
+  background: #FFFFFF;
   transition: opacity 0.32s ease;
 }
 .adopt-intro.leaving { opacity: 0; }
 
-.adopt-intro-img {
+/* 마우스 상·하 위치에 따라 헤드 프레임이 바뀌는 인터랙티브 스테이지 */
+.adopt-intro-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.adopt-intro-head {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 35%;
+  object-position: center 42%;
   -webkit-user-drag: none;
   user-select: none;
+  pointer-events: none;
 }
 
 .adopt-intro-copy {
   position: absolute;
   left: 51px;
-  bottom: 48px;
+  top: 48px;                 /* 좌상단 배치 (Reference 08_Adoption) */
   z-index: 2;
 }
 
@@ -1852,7 +1956,7 @@ body.adoption-page .site-header {
   line-height: 1.04;
   font-weight: 600;
   letter-spacing: -0.06em;
-  color: #111;
+  color: var(--navy);   /* Archiving 페이지 타이틀과 동일 색상 */
 }
 
 .adopt-intro-row {
@@ -1877,16 +1981,19 @@ body.adoption-page .site-header {
 }
 
 .click-here-btn {
-  background: #111;
-  color: #fff;
-  font-size: 1.55vw;
+  display: inline-block;
+  margin-top: 1.6vw;                     /* 타이틀 아래 배치 */
+  background: transparent;               /* 안쪽 완전 투명 */
+  color: var(--navy);
+  border: 1.5px solid var(--navy);       /* 스트로크만 */
+  font-size: 0.95vw;                     /* 레퍼런스 기준 축소 */
   font-weight: 600;
-  padding: 1.05vw 2.2vw;
+  padding: 0.62vw 1.5vw;
   border-radius: 999px;
   letter-spacing: -0.01em;
   transition: transform 0.15s ease, background 0.2s ease;
 }
-.click-here-btn:hover { background: #2b2b2b; transform: translateY(-2px); }
+.click-here-btn:hover { background: rgba(30, 42, 61, 0.06); transform: translateY(-2px); }
 
 /* --- Studio (view 2) --- */
 .adopt-studio {
@@ -1897,7 +2004,7 @@ body.adoption-page .site-header {
 
 .studio-stage {
   position: relative;
-  background: #f4f4f4;
+  background: #fff;
   padding: 34px 0 40px;
 }
 

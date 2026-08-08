@@ -1,6 +1,8 @@
 .claude/scheduled_tasks.lock
 Font/
 Adoption_Lassie_Turn/
+# 원본 헤드 프레임(대용량 PNG) — 변환된 assets/adoption_head/만 커밋
+/Adoption_Head/
 # 원본 컬러 턴테이블 렌더(대용량 PNG) — 변환된 assets/turn_*만 커밋
 assets/FCFCFC_Gray/
 assets/EDE2D7_Beige/

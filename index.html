@@ -12,8 +12,7 @@
   <!-- ===== Header ===== -->
   <header class="site-header">
     <a class="logo" href="#">
-      <img class="logo-wordmark" src="assets/logo-wordmark.png" alt="Lassie" />
-      <img class="logo-mark" src="assets/logo-icon.png" alt="" aria-hidden="true" />
+      <img class="logo-typo" src="Logo/TypoLogo.svg" alt="Lassie" draggable="false" />
     </a>
 
     <div class="header-right">
@@ -81,6 +80,16 @@
       <a class="icon-btn" href="profile.html" aria-label="Account">
         <img class="ic" src="Icon/Icon_SVG/Profile_Icon.svg" alt="" aria-hidden="true" draggable="false" />
       </a>
+      <div class="lang-wrap" id="langWrap">
+        <button class="icon-btn lang-btn" type="button" id="langToggle" aria-label="Language">
+          <img class="ic" src="Icon/Icon_SVG/Menu_Languageicon.svg" alt="" aria-hidden="true" draggable="false" />
+        </button>
+        <div class="lang-panel" id="langPanel" aria-hidden="true">
+          <button class="lang-opt" type="button">Kr</button>
+          <span class="lang-div"></span>
+          <button class="lang-opt" type="button">En</button>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -88,6 +97,17 @@
   <section class="hero" id="top">
     <video class="hero-main-video" id="heroMainVideo" src="Video/01_Main_Video.mp4"
            autoplay muted playsinline preload="auto"></video>
+
+    <!-- 영상 종료 후 나타나는 하단 CTA (우측 화살표 → Adoption) -->
+    <a class="home-cta" id="homeCta" href="adoption.html" aria-hidden="true">
+      <span class="home-cta-avatar"><img src="assets/adoption-hero.jpg" alt="" draggable="false" /></span>
+      <span class="home-cta-title">Bring Lassie<br />Home</span>
+      <span class="home-cta-main">
+        <span class="home-cta-head">Find Your Perfect Lassie</span>
+        <span class="home-cta-sub">오늘부터 함께 걸을 새로운 동반자가 기다리고 있습니다.</span>
+      </span>
+      <span class="home-cta-arrow"><img src="Icon/Icon_SVG/Main_Rightsign.svg" alt="" draggable="false" /></span>
+    </a>
   </section>
 
   <!-- ===== Site footer ===== -->
@@ -100,7 +120,7 @@
         <dt>Address</dt>
         <dd>seoul, republic of korea</dd>
 
-        <dt>CEO</dt>
+        <dt>Designers</dt>
         <dd>
           <span class="footer-ceo">
             <span>Jang byeol</span><span>Park Jungmin</span>
@@ -109,7 +129,7 @@
         </dd>
 
         <dt>Online business<br />license</dt>
-        <dd>2026-seoul-0803</dd>
+        <dd>2026-Seoul-0811</dd>
 
         <dt>Business<br />license</dt>
         <dd>617-42-08216</dd>
@@ -200,12 +220,48 @@
       }
     });
 
+    // ---- 언어 선택 팝업 (실제 언어 전환은 추후) ----
+    const langWrap = document.getElementById('langWrap');
+    const langToggle = document.getElementById('langToggle');
+    const langPanel = document.getElementById('langPanel');
+    function closeLang() {
+      if (!langPanel) return;
+      langPanel.classList.remove('open');
+      langWrap.classList.remove('open');
+      langPanel.setAttribute('aria-hidden', 'true');
+    }
+    if (langToggle) {
+      langToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = langPanel.classList.toggle('open');
+        langWrap.classList.toggle('open', isOpen);
+        langPanel.setAttribute('aria-hidden', String(!isOpen));
+        if (isOpen) { closeMenu(); closeSearch(); }
+      });
+      document.addEventListener('click', (e) => {
+        if (!langWrap.contains(e.target)) closeLang();
+      });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLang(); });
+    }
+
     // ---- 히어로: 메인 영상 로드 즉시 재생 → 끝나면 마지막 프레임에서 정지(loop 없음) ----
     const heroMainVideo = document.getElementById('heroMainVideo');
+    const homeCta = document.getElementById('homeCta');
+    const showHomeCta = () => {
+      if (!homeCta) return;
+      homeCta.classList.add('show');
+      homeCta.setAttribute('aria-hidden', 'false');
+    };
     if (heroMainVideo) {
       const playHero = () => heroMainVideo.play().catch(() => {});
       if (heroMainVideo.readyState >= 2) playHero();
       else heroMainVideo.addEventListener('loadeddata', playHero, { once: true });
+      // 영상이 끝나 마지막 프레임에서 멈추면 CTA 노출
+      heroMainVideo.addEventListener('ended', showHomeCta);
+      // 자동재생 차단/오류 대비 폴백
+      setTimeout(showHomeCta, 6000);
+    } else {
+      showHomeCta();
     }
   </script>
 </body>

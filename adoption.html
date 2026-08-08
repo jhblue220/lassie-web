@@ -12,7 +12,7 @@
   <!-- ===== Header ===== -->
   <header class="site-header">
     <a class="logo" href="index.html">
-      <img class="logo-mark logo-mark-only" src="assets/logo-icon.png" alt="Lassie 홈" />
+      <img class="logo-symbol" src="Logo/SymbolLogo.svg" alt="Lassie 홈" draggable="false" />
     </a>
 
     <div class="header-right">
@@ -80,20 +80,30 @@
       <a class="icon-btn" href="profile.html" aria-label="Account">
         <img class="ic" src="Icon/Icon_SVG/Profile_Icon.svg" alt="" aria-hidden="true" draggable="false" />
       </a>
+      <div class="lang-wrap" id="langWrap">
+        <button class="icon-btn lang-btn" type="button" id="langToggle" aria-label="Language">
+          <img class="ic" src="Icon/Icon_SVG/Menu_Languageicon.svg" alt="" aria-hidden="true" draggable="false" />
+        </button>
+        <div class="lang-panel" id="langPanel" aria-hidden="true">
+          <button class="lang-opt" type="button">Kr</button>
+          <span class="lang-div"></span>
+          <button class="lang-opt" type="button">En</button>
+        </div>
+      </div>
     </div>
   </header>
 
   <!-- ===== Intro: Meet Your Lassie ===== -->
   <section class="adopt-intro" id="adoptIntro">
-    <img class="adopt-intro-img intro-pop intro-pop-3" src="assets/adoption-hero.jpg" alt="Lassie 클로즈업" draggable="false" />
+    <div class="adopt-intro-stage intro-pop intro-pop-3" id="adoptHeadStage">
+      <img class="adopt-intro-head" id="adoptHeadImg" src="assets/adoption_head/0330.bip.1.16.png" alt="Lassie" draggable="false" />
+    </div>
     <div class="adopt-intro-copy">
       <h1 class="adopt-intro-title">
         <span class="intro-pop intro-pop-1">Meet Your</span><br />
-        <span class="adopt-intro-row">
-          <span class="intro-pop intro-pop-1">Lassie</span>
-          <button class="click-here-btn intro-pop intro-pop-2" type="button" id="clickHereBtn">Click Here</button>
-        </span>
+        <span class="intro-pop intro-pop-1">Lassie</span>
       </h1>
+      <button class="click-here-btn intro-pop intro-pop-2" type="button" id="clickHereBtn">Click here</button>
     </div>
   </section>
 
@@ -129,9 +139,9 @@
       <p class="turn-hint">이미지를 잡고 좌우로 밀면 돌아가요</p>
 
       <div class="adopt-accessories studio-accessories">
-        <div class="adopt-accessory-thumb"><img src="assets/adoption-accessory-1.png" alt="산책용 액세서리" /></div>
-        <div class="adopt-accessory-thumb"><img src="assets/adoption-accessory-2.png" alt="넥 컬러" /></div>
-        <div class="adopt-accessory-thumb"><img src="assets/adoption-accessory-3.png" alt="하네스" /></div>
+        <div class="adopt-accessory-thumb"><img src="assets/acc/1/01.jpg" alt="Style Bag" /></div>
+        <div class="adopt-accessory-thumb"><img src="assets/acc/4/01.jpg" alt="Sport Leash" /></div>
+        <div class="adopt-accessory-thumb"><img src="assets/acc/7/01.jpg" alt="Boots" /></div>
       </div>
     </div>
 
@@ -179,7 +189,7 @@
         <dt>Address</dt>
         <dd>seoul, republic of korea</dd>
 
-        <dt>CEO</dt>
+        <dt>Designers</dt>
         <dd>
           <span class="footer-ceo">
             <span>Jang byeol</span><span>Park Jungmin</span>
@@ -188,7 +198,7 @@
         </dd>
 
         <dt>Online business<br />license</dt>
-        <dd>2026-seoul-0803</dd>
+        <dd>2026-Seoul-0811</dd>
 
         <dt>Business<br />license</dt>
         <dd>617-42-08216</dd>
@@ -280,6 +290,30 @@
       }
     });
 
+    // ---- 언어 선택 팝업 (실제 언어 전환은 추후) ----
+    const langWrap = document.getElementById('langWrap');
+    const langToggle = document.getElementById('langToggle');
+    const langPanel = document.getElementById('langPanel');
+    function closeLang() {
+      if (!langPanel) return;
+      langPanel.classList.remove('open');
+      langWrap.classList.remove('open');
+      langPanel.setAttribute('aria-hidden', 'true');
+    }
+    if (langToggle) {
+      langToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = langPanel.classList.toggle('open');
+        langWrap.classList.toggle('open', isOpen);
+        langPanel.setAttribute('aria-hidden', String(!isOpen));
+        if (isOpen) { closeMenu(); closeSearch(); }
+      });
+      document.addEventListener('click', (e) => {
+        if (!langWrap.contains(e.target)) closeLang();
+      });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLang(); });
+    }
+
     // ---- 등장 애니메이션이 끝나면 잠긴 transform을 풀어 hover 트랜지션과 충돌 방지 ----
     document.querySelectorAll('.intro-pop').forEach((el) => {
       el.addEventListener('animationend', () => {
@@ -305,6 +339,24 @@
     })();
     const adoptIntro = document.getElementById('adoptIntro');
     const adoptStudio = document.getElementById('adoptStudio');
+
+    // ---- 인트로 헤드: 마우스 상·하 위치로 프레임 전환 (하단=1, 상단=31) ----
+    (function initAdoptHead() {
+      const stage = document.getElementById('adoptHeadStage');
+      const headImg = document.getElementById('adoptHeadImg');
+      if (!stage || !headImg) return;
+      const HEAD_N = 31;
+      const headSrc = (i) => `assets/adoption_head/0330.bip.1.${i}.png`;
+      for (let i = 1; i <= HEAD_N; i++) { const im = new Image(); im.src = headSrc(i); }
+      let curHead = 16;
+      window.addEventListener('mousemove', (e) => {
+        if (adoptStudio && !adoptStudio.hidden) return;   // 스튜디오 진입 후에는 중단
+        const vh = window.innerHeight || 1;
+        const t = Math.min(1, Math.max(0, e.clientY / vh));      // 0(위)~1(아래)
+        const i = Math.round(HEAD_N - t * (HEAD_N - 1));          // 위=31, 아래=1
+        if (i !== curHead) { curHead = i; headImg.src = headSrc(i); }
+      });
+    })();
 
     document.getElementById('clickHereBtn').addEventListener('click', () => {
       adoptIntro.classList.add('leaving');

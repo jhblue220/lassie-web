@@ -12,7 +12,7 @@
   <!-- ===== Header ===== -->
   <header class="site-header">
     <a class="logo" href="index.html">
-      <img class="logo-mark logo-mark-only" src="assets/logo-icon.png" alt="Lassie 홈" />
+      <img class="logo-symbol" src="Logo/SymbolLogo.svg" alt="Lassie 홈" draggable="false" />
     </a>
 
     <div class="header-right">
@@ -20,7 +20,7 @@
         <nav class="nav-pill">
           <button class="nav-item" type="button" id="menuNavToggle">
             FAQ
-            <img class="ic nav-ic-95" src="Icon/Icon_SVG/Menu_FAQicon.svg" alt="" aria-hidden="true" draggable="false" />
+            <img class="ic nav-ic-14" src="Icon/Icon_SVG/Menu_FAQicon.svg" alt="" aria-hidden="true" draggable="false" />
           </button>
           <span class="nav-divider"></span>
           <button class="nav-item nav-search" type="button" id="searchToggle" aria-label="Search">
@@ -80,6 +80,16 @@
       <a class="icon-btn" href="profile.html" aria-label="Account">
         <img class="ic" src="Icon/Icon_SVG/Profile_Icon.svg" alt="" aria-hidden="true" draggable="false" />
       </a>
+      <div class="lang-wrap" id="langWrap">
+        <button class="icon-btn lang-btn" type="button" id="langToggle" aria-label="Language">
+          <img class="ic" src="Icon/Icon_SVG/Menu_Languageicon.svg" alt="" aria-hidden="true" draggable="false" />
+        </button>
+        <div class="lang-panel" id="langPanel" aria-hidden="true">
+          <button class="lang-opt" type="button">Kr</button>
+          <span class="lang-div"></span>
+          <button class="lang-opt" type="button">En</button>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -236,7 +246,7 @@
         <dt>Address</dt>
         <dd>seoul, republic of korea</dd>
 
-        <dt>CEO</dt>
+        <dt>Designers</dt>
         <dd>
           <span class="footer-ceo">
             <span>Jang byeol</span><span>Park Jungmin</span>
@@ -245,7 +255,7 @@
         </dd>
 
         <dt>Online business<br />license</dt>
-        <dd>2026-seoul-0803</dd>
+        <dd>2026-Seoul-0811</dd>
 
         <dt>Business<br />license</dt>
         <dd>617-42-08216</dd>
@@ -298,6 +308,7 @@
       } else {
         menuPanel.classList.add('open');
         closeSearch();
+        closeChat();          // 메뉴 팝업 시 Customer Service 채팅창 닫기(겹침 방지)
       }
     });
 
@@ -336,6 +347,30 @@
         searchToggle.blur();
       }
     });
+
+    // ---- 언어 선택 팝업 (실제 언어 전환은 추후) ----
+    const langWrap = document.getElementById('langWrap');
+    const langToggle = document.getElementById('langToggle');
+    const langPanel = document.getElementById('langPanel');
+    function closeLang() {
+      if (!langPanel) return;
+      langPanel.classList.remove('open');
+      langWrap.classList.remove('open');
+      langPanel.setAttribute('aria-hidden', 'true');
+    }
+    if (langToggle) {
+      langToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = langPanel.classList.toggle('open');
+        langWrap.classList.toggle('open', isOpen);
+        langPanel.setAttribute('aria-hidden', String(!isOpen));
+        if (isOpen) { closeMenu(); closeSearch(); }
+      });
+      document.addEventListener('click', (e) => {
+        if (!langWrap.contains(e.target)) closeLang();
+      });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLang(); });
+    }
 
     // ---- FAQ 아코디언 ----
     document.querySelectorAll('.faq-item').forEach((item) => {
