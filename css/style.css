@@ -75,9 +75,10 @@ input { font-family: inherit; }
   z-index: 200;
   display: flex;
   align-items: center;
+  width: 320px;              /* 고정 shell 폭 — 페이지 타이틀 길이와 무관하게 항상 동일 */
   background: #1D2737;
   border-radius: 999px;
-  padding: 5px;
+  padding: 4px;              /* 얇고 일정한 내부 inset (About을 컨테이너에 밀착) */
   color: #fff;
   transition: background 0.5s ease;
 }
@@ -88,24 +89,39 @@ input { font-family: inherit; }
   align-items: center;
   gap: 8px;
   color: #fff;
+  font-family: 'Pretendard', 'Pretendard Variable', sans-serif;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 500;          /* Pretendard Medium */
   padding: 9px 16px;
   border-radius: 999px;
 }
 
+/* 좌측 페이지 타이틀 + 아이콘: 고정폭 예약 → 글자 수가 달라져도 뒤 요소 위치 불변 */
+#menuNavToggle {
+  flex: 0 0 128px;
+  width: 128px;
+  justify-content: flex-start;
+  padding: 9px 18px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .nav-divider {
+  flex: 0 0 auto;
   width: 1px;
   height: 18px;
   background: rgba(255, 255, 255, 0.28);
   margin: 0 6px;
 }
 
-.nav-search { padding: 9px 14px; }
+.nav-search { flex: 0 0 auto; padding: 9px 14px; }
 
+/* About: 오른쪽 끝에 고정 — 남는 공간을 왼쪽 margin이 흡수해 어느 페이지에서도 같은 위치 */
 .nav-about {
+  flex: 0 0 auto;
+  margin-left: auto;
   background: #3F4755;
-  padding: 9px 24px;
+  padding: 9px 20px;
 }
 
 /* Menu dropdown */
