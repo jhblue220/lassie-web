@@ -12,8 +12,7 @@
   <!-- ===== Header ===== -->
   <header class="site-header">
     <a class="logo" href="index.html">
-      <img class="logo-wordmark" src="assets/logo-wordmark.png" alt="Lassie" />
-      <img class="logo-mark" src="assets/logo-icon.png" alt="" aria-hidden="true" />
+      <img class="logo-mark logo-mark-only" src="assets/logo-icon.png" alt="Lassie 홈" />
     </a>
 
     <div class="header-right">
@@ -21,7 +20,7 @@
         <nav class="nav-pill">
           <button class="nav-item" type="button" id="menuNavToggle">
             Archive
-            <img class="ic" src="Icon/Archivie_Icon.png" alt="" aria-hidden="true" draggable="false" />
+            <img class="ic" src="Icon/Icon_SVG/Menu_Archiveicon.png" alt="" aria-hidden="true" draggable="false" />
           </button>
           <span class="nav-divider"></span>
           <button class="nav-item nav-search" type="button" id="searchToggle" aria-label="Search">
@@ -83,24 +82,45 @@
     </div>
   </header>
 
-  <!-- ===== Archiving (center-focus 코버플로우 / 드래그 스크롤) ===== -->
-  <section class="archive-stage" id="archiveStage">
-    <div class="archive-track" id="archiveTrack"></div>
-  </section>
+  <!-- ===== Archiving (세로 스크롤 갤러리 · 같은 번호는 가로 병렬, 여백 20px) ===== -->
+  <section class="archive-wrap">
+    <h1 class="archive-title">Archiving</h1>
+    <div class="archive-words">
+      <span>Life</span>
+      <span class="aw-mid"><span>Moves</span><span>Better</span><span>Together</span></span>
+      <span>Index</span>
+    </div>
 
-  <!-- ===== Archive lightbox (원본 비율 보기) ===== -->
-  <div class="arch-lightbox" id="archLightbox" aria-hidden="true">
-    <button class="arch-lightbox-close" type="button" aria-label="닫기">
-      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4l12 12M16 4 4 16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-    </button>
-    <figure class="arch-lightbox-fig">
-      <img id="archLightboxImg" src="" alt="" draggable="false" />
-    </figure>
-  </div>
+    <div class="archive-grid">
+      <div class="arch-row arch-pair">
+        <figure class="arch-fig"><img src="assets/archive_v2/1_1.jpg" alt="" loading="lazy" draggable="false" /></figure>
+        <figure class="arch-fig"><img src="assets/archive_v2/1_2.jpg" alt="" loading="lazy" draggable="false" /></figure>
+      </div>
+      <div class="arch-row arch-single">
+        <figure class="arch-fig"><img src="assets/archive_v2/2.jpg" alt="" loading="lazy" draggable="false" /></figure>
+      </div>
+      <div class="arch-row arch-pair">
+        <figure class="arch-fig"><img src="assets/archive_v2/3_1.jpg" alt="" loading="lazy" draggable="false" /></figure>
+        <figure class="arch-fig"><img src="assets/archive_v2/3_2.jpg" alt="" loading="lazy" draggable="false" /></figure>
+      </div>
+      <div class="arch-row arch-single">
+        <figure class="arch-fig"><img src="assets/archive_v2/4.jpg" alt="" loading="lazy" draggable="false" /></figure>
+      </div>
+      <div class="arch-row arch-pair">
+        <figure class="arch-fig"><img src="assets/archive_v2/5_1.jpg" alt="" loading="lazy" draggable="false" /></figure>
+        <figure class="arch-fig"><img src="assets/archive_v2/5_2.jpg" alt="" loading="lazy" draggable="false" /></figure>
+      </div>
+      <div class="arch-row arch-single">
+        <figure class="arch-fig"><img src="assets/archive_v2/6.jpg" alt="" loading="lazy" draggable="false" /></figure>
+      </div>
+      <div class="arch-row arch-single">
+        <figure class="arch-fig"><img src="assets/archive_v2/7.jpg" alt="" loading="lazy" draggable="false" /></figure>
+      </div>
+    </div>
+  </section>
 
   <!-- ===== Site footer ===== -->
   <footer class="site-footer-lg">
-    <p class="footer-legal">Lassie inc. business no. 617-42-08216. seoul,<br />republic of korea (c) 2026 lassie. all rights reserved.</p>
 
     <div class="footer-main">
       <p class="footer-brand">Lassie INC.</p>
@@ -130,7 +150,6 @@
         <dd>+82 70-4821-0803</dd>
       </dl>
 
-      <p class="footer-tagline">Physical wellness<br />companion</p>
     </div>
   </footer>
 
@@ -209,174 +228,6 @@
         searchToggle.blur();
       }
     });
-
-    // ============================================================
-    //  Archiving — center-focus 코버플로우 + 드래그 스크롤
-    //  스크롤 진행에 따라 '가장 큰 카드' 초점이 왼쪽→중앙→오른쪽으로 이동,
-    //  초점에서 멀수록 작아지고 여백이 넓어짐. 카드 클릭 시 원본 비율.
-    //  ▼ P 값으로 카드 크기 / 낙폭 / 감도 튜닝
-    // ============================================================
-    const P = {
-      CARD_H:  0.72,  // 최대 카드 높이 (스테이지 높이 대비)
-      RATIO:   0.78,  // 카드 가로/세로 비 (직사각형)
-      GAP:     26,    // 슬롯 간격 (최대 크기 기준, px)
-      MIN_S:   0.24,  // 초점에서 가장 먼 카드의 최소 스케일
-      SPREAD:  3.0,   // 낙폭 폭 (슬롯 수 기준, 클수록 완만)
-      CURVE:   1.25,  // 낙폭 곡선 지수
-      FOCAL_L: 0.17,  // 시작 초점 x (뷰포트 폭 비율) — 왼쪽
-      FOCAL_R: 0.83,  // 끝 초점 x — 오른쪽
-      EASE:     0.10, // 관성 감속/정착 부드러움 (작을수록 더 스르륵)
-      DRAG:     1.15, // 드래그 이동 배율
-      WHEEL:    0.9,  // 휠 스크롤 배율
-      MOMENTUM: 22,   // 놓았을 때 관성 투영량 (클수록 멀리 미끄러짐)
-    };
-
-    const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
-    const N = 26;
-    const imgUrl = (i) => `assets/archive/${String(i + 1).padStart(2, '0')}.jpg`;
-
-    const stage = document.getElementById('archiveStage');
-    const track = document.getElementById('archiveTrack');
-
-    // 카드 생성 (동일 규격 직사각형, 순서대로)
-    const cards = [];
-    for (let i = 0; i < N; i++) {
-      const card = document.createElement('div');
-      card.className = 'arch-card';
-      const img = document.createElement('img');
-      img.src = imgUrl(i);
-      img.alt = '';
-      img.draggable = false;
-      img.loading = 'lazy';
-      card.appendChild(img);
-      track.appendChild(card);
-      card.addEventListener('click', () => { if (!dragged) openLightbox(i); });
-      cards.push({ el: card, baseX: 0 });
-    }
-
-    // ---- 레이아웃 ----
-    let vw = 0, cardW = 0, cardH = 0, slot = 0, minScroll = 0, maxScroll = 0, snapStep = 1;
-    let scroll = 0, targetScroll = 0;
-
-    function layout() {
-      vw = stage.clientWidth;
-      const vh = stage.clientHeight;
-      cardH = vh * P.CARD_H;
-      cardW = cardH * P.RATIO;
-      slot = cardW + P.GAP;
-      cards.forEach((c, i) => {
-        c.baseX = i * slot;
-        c.el.style.width = cardW + 'px';
-        c.el.style.height = cardH + 'px';
-        c.el.style.top = '50%';
-        c.el.style.marginTop = (-cardH / 2) + 'px';
-      });
-      // 첫 카드 중앙 = FOCAL_L*vw, 마지막 카드 중앙 = FOCAL_R*vw 가 되도록 스크롤 범위 설정
-      minScroll = cardW / 2 - P.FOCAL_L * vw;
-      maxScroll = (N - 1) * slot + cardW / 2 - P.FOCAL_R * vw;
-      if (maxScroll < minScroll) maxScroll = minScroll;
-      snapStep = (N > 1) ? (maxScroll - minScroll) / (N - 1) : 1; // 카드 한 장당 스크롤량
-      scroll = clamp(scroll, minScroll, maxScroll);
-      targetScroll = clamp(targetScroll, minScroll, maxScroll);
-    }
-
-    // 가장 가까운 '카드 정착' 위치 (한 이미지에 걸려 멈추도록)
-    function snapNearest(pos) {
-      if (maxScroll <= minScroll) return minScroll;
-      const i = clamp(Math.round((pos - minScroll) / snapStep), 0, N - 1);
-      return minScroll + i * snapStep;
-    }
-
-    // ---- 렌더 ----
-    function render() {
-      const denom = (maxScroll - minScroll) || 1;
-      const p = clamp((scroll - minScroll) / denom, 0, 1);
-      const focalX = P.FOCAL_L * vw + p * (P.FOCAL_R - P.FOCAL_L) * vw;
-      track.style.transform = `translate3d(${-scroll}px, 0, 0)`;
-      for (const c of cards) {
-        const centerX = c.baseX + cardW / 2 - scroll;
-        const nd = Math.abs(centerX - focalX) / slot;       // 슬롯 단위 거리
-        const f = clamp(1 - nd / P.SPREAD, 0, 1);
-        const s = P.MIN_S + (1 - P.MIN_S) * Math.pow(f, P.CURVE);
-        c.el.style.transform = `scale(${s})`;
-        c.el.style.left = c.baseX + 'px';
-        c.el.style.zIndex = String(Math.round(s * 100));
-      }
-    }
-
-    // ---- 드래그 스크롤 (관성 + 카드 스냅) ----
-    let dragging = false, dragged = false, startX = 0, startScroll = 0;
-    let vel = 0, prevScroll = 0;
-
-    stage.addEventListener('pointerdown', (e) => {
-      dragging = true; dragged = false;
-      startX = e.clientX; startScroll = scroll;
-      vel = 0; prevScroll = scroll;
-      stage.classList.add('dragging');
-      stage.setPointerCapture(e.pointerId);
-    });
-    stage.addEventListener('pointermove', (e) => {
-      if (!dragging) return;
-      const dx = e.clientX - startX;
-      if (Math.abs(dx) > 6) dragged = true;
-      scroll = clamp(startScroll - dx * P.DRAG, minScroll, maxScroll); // 드래그 중 직접 추종
-    });
-    function endDrag() {
-      if (!dragging) return;
-      dragging = false;
-      stage.classList.remove('dragging');
-      // 놓는 순간 속도만큼 앞으로 투영 → 가까운 카드에 정착 (플릭 세기만큼 더 넘어감)
-      targetScroll = snapNearest(scroll + vel * P.MOMENTUM);
-    }
-    stage.addEventListener('pointerup', endDrag);
-    stage.addEventListener('pointercancel', endDrag);
-
-    // 휠로도 좌우 이동 (역시 카드에 정착)
-    stage.addEventListener('wheel', (e) => {
-      const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-      targetScroll = snapNearest(clamp(targetScroll + d * P.WHEEL, minScroll, maxScroll));
-      e.preventDefault();
-    }, { passive: false });
-
-    window.addEventListener('resize', layout);
-
-    // ---- 라이트박스: 카드 클릭 시 원본 비율로 확대 ----
-    const lightbox = document.getElementById('archLightbox');
-    const lightboxImg = document.getElementById('archLightboxImg');
-
-    function openLightbox(i) {
-      lightboxImg.src = imgUrl(i);
-      lightbox.classList.add('open');
-      lightbox.setAttribute('aria-hidden', 'false');
-    }
-    function closeLightbox() {
-      lightbox.classList.remove('open');
-      lightbox.setAttribute('aria-hidden', 'true');
-    }
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox || e.target.closest('.arch-lightbox-close')) closeLightbox();
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeLightbox();
-    });
-
-    // ---- 루프 ----
-    function frame() {
-      if (!dragging) {
-        // 관성 감속하며 정착 위치로 스르륵 이동 → 카드 하나에 걸려 멈춤
-        scroll += (targetScroll - scroll) * P.EASE;
-        if (Math.abs(targetScroll - scroll) < 0.3) scroll = targetScroll;
-      }
-      scroll = clamp(scroll, minScroll, maxScroll);
-      render();
-      vel = scroll - prevScroll; // 이번 프레임 속도 (놓을 때 관성 투영에 사용)
-      prevScroll = scroll;
-      requestAnimationFrame(frame);
-    }
-    layout();
-    scroll = targetScroll = prevScroll = minScroll; // 첫 카드가 왼쪽에서 가장 크게 시작
-    render();
-    requestAnimationFrame(frame);
   </script>
 </body>
 </html>
