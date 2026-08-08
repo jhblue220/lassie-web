@@ -84,20 +84,10 @@
     </div>
   </header>
 
-  <!-- ===== Hero ===== -->
+  <!-- ===== Hero: 메인 영상 (로드 즉시 1회 재생 후 마지막 프레임에서 정지) ===== -->
   <section class="hero" id="top">
-    <img class="hero-bg-img" src="assets/hero-main.jpg" alt="Lassie" draggable="false" />
-    <p class="hero-tagline">Step outside,<br />together</p>
-
-    <!-- 클릭 시 커서 위치에서 확장되어 재생되는 영상 -->
-    <div class="hero-reveal" id="heroReveal" aria-hidden="true">
-      <video class="hero-video" id="heroVideo" src="Video/Main_video.mp4" muted playsinline preload="metadata"></video>
-    </div>
-    <!-- Click & See 커서 -->
-    <div class="hero-cursor" id="heroCursor" aria-hidden="true">
-      <span class="hero-cursor-box"></span>
-      <span class="hero-cursor-label">Click &amp; See</span>
-    </div>
+    <video class="hero-main-video" id="heroMainVideo" src="Video/01_Main_Video.mp4"
+           autoplay muted playsinline preload="auto"></video>
   </section>
 
   <!-- ===== Site footer ===== -->
@@ -210,77 +200,13 @@
       }
     });
 
-    // ---- 히어로: Click & See 커서 + 클릭 시 영상 재생(확장) ----
-    const heroSection = document.getElementById('top');
-    const heroCursor = document.getElementById('heroCursor');
-    const heroReveal = document.getElementById('heroReveal');
-    const heroVideo = document.getElementById('heroVideo');
-    const clampN = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
-
-    let revealed = false, collapsing = false, collapseRAF = null;
-    let lastMouseX = window.innerWidth / 2, lastMouseY = window.innerHeight / 2;
-    document.addEventListener('mousemove', (e) => { lastMouseX = e.clientX; lastMouseY = e.clientY; });
-
-    function boxInsetAt(cx, cy) {
-      const r = heroReveal.getBoundingClientRect();
-      const x = clampN(cx - r.left, 0, r.width);
-      const y = clampN(cy - r.top, 0, r.height);
-      const hw = 80, hh = 48; // 커서 박스 절반 (.hero-cursor-box 와 일치)
-      return `inset(${Math.max(0, y - hh)}px ${Math.max(0, r.width - (x + hw))}px ${Math.max(0, r.height - (y + hh))}px ${Math.max(0, x - hw)}px)`;
+    // ---- 히어로: 메인 영상 로드 즉시 재생 → 끝나면 마지막 프레임에서 정지(loop 없음) ----
+    const heroMainVideo = document.getElementById('heroMainVideo');
+    if (heroMainVideo) {
+      const playHero = () => heroMainVideo.play().catch(() => {});
+      if (heroMainVideo.readyState >= 2) playHero();
+      else heroMainVideo.addEventListener('loadeddata', playHero, { once: true });
     }
-
-    function openReveal(cx, cy) {
-      cancelAnimationFrame(collapseRAF); collapsing = false; revealed = true;
-      heroReveal.style.transition = 'none';
-      heroReveal.style.clipPath = boxInsetAt(cx, cy);
-      heroReveal.classList.add('open');
-      heroReveal.setAttribute('aria-hidden', 'false');
-      heroCursor.classList.remove('show');
-      try { heroVideo.currentTime = 0; } catch (e) {}
-      heroVideo.play().catch(() => {});
-      void heroReveal.offsetWidth;                    // 리플로우 강제
-      heroReveal.style.transition = '';
-      heroReveal.style.clipPath = 'inset(0px 0px 0px 0px)'; // 커서 박스 → 전체로 확장
-    }
-
-    function closeReveal() {
-      if (!revealed) return;
-      cancelAnimationFrame(collapseRAF);
-      revealed = false; collapsing = true;
-      heroReveal.classList.remove('open');
-      heroReveal.style.transition = 'none';
-      const DURATION = 600, startT = performance.now();
-      function shrink(now) {
-        let t = (now - startT) / DURATION; if (t > 1) t = 1;
-        const e = 1 - Math.pow(1 - t, 3);            // easeOutCubic
-        const r = heroReveal.getBoundingClientRect();
-        const mx = clampN(lastMouseX - r.left, 0, r.width);
-        const my = clampN(lastMouseY - r.top, 0, r.height);
-        heroReveal.style.clipPath =
-          `inset(${e * my}px ${e * (r.width - mx)}px ${e * (r.height - my)}px ${e * mx}px)`;
-        if (t < 1) { collapseRAF = requestAnimationFrame(shrink); return; }
-        heroReveal.setAttribute('aria-hidden', 'true');
-        try { heroVideo.pause(); heroVideo.currentTime = 0; } catch (err) {}
-        collapsing = false;
-        const hr = heroSection.getBoundingClientRect();
-        if (lastMouseX >= hr.left && lastMouseX <= hr.right && lastMouseY >= hr.top && lastMouseY <= hr.bottom) {
-          heroCursor.style.transform = `translate(${lastMouseX}px, ${lastMouseY}px)`;
-          heroCursor.classList.remove('show'); void heroCursor.offsetWidth; heroCursor.classList.add('show');
-        }
-      }
-      collapseRAF = requestAnimationFrame(shrink);
-    }
-
-    heroVideo.addEventListener('ended', closeReveal); // 영상 끝나면 커서 위치로 축소 복귀
-
-    heroSection.addEventListener('mousemove', (e) => {
-      if (revealed || collapsing) return;
-      heroCursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-      heroCursor.classList.add('show');
-    });
-    heroSection.addEventListener('mouseleave', () => heroCursor.classList.remove('show'));
-    heroSection.addEventListener('click', () => { revealed ? closeReveal() : openReveal(lastMouseX, lastMouseY); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeReveal(); });
   </script>
 </body>
 </html>
