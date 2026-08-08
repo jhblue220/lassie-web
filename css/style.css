@@ -1133,12 +1133,12 @@ input { font-family: inherit; }
 /* ===== Chat widget ===== */
 .chat-widget {
   position: fixed;
+  top: 118px;                               /* 헤더(≈88px) 아래 30px 고정 — 최상단에서도 절대 겹치지 않음 */
   right: 40px;
   bottom: 110px;
   z-index: 300;
-  width: min(400px, calc(100vw - 48px));   /* 뷰포트를 넘지 않도록(전송 버튼 잘림 방지) */
-  height: 760px;
-  max-height: calc(100vh - 228px);          /* 상단 메뉴바(≈88px) + 30px 여백 확보 */
+  width: min(400px, calc(100vw - 48px));    /* 뷰포트를 넘지 않도록(전송 버튼 잘림 방지) */
+  max-height: 760px;                        /* 데스크톱 높이 상한(짧은 화면에선 top·bottom으로 축소) */
   /* 메뉴 팝업창과 동일한 글래스모피즘(노이즈 + 반투명 + 블러 + 라이트 보더) */
   background:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat,
@@ -1898,6 +1898,8 @@ body.adoption-page .site-header {
 }
 
 .color-dot-lg {
+  position: relative;
+  overflow: hidden;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -1909,7 +1911,8 @@ body.adoption-page .site-header {
   transition: transform 0.15s ease;
 }
 .color-dot-lg:hover { transform: scale(1.1); }
-.color-dot-lg svg { width: 12px; height: 10px; opacity: 0; }
+.dot-swatch { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.color-dot-lg svg { position: relative; z-index: 1; width: 12px; height: 10px; opacity: 0; }
 .color-dot-lg.selected svg { opacity: 1; }
 .color-dot-lg.selected { box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(30, 42, 61, 0.5); }
 
@@ -2474,3 +2477,193 @@ body.adoption-page .site-header {
 .detail-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .also-media { background-size: cover; background-position: center; }
+
+/* ===== Plans / Pricing page ===== */
+.plans-page { background: #fff; }
+
+.plans-hero {
+  padding: 90px 40px 0;
+  text-align: center;
+}
+.plans-title {
+  font-size: 96px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.0;
+  color: var(--navy);
+}
+.plans-subtitle {
+  margin: 26px auto 0;
+  font-size: 20px;
+  line-height: 1.6;
+  color: #9aa1ab;
+}
+
+/* Top Pick / All 세그먼트 토글 */
+.plans-toggle {
+  margin: 48px auto 0;
+  display: inline-flex;
+  gap: 2px;
+  padding: 5px;
+  background: #ededed;
+  border-radius: 999px;
+}
+.plans-seg {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 32px;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #7b828c;
+  background: transparent;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.plans-seg.active {
+  background: #fff;
+  color: var(--navy);
+  box-shadow: 0 2px 8px rgba(30, 42, 61, 0.08);
+}
+.seg-save { font-size: 15px; color: #a7abb2; font-weight: 500; }
+
+/* 카드 그리드 */
+.plans-grid {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 40px;
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: 70px 40px 130px;
+}
+.plans-grid.view-top [data-plan="adopt"] { order: -1; }   /* Top Pick: Adopt 먼저 */
+
+.plan-card {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 46px 44px 44px;
+  background: #fff;
+  border: 1px solid #e7e7e9;
+  border-radius: 24px;
+}
+.plan-card-dark {
+  background: #1D2737;
+  border-color: #1D2737;
+}
+
+.plan-name {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+}
+.plan-card-dark .plan-name { color: #fff; }
+
+.plan-badge {
+  padding: 6px 15px;
+  border-radius: 999px;
+  background: var(--yellow);
+  color: #1D2737;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.plan-price {
+  margin-top: 36px;
+  font-size: 46px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--navy);
+}
+.plan-card-dark .plan-price { color: #fff; }
+
+.plan-period {
+  margin-top: 10px;
+  font-size: 15px;
+  color: #9aa1ab;
+}
+.plan-card-dark .plan-period { color: #9aa6b2; }
+
+.plan-lead {
+  margin-top: 40px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--navy);
+}
+.plan-card-dark .plan-lead { color: #fff; }
+
+.plan-features {
+  margin-top: 24px;
+  list-style: none;
+}
+.plan-features li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 9px 0;
+  font-size: 16px;
+  color: #6b7280;
+}
+.plan-card-dark .plan-features li { color: #c4cbd4; }
+
+.feat-check {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  background: #ececec;
+  color: #9aa1ab;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.feat-check svg { width: 12px; height: 10px; }
+.plan-card-dark .feat-check { background: #fff; color: #1D2737; }
+
+.plan-btn {
+  margin-top: auto;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 17px 0;
+  border: 1px solid #d8dade;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--navy);
+  font-size: 16px;
+  font-weight: 600;
+  transition: transform 0.15s ease, background 0.25s ease;
+}
+.plan-features + .plan-btn { margin-top: 42px; }
+.plan-btn:hover { transform: translateY(-1px); background: #f7f7f6; }
+.plan-btn.picked { background: #D7D133; border-color: #D7D133; color: #1D2737; transform: none; }
+.plan-btn-solid {
+  border-color: #fff;
+  background: #fff;
+  color: #1D2737;
+}
+.plan-btn-solid:hover { background: #f0f0f0; }
+
+/* Adoption: Plans에서 선택한 플랜 표시 */
+.adopt-plan-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  padding: 11px 20px;
+  background: #f7f7f4;
+  border: 1px solid #ececea;
+  border-radius: 999px;
+  font-size: 14px;
+  color: #6b7280;
+}
+.adopt-plan-note .pnote-dot { width: 8px; height: 8px; border-radius: 50%; background: #D7D133; flex-shrink: 0; }
+.adopt-plan-note strong { color: var(--navy); font-weight: 600; }
+.adopt-plan-note .pnote-price { color: #1D2737; font-weight: 700; }

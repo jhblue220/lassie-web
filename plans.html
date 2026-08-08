@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plans — Lassie</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="plans-page">
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <a class="logo" href="index.html">
+      <img class="logo-mark logo-mark-only" src="assets/logo-icon.png" alt="Lassie 홈" />
+    </a>
+
+    <div class="header-right">
+      <div class="menu-wrap">
+        <nav class="nav-pill">
+          <button class="nav-item" type="button" id="menuNavToggle">
+            Plans
+            <img class="ic" src="Icon/Icon_SVG/Menu_Pricingicon.svg" alt="" aria-hidden="true" draggable="false" />
+          </button>
+          <span class="nav-divider"></span>
+          <button class="nav-item nav-search" type="button" id="searchToggle" aria-label="Search">
+            <img class="ic" src="Icon/Icon_SVG/Menu_Searching.svg" alt="" aria-hidden="true" draggable="false" />
+          </button>
+          <button class="nav-item nav-about" type="button">About</button>
+
+          <div class="search-panel" id="searchPanel">
+            <div class="search-panel-mask">
+              <div class="search-pill">
+                <svg class="search-pill-icon" viewBox="0 0 20 20" aria-hidden="true">
+                  <circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.8" fill="none"/>
+                  <path d="M13.5 13.5 17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+                <input type="text" class="search-pill-input" id="searchInput" placeholder="searching" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <div class="menu-panel">
+          <div class="menu-panel-inner">
+            <div class="menu-panel-content">
+              <button class="menu-close" type="button" aria-label="Close menu">
+                <img class="menu-close-ic" src="Icon/Icon_SVG/Menu_X_icon.svg" alt="" aria-hidden="true" draggable="false" />
+              </button>
+              <div class="menu-group">
+                <img class="menu-group-ic" src="Icon/Icon_SVG/Menu_Menuicon.svg" alt="" aria-hidden="true" draggable="false" />
+                <div class="menu-item">
+                  <button class="menu-link menu-link-toggle" type="button" aria-expanded="false">
+                    Shop
+                    <img class="menu-chevron" src="Icon/Icon_SVG/Menu_Shop_Downsign.svg" alt="" aria-hidden="true" draggable="false" />
+                  </button>
+                  <div class="submenu">
+                    <div class="submenu-inner">
+                      <a class="submenu-link" href="adoption.html">Adoption</a>
+                      <a class="submenu-link" href="accessories.html">Accessories</a>
+                    </div>
+                  </div>
+                </div>
+                <a class="menu-link" href="archive.html">Archive</a>
+                <a class="menu-link" href="club.html">Club</a>
+                <a class="menu-link" href="plans.html">Plans</a>
+              </div>
+              <div class="menu-group">
+                <img class="menu-group-ic" src="Icon/Menu_i_icon.png" alt="" aria-hidden="true" draggable="false" />
+                <a class="menu-link" href="faq.html">FAQ</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="icon-btn" href="cart.html" aria-label="Cart">
+        <img class="ic" src="Icon/Icon_SVG/Cart_Icon.svg" alt="" aria-hidden="true" draggable="false" />
+        <span class="cart-badge" id="cartBadge"></span>
+      </a>
+      <a class="icon-btn" href="profile.html" aria-label="Account">
+        <img class="ic" src="Icon/Icon_SVG/Profile_Icon.svg" alt="" aria-hidden="true" draggable="false" />
+      </a>
+    </div>
+  </header>
+
+  <!-- ===== Plans ===== -->
+  <section class="plans-hero">
+    <h1 class="plans-title">Choose Your Journey</h1>
+    <p class="plans-subtitle">잠시 함께하는 만남부터, 오래 이어질 동행, 평생의 가족이 되기까지.<br />당신에게 가장 잘 맞는 래시와의 시작을 선택해 보세요.</p>
+
+    <div class="plans-toggle" role="tablist" aria-label="플랜 보기">
+      <button class="plans-seg" type="button" data-view="top" role="tab" aria-selected="false">Top Pick</button>
+      <button class="plans-seg active" type="button" data-view="all" role="tab" aria-selected="true">All <span class="seg-save">Save 35%</span></button>
+    </div>
+  </section>
+
+  <section class="plans-grid" id="plansGrid">
+    <!-- Short Stay -->
+    <article class="plan-card" data-plan="short">
+      <h2 class="plan-name">Short Stay</h2>
+      <p class="plan-price">₩89,000</p>
+      <p class="plan-period">Per 2 weeks</p>
+      <p class="plan-lead">Experience life with Lassie</p>
+      <ul class="plan-features">
+        <li><span class="feat-check"><svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>2주 임시 보호</li>
+        <li><span class="feat-check"><svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>래시 기본 액세서리 포함</li>
+        <li><span class="feat-check"><svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>AI 산책 루틴 추천</li>
+        <li><span class="feat-check"><svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>일일 아카이브 자동 생성</li>
+        <li><span class="feat-check"><svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>구매 시 렌탈 비용 일부 차감</li>
+      </ul>
+      <button class="plan-btn" type="button">Start Short Stay</button>
+    </article>
+
+    <!-- Long Stay -->
+    <article class="plan-card" data-plan="long">
+      <h2 class="plan-name">Long Stay</h2>
+      <p class="plan-price">₩239,000</p>
+      <p class="plan-period">Per 8 weeks</p>
+      <p class="plan-lead">Build a lasting routine</p>
+      <ul class="plan-features">
+        <li><span class="feat-check"><svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>1개월 이상 임시 보호</li>
+        <li><span class="feat-check"><svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>주간 리포트 &amp; 성장 기록</li>
+        <li><span class="feat-check"><svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>맞춤형 라이프스타일 학습</li>
+        <li><span class="feat-check"><svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>무료 점검 및 소프트웨어 업데이트</li>
+        <li><span class="feat-check"><svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>구매 전환 시 최대 3개월 렌탈료 차감</li>
+      </ul>
+      <button class="plan-btn" type="button">Start Long Stay</button>
+    </article>
+
+    <!-- Adopt (highlighted) -->
+    <article class="plan-card plan-card-dark" data-plan="adopt">
+      <h2 class="plan-name">Adopt <span class="plan-badge">Popular</span></h2>
+      <p class="plan-price">₩2,490,000</p>
+      <p class="plan-period">One-time purchase</p>
+      <p class="plan-lead">Welcome Lassie home forever</p>
+      <ul class="plan-features">
+        <li><span class="feat-check"><svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>래시 영구 소유</li>
+        <li><span class="feat-check"><svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>평생 계정 연동</li>
+        <li><span class="feat-check"><svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>모든 AI 기능 제공</li>
+        <li><span class="feat-check"><svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>정식 워런티 2년</li>
+        <li><span class="feat-check"><svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>모든 아카이브 영구 보관</li>
+      </ul>
+      <button class="plan-btn plan-btn-solid" type="button">Adopt Lassie</button>
+    </article>
+  </section>
+
+  <!-- ===== Site footer ===== -->
+  <footer class="site-footer-lg">
+
+    <div class="footer-main">
+      <p class="footer-brand">Lassie INC.</p>
+
+      <dl class="footer-info">
+        <dt>Address</dt>
+        <dd>seoul, republic of korea</dd>
+
+        <dt>CEO</dt>
+        <dd>
+          <span class="footer-ceo">
+            <span>Jang byeol</span><span>Park Jungmin</span>
+            <span>Yang Hyunji</span><span>Kim Junghyun</span>
+          </span>
+        </dd>
+
+        <dt>Online business<br />license</dt>
+        <dd>2026-seoul-0803</dd>
+
+        <dt>Business<br />license</dt>
+        <dd>617-42-08216</dd>
+
+        <dt>Email</dt>
+        <dd><a href="mailto:support@lassie.com">support@lassie.com</a></dd>
+
+        <dt>Customer service</dt>
+        <dd>+82 70-4821-0803</dd>
+      </dl>
+
+    </div>
+  </footer>
+
+  <script src="assets/cart.js"></script>
+  <script>
+    const menuItem = document.querySelector('.menu-item');
+    const menuToggle = document.querySelector('.menu-link-toggle');
+    const menuWrap = document.querySelector('.menu-wrap');
+    const menuNavToggle = document.getElementById('menuNavToggle');
+    const menuPanel = document.querySelector('.menu-panel');
+    const searchToggle = document.getElementById('searchToggle');
+    const searchPanel = document.getElementById('searchPanel');
+    const searchInput = document.getElementById('searchInput');
+
+    function closeSubmenu() {
+      menuItem.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+    function closeMenu() {
+      menuPanel.classList.remove('open');
+      closeSubmenu();
+    }
+    function closeSearch() {
+      searchPanel.classList.remove('open');
+    }
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuItem.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    menuNavToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (menuPanel.classList.contains('open')) {
+        closeMenu();
+      } else {
+        menuPanel.classList.add('open');
+        closeSearch();
+      }
+    });
+
+    searchToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (searchPanel.classList.contains('open')) {
+        closeSearch();
+      } else {
+        searchPanel.classList.add('open');
+        closeMenu();
+        searchInput.focus();
+      }
+    });
+
+    document.querySelector('.menu-close').addEventListener('click', closeMenu);
+
+    const navAbout = document.querySelector('.nav-about');
+    if (navAbout) navAbout.addEventListener('click', () => { closeMenu(); closeSearch(); });
+
+    document.addEventListener('click', (e) => {
+      if (!menuWrap.contains(e.target)) {
+        closeMenu();
+        closeSearch();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeMenu();
+        closeSearch();
+        searchToggle.blur();
+      }
+    });
+
+    // ---- Top Pick / All 토글: 카드 순서 변경 ----
+    //  All      → Short Stay, Long Stay, Adopt
+    //  Top Pick → Adopt, Short Stay, Long Stay
+    const plansGrid = document.getElementById('plansGrid');
+    document.querySelectorAll('.plans-seg').forEach((seg) => {
+      seg.addEventListener('click', () => {
+        document.querySelectorAll('.plans-seg').forEach((s) => {
+          s.classList.remove('active');
+          s.setAttribute('aria-selected', 'false');
+        });
+        seg.classList.add('active');
+        seg.setAttribute('aria-selected', 'true');
+        plansGrid.classList.toggle('view-top', seg.dataset.view === 'top');
+      });
+    });
+
+    // ---- 플랜 선택: 버튼 변색(D7D133) 후 Adoption으로 이동 ----
+    //  선택한 플랜(이름·금액)을 저장 → Adoption에서 해당 금액으로 구매 + 하단 표시
+    const PLAN_INFO = {
+      short: { name: 'Short Stay', price: 89000 },
+      long:  { name: 'Long Stay',  price: 239000 },
+      adopt: { name: 'Adopt',      price: 2490000 },
+    };
+    document.querySelectorAll('.plan-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.plan-card');
+        const info = PLAN_INFO[card && card.dataset.plan];
+        if (!info) return;
+        btn.classList.add('picked');
+        try { localStorage.setItem('lassie_plan', JSON.stringify(info)); } catch (e) {}
+        setTimeout(() => { window.location.href = 'adoption.html'; }, 220);
+      });
+    });
+  </script>
+</body>
+</html>

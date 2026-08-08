@@ -63,6 +63,7 @@
                 </div>
                 <a class="menu-link" href="archive.html">Archive</a>
                 <a class="menu-link" href="club.html">Club</a>
+                <a class="menu-link" href="plans.html">Plans</a>
               </div>
               <div class="menu-group">
                 <img class="menu-group-ic" src="Icon/Menu_i_icon.png" alt="" aria-hidden="true" draggable="false" />
@@ -100,34 +101,30 @@
   <section class="adopt-studio" id="adoptStudio" hidden>
     <div class="studio-stage">
       <div class="studio-colors" id="studioColors">
-        <button class="color-dot-lg selected" type="button" data-color="gray" data-label="Gray" style="background:#FCFCFC;box-shadow:0 0 0 1px #e0e0e0" aria-label="Gray 선택">
+        <button class="color-dot-lg selected" type="button" data-color="gray" data-label="Gray" aria-label="Gray 선택">
+          <img class="dot-swatch" src="assets/lassie_turn/Gray_color.svg" alt="" draggable="false" />
           <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#433E38" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <button class="color-dot-lg" type="button" data-color="beige" data-label="Beige" style="background:#EDE2D7" aria-label="Beige 선택">
+        <button class="color-dot-lg" type="button" data-color="beige" data-label="Beige" aria-label="Beige 선택">
+          <img class="dot-swatch" src="assets/lassie_turn/Beige_color.svg" alt="" draggable="false" />
           <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#433E38" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <button class="color-dot-lg" type="button" data-color="pink" data-label="Pink" style="background:#FFCAD0" aria-label="Pink 선택">
+        <button class="color-dot-lg" type="button" data-color="green" data-label="Green" aria-label="Green 선택">
+          <img class="dot-swatch" src="assets/lassie_turn/Green_color.svg" alt="" draggable="false" />
           <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#433E38" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <button class="color-dot-lg" type="button" data-color="green" data-label="Green" style="background:#D7D133" aria-label="Green 선택">
-          <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#433E38" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <button class="color-dot-lg" type="button" data-color="blue" data-label="Blue" style="background:#18CBE7" aria-label="Blue 선택">
+        <button class="color-dot-lg" type="button" data-color="indigo" data-label="Indigo" aria-label="Indigo 선택">
+          <img class="dot-swatch" src="assets/lassie_turn/Indigo_color.svg" alt="" draggable="false" />
           <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <button class="color-dot-lg" type="button" data-color="darkbrown" data-label="Dark Brown" style="background:#433E38" aria-label="Dark Brown 선택">
-          <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <button class="color-dot-lg" type="button" data-color="indigo" data-label="Indigo" style="background:#131C27" aria-label="Indigo 선택">
-          <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <button class="color-dot-lg" type="button" data-color="black" data-label="Black" style="background:#040404" aria-label="Black 선택">
+        <button class="color-dot-lg" type="button" data-color="black" data-label="Black" aria-label="Black 선택">
+          <img class="dot-swatch" src="assets/lassie_turn/Black_color.svg" alt="" draggable="false" />
           <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
 
       <div class="turn-viewport" id="turnViewport">
-        <img id="turnImg" src="assets/turn_gray/frame_01.jpg" alt="Lassie 360도 보기" draggable="false" />
+        <img id="turnImg" src="assets/lassie_turn/Gray_Turn/0330.bip.276.1.png" alt="Lassie 360도 보기" draggable="false" />
       </div>
       <p class="turn-hint">이미지를 잡고 좌우로 밀면 돌아가요</p>
 
@@ -162,6 +159,8 @@
           </div>
           <button class="detail-add-cart" type="button" id="adoptAddCart">Add to Cart</button>
         </div>
+
+        <p class="adopt-plan-note" id="adoptPlanNote" hidden></p>
       </div>
 
       <div class="adopt-move-media">
@@ -292,6 +291,18 @@
 
     // ---- Click Here: 인트로 -> 360 스튜디오 전환 ----
     const LASSIE_PRICE = 2490000;
+
+    // Plans에서 선택한 플랜 불러오기 → 금액·하단 표시에 사용
+    let selectedPlan = null;
+    try { selectedPlan = JSON.parse(localStorage.getItem('lassie_plan') || 'null'); } catch (e) {}
+    const wonKR = (n) => '₩' + Number(n).toLocaleString('ko-KR');
+    (function showPlanNote() {
+      const note = document.getElementById('adoptPlanNote');
+      if (!note || !selectedPlan) return;
+      note.innerHTML = '<span class="pnote-dot"></span>선택한 플랜 · <strong>' + selectedPlan.name +
+        '</strong> · <span class="pnote-price">' + wonKR(selectedPlan.price) + '</span>';
+      note.hidden = false;
+    })();
     const adoptIntro = document.getElementById('adoptIntro');
     const adoptStudio = document.getElementById('adoptStudio');
 
@@ -308,15 +319,13 @@
 
     // ---- 360 턴테이블 뷰어 ----
     // 색상별 프레임 세트: 새 색상이 나오면 여기에 추가하면 됨
+    // 색상별 프레임 세트 (Adoption_Lassie_Turn 폴더명·파일명 그대로 반영)
     const TURN_SETS = {
-      gray:      { dir: 'assets/turn_gray', count: 91 },
-      beige:     { dir: 'assets/turn_beige', count: 91 },
-      pink:      { dir: 'assets/turn_pink', count: 91 },
-      green:     { dir: 'assets/turn_green', count: 91 },
-      blue:      { dir: 'assets/turn_blue', count: 91 },
-      darkbrown: { dir: 'assets/turn_darkbrown', count: 91 },
-      indigo:    { dir: 'assets/turn_indigo', count: 91 },
-      black:     { dir: 'assets/turn_black', count: 91 },
+      gray:   { dir: 'assets/lassie_turn/Gray_Turn',   prefix: '0330.bip.276.', count: 12 },
+      beige:  { dir: 'assets/lassie_turn/Beige_Turn',  prefix: '0330.bip.287.', count: 12 },
+      green:  { dir: 'assets/lassie_turn/Green_Turn',  prefix: '0330.bip.280.', count: 12 },
+      indigo: { dir: 'assets/lassie_turn/Indigo_Turn', prefix: '0330.bip.278.', count: 13 },
+      black:  { dir: 'assets/lassie_turn/Black_Turn',  prefix: '0330.bip.279.', count: 12 },
     };
 
     const turnImg = document.getElementById('turnImg');
@@ -326,8 +335,8 @@
     const preloaded = {};
 
     function framePath(color, i) {
-      const num = String(i + 1).padStart(2, '0');
-      return `${TURN_SETS[color].dir}/frame_${num}.jpg`;
+      const set = TURN_SETS[color];
+      return `${set.dir}/${set.prefix}${i + 1}.png`;   // 파일명은 1-based (0330.bip.XXX.N.png)
     }
 
     function preloadFrames(color) {
@@ -349,7 +358,7 @@
 
     // 드래그 회전: 프레임 번호가 커질수록 코가 왼쪽으로 도므로,
     // 왼쪽으로 밀면(deltaX<0) 프레임이 증가해 미는 방향과 회전이 일치함
-    const DRAG_PX_PER_FRAME = 6;
+    const DRAG_PX_PER_FRAME = 30;   // 프레임이 12장(≈30°/장)이라 감도 완화
     let dragging = false;
     let dragStartX = 0;
     let dragStartFrame = 0;
@@ -420,9 +429,9 @@
     adoptAddCart.addEventListener('click', () => {
       if (!selectedColor) return;
       Cart.add({
-        id: 'lassie-' + selectedColor.id,
-        name: 'Lassie',
-        price: LASSIE_PRICE,
+        id: 'lassie-' + selectedColor.id + (selectedPlan ? '-' + selectedPlan.name.replace(/\s+/g, '') : ''),
+        name: selectedPlan ? 'Lassie · ' + selectedPlan.name : 'Lassie',
+        price: selectedPlan ? selectedPlan.price : LASSIE_PRICE,
         desc: 'Color: ' + selectedColor.label,
         color: selectedColor.label,
         image: 'assets/adoption-dog.png',
