@@ -142,7 +142,7 @@
       <div class="shop-meta">
         <button class="tryon-btn" id="tryOnBtn" type="button">Try on</button>
         <div class="shop-meta-right">
-          <span class="shop-count">Showing 1-9 of 9 Products</span>
+          <span class="shop-count">Showing 1-8 of 8 Products</span>
           <span class="shop-sort">
             Sort by: <strong>Most Popular</strong>
             <svg viewBox="0 0 14 8" class="sort-chevron" aria-hidden="true">
@@ -272,34 +272,53 @@
   <script src="assets/cart.js"></script>
   <script>
     // ---- 제품 데이터 (Accessories 폴더 기반) ----
-    const IMGROOT = 'assets/acc';
+    const IMGROOT = 'assets/acc2';
     const won = (n) => '₩' + n.toLocaleString('ko-KR');
     const imgP = (num, file) => `${IMGROOT}/${num}/${file}`;
     function isDark(hex) {
       const r = parseInt(hex.slice(0, 2), 16), g = parseInt(hex.slice(2, 4), 16), b = parseInt(hex.slice(4, 6), 16);
       return (0.299 * r + 0.587 * g + 0.114 * b) < 140;
     }
+    // 컬러 코드는 단일('6B6B6B') 또는 2색('575551-C3BF54')
+    // 2색이면 원을 가로로 반 나눠 위=첫 색, 아래=둘째 색
+    function chipStyle(code) {
+      const p = String(code).split('-');
+      return p.length > 1
+        ? `background:linear-gradient(to bottom, #${p[0]} 0 50%, #${p[1]} 50% 100%)`
+        : `background:#${p[0]}`;
+    }
+    const isDarkCode = (code) => isDark(String(code).split('-')[0]);
+    const priceText = (p) => won(p.price) + (p.priceSuffix || '');
 
     const PRODUCTS = [
-      { num: 1, id: 'style-bag',      name: 'Style Bag',      price: 54000,  colors: ['95926B','99B9D1','EAD299'],          story: '컬러 포인트가 들어간 데일리 스타일 백이에요. 가벼운 소재로 산책길 룩에 포인트를 더합니다.' },
-      { num: 2, id: 'sport-bag',      name: 'Sport Bag',      price: 66000,  colors: ['2F2F2F','80623E','E1E1DF'],          story: '활동적인 산책에 맞춘 스포츠 백입니다. 흔들림을 줄인 구조로 러닝에도 잘 맞아요.' },
-      { num: 3, id: 'lassie-bag',     name: 'Lassie Bag',     price: 75000,  colors: ['33302E','BDB8B2'],                   story: '래시 전용으로 설계된 시그니처 백이에요. 등 모듈에 밀착되어 안정적으로 고정됩니다.' },
-      { num: 4, id: 'sport-leash',    name: 'Sport Leash',    price: 56000,  colors: ['3A6CA9','F4717F','FF7342'],          story: '가볍고 튼튼한 스포츠 리쉬입니다. 선명한 컬러로 시야 확보에도 도움이 돼요.' },
-      { num: 5, id: 'leather-leash',  name: 'Leather Leash',  price: 106000, colors: ['343334','7E2325','B9AFA5','BC5E23'], story: '고급 가죽으로 마감한 리쉬예요. 사용할수록 자연스럽게 길드는 질감이 매력입니다.' },
-      { num: 6, id: 'rope-leash',     name: 'Rope Leash',     price: 76000,  colors: ['8CB4D3','969886','E9C0BB'],          story: '손에 부드럽게 감기는 로프 리쉬입니다. 장시간 산책에도 손이 편안해요.' },
-      { num: 7, id: 'boots',          name: 'Boots',          price: 65000,  colors: ['A2B1BC','C7C4CA'],                   story: '발 모듈을 보호하는 부츠예요. 거친 노면과 뜨거운 아스팔트로부터 발끝을 지켜줍니다.' },
-      { num: 8, id: 'rain-coat',      name: 'Rain Coat',      price: 126000, colors: ['363635','897A5E','C8D6CB'],          story: '우천 산책용 레인 코트입니다. 관절 부위를 정확히 덮어 비 오는 날에도 산책을 이어갈 수 있어요.' },
-      { num: 9, id: 'technical-vest', name: 'Technical Vest', price: 96000,  colors: ['363535','A59A94','D5B2A7'],          story: '기능성 아웃도어 베스트예요. 활동성과 개성을 동시에 챙겨 주는 시그니처 아이템입니다.' },
+      { num: 1, id: 'cleaning-pad',   name: 'Cleaning Pad',           price: 69000,  colors: ['6B6B6B','D1CF29'],
+        story: 'Lassie의 발의 굴곡에 맞게 외부 오염을 털어낼 수 있는 풋 클리닝 패드입니다.', notes: [] },
+      { num: 2, id: 'charging-bed',   name: 'Charging Bed',           price: 149000, colors: ['74A5A9','AEAEAE'],
+        story: 'Lassie가 편안하게 기대 충전을 할 수 있는 패브릭 소재의 충전 베드입니다.', notes: ['충전부 분리 가능'] },
+      { num: 3, id: 'running-set',    name: 'Running Set',            price: 69000,  colors: ['575551-C3BF54','A9A7AA-75BFBB'],
+        story: '러닝 시 필요한 물병과 휴대폰 등 간단한 소지품을 휴대할 수 있는 러닝 베스트입니다.', notes: ['하네스 탈부착 가능', '마그네틱 등판 결합'] },
+      { num: 4, id: 'battery-pack',   name: 'Extended Battery Pack',  price: 149000, colors: ['3F3A39-FFCAD0','D6D2CD-D7E145'],
+        story: '장시간의 야외 활동을 위해 추가 전력을 공급하며, Lassie의 바디에 안정적으로 장착할 수 있도록 설계된 보조 배터리 팩입니다.', notes: [] },
+      { num: 5, id: 'companion-leash', name: 'Companion Leash',       price: 29000,  colors: ['434342','845240','B0A49B'],
+        story: 'Lassie와 나란히 걷는 경험을 위한 리드로, 등판의 전용 고리에 간편하게 연결할 수 있습니다.', notes: [] },
+      { num: 6, id: 'rain-coat',      name: 'Rain Coat',              price: 89000,  colors: ['363635','897A5E'],
+        story: '비 오는 날에도 함께할 수 있도록, 패브릭 바디를 빗물과 오염으로부터 보호하는 전용 우비입니다.', notes: [] },
+      { num: 7, id: 'trail-vest',     name: 'Trail Vest',             price: 89000,  colors: ['363635','5B534C','6F6C55'],
+        story: '하이킹과 트레일에 필요한 장비를 안정적으로 휴대할 수 있는 기능성 베스트입니다.', notes: [] },
+      { num: 8, id: 'activity-legwear', name: 'Activity Legwear',     price: 45000,  colors: ['B5B4B5','C3BF54'], priceSuffix: ' / 4P SET',
+        story: '액티비티에 착용하기 좋은 레그웨어로, 하단 레그를 오염과 스크래치로부터 보호합니다.', notes: [] },
     ];
 
     // ---- 그리드 렌더 (처음엔 01_Basic) ----
     const grid = document.getElementById('productGrid');
     grid.innerHTML = PRODUCTS.map((p) => `
       <article class="product" data-id="${p.id}">
-        <div class="product-media"><img class="product-img" src="${imgP(p.num, '01.jpg')}" alt="${p.name}"
-             data-basic="${imgP(p.num, '01.jpg')}" data-tryon="${imgP(p.num, '02.jpg')}" /></div>
+        <div class="product-media">
+          <img class="product-img p-basic is-on" src="${imgP(p.num, '01.jpg')}" alt="${p.name}" />
+          <img class="product-img p-tryon" src="${imgP(p.num, '02.jpg')}" alt="${p.name} 착용" />
+        </div>
         <h3 class="product-name">${p.name}</h3>
-        <p class="product-price">${won(p.price)}</p>
+        <p class="product-price">${priceText(p)}</p>
       </article>`).join('');
 
     const catalog = PRODUCTS;
@@ -309,9 +328,9 @@
     let triedOn = false;
 
     function setGridImages(tryon) {
-      document.querySelectorAll('.product-img').forEach((img) => {
-        img.src = tryon ? img.dataset.tryon : img.dataset.basic;
-      });
+      // 이전 이미지 fade out / 이후 이미지 fade in (CSS transition)
+      document.querySelectorAll('.p-basic').forEach((img) => img.classList.toggle('is-on', !tryon));
+      document.querySelectorAll('.p-tryon').forEach((img) => img.classList.toggle('is-on', tryon));
     }
     tryOnBtn.addEventListener('click', () => {
       triedOn = !triedOn;
@@ -335,6 +354,7 @@
 
     let detailCurrent = null;
     let detailQty = 1;
+    let detailColor = null;   // 상세에서 선택 중인 컬러 코드
 
     function openDetail(id) {
       const item = catalog.find((c) => c.id === id);
@@ -345,19 +365,23 @@
 
       detailEls.name.innerHTML = item.name.replace(' ', '<br />');
       detailEls.watchers.textContent = 12 + Math.floor(Math.random() * 70);
-      detailEls.price.textContent = won(item.price);
-      detailEls.desc.textContent = item.story;
+      detailEls.price.textContent = priceText(item);
+      detailEls.desc.innerHTML = item.story
+        + ((item.notes && item.notes.length)
+            ? '<span class="detail-notes">' + item.notes.map((t) => '· ' + t).join('<br />') + '</span>'
+            : '');
 
       // 색상 칩 = 제품 실제 색상, 선택 시 03·04 이미지 팝업 교체
       const media1 = document.getElementById('detailMedia1');
       const media2 = document.getElementById('detailMedia2');
       function applyColor(c) {
+        detailColor = c;
         media1.innerHTML = `<img src="${imgP(item.num, '03_' + c + '.jpg')}" alt="${item.name}" />`;
         media2.innerHTML = `<img src="${imgP(item.num, '04_' + c + '.jpg')}" alt="${item.name}" />`;
       }
       detailEls.colors.innerHTML = item.colors.map((c, i) => {
-        const stroke = isDark(c) ? '#fff' : '#1e2a3d';
-        return `<button type="button" class="color-dot${i === 0 ? ' selected' : ''}" style="background:#${c}" data-color="${c}" aria-label="색상 #${c}">
+        const stroke = isDarkCode(c) ? '#fff' : '#1e2a3d';
+        return `<button type="button" class="color-dot${i === 0 ? ' selected' : ''}" style="${chipStyle(c)}" data-color="${c}" aria-label="색상 ${c}">
           <svg viewBox="0 0 12 10" aria-hidden="true"><path d="M1 5.2 4.4 8.6 11 1.4" stroke="${stroke}" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>`;
       }).join('');
@@ -377,7 +401,7 @@
         <button type="button" class="also-card" data-id="${o.id}">
           <span class="also-media" style="background-image:url('${imgP(o.num, '01.jpg')}')"></span>
           <span class="also-name">${o.name}</span>
-          <span class="also-price">${won(o.price)}</span>
+          <span class="also-price">${priceText(o)}</span>
         </button>`).join('');
       detailEls.also.querySelectorAll('.also-card').forEach((card) => {
         card.addEventListener('click', () => openDetail(card.dataset.id));
@@ -417,10 +441,12 @@
     detailEls.addCart.addEventListener('click', () => {
       if (!detailCurrent) return;
       Cart.add({
-        id: detailCurrent.id,
+        id: detailCurrent.id + (detailColor ? '-' + detailColor : ''),
         name: detailCurrent.name,
         price: detailCurrent.price,
         desc: detailCurrent.name,
+        color: Cart.colorLabel(detailColor),
+        colorCode: detailColor || '',
         image: imgP(detailCurrent.num, '01.jpg'),
         qty: detailQty,
       });

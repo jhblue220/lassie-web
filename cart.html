@@ -128,7 +128,7 @@
 
         <div class="promo-row">
           <div class="promo-input-wrap">
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3h6a1 1 0 0 1 1 1v6a1 1 0 0 1-.3.7l-7 7a1 1 0 0 1-1.4 0l-6-6a1 1 0 0 1 0-1.4l7-7A1 1 0 0 1 10 3Z" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linejoin="round"/><circle cx="14.5" cy="6.5" r="1.1" fill="currentColor"/></svg>
+            <img class="promo-coupon-ic" src="Icon/Icon_SVG/Cart_Couponicon.svg" alt="" aria-hidden="true" draggable="false" />
             <input type="text" id="promoInput" placeholder="Add promo code" />
           </div>
           <button class="btn-dark-pill" type="button" id="applyPromoBtn">Apply</button>
@@ -435,7 +435,11 @@
                 <img src="Icon/Icon_SVG/Trashcan_Icon.svg" alt="삭제" draggable="false" />
               </button>
             </div>
-            ${item.color ? `<p class="cart-item-color">Color: <span>${item.color}</span></p>` : ''}
+            ${(item.color || item.colorCode) ? `
+              <div class="cart-item-color-wrap">
+                <p class="cart-item-color">Color: <span>${item.color || Cart.colorLabel(item.colorCode)}</span></p>
+                ${item.colorCode ? `<span class="cart-color-chip" style="${Cart.chipStyle(item.colorCode)}" aria-hidden="true"></span>` : ''}
+              </div>` : ''}
             <div class="cart-item-bottom">
               <p class="cart-item-price">${won(item.price)}</p>
               <div class="qty-stepper">

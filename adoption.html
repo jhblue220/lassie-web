@@ -115,9 +115,9 @@
       <p class="turn-hint">래시를 좌우로 돌려보세요</p>
 
       <div class="adopt-accessories studio-accessories">
-        <div class="adopt-accessory-thumb"><img src="assets/acc/1/01.jpg" alt="Style Bag" /></div>
-        <div class="adopt-accessory-thumb"><img src="assets/acc/4/01.jpg" alt="Sport Leash" /></div>
-        <div class="adopt-accessory-thumb"><img src="assets/acc/7/01.jpg" alt="Boots" /></div>
+        <div class="adopt-accessory-thumb"><img src="assets/acc2/3/01.jpg" alt="Running Set" /></div>
+        <div class="adopt-accessory-thumb"><img src="assets/acc2/5/01.jpg" alt="Companion Leash" /></div>
+        <div class="adopt-accessory-thumb"><img src="assets/acc2/8/01.jpg" alt="Activity Legwear" /></div>
       </div>
     </div>
 
@@ -347,6 +347,16 @@
 
     // ---- 색상 도트: 선택 시 같은 회전 각도에서 해당 색상 모델로 교체 ----
     const colorDots = document.querySelectorAll('.color-dot-lg');
+    // 장바구니용: 색상별 11번 프레임 이미지 + 스와치 컬러 코드
+    const CART_IMG = {
+      gray:   'assets/lassie_turn/Gray_Turn/0330.bip.276.11.png',
+      beige:  'assets/lassie_turn/Beige_Turn/0330.bip.287.11.png',
+      green:  'assets/lassie_turn/Green_Turn/0330.bip.280.11.png',
+      indigo: 'assets/lassie_turn/Indigo_Turn/0330.bip.278.11.png',
+      black:  'assets/lassie_turn/Black_Turn/0330.bip.279.11.png',
+    };
+    const CART_HEX = { gray: 'E5E4E4', beige: 'A98F72', green: 'BFC392', indigo: '525F74', black: '5C5C5D' };
+
     let selectedColor = { id: 'gray', label: 'Gray' };
 
     colorDots.forEach((dot) => {
@@ -393,7 +403,8 @@
         price: selectedPlan ? selectedPlan.price : LASSIE_PRICE,
         desc: 'Color: ' + selectedColor.label,
         color: selectedColor.label,
-        image: 'assets/adoption-dog.png',
+        colorCode: CART_HEX[selectedColor.id] || '',
+        image: CART_IMG[selectedColor.id] || CART_IMG.gray,
         qty: adoptQty,
       });
       const original = adoptAddCart.textContent;

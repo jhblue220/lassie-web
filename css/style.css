@@ -2014,12 +2014,18 @@ body.adoption-page .site-header {
 }
 
 /* 장바구니 항목에 실제 상품 이미지가 있을 때 */
-.cart-item-media-photo { background: #f4f4f3; }
+/* 상품 배경을 F6F6F6으로 통일.
+   multiply 블렌드로 사진의 흰 배경만 F6F6F6이 되고 제품은 거의 영향 없음
+   (투명 PNG는 투명 영역이 그대로 배경색으로 보인다) */
+.cart-item-media-photo { background: #F6F6F6; }
 .cart-item-media-photo img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  mix-blend-mode: multiply;
 }
+
+.promo-coupon-ic { width: 16px; height: 16px; flex-shrink: 0; display: block; }
 
 /* ===== Cart badge & add-to-cart button ===== */
 .icon-btn { position: relative; }
@@ -2146,6 +2152,17 @@ body.adoption-page .site-header {
 
 .cart-item-color { margin-top: 8px; font-size: 14px; color: var(--navy); }
 .cart-item-color span { color: #9aa1ab; }
+
+/* Color 라벨 아래 좌측정렬 컬러칩 (2색은 위/아래로 반 나눔) */
+.cart-item-color-wrap { display: flex; flex-direction: column; align-items: flex-start; }
+.cart-color-chip {
+  display: block;
+  margin-top: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(30, 42, 61, 0.12);
+}
 
 .cart-item-bottom {
   margin-top: 34px;
@@ -2450,8 +2467,28 @@ body.adoption-page .site-header {
 }
 
 /* ===== Accessories: 실제 제품 이미지 + Try on ===== */
-.product-media { padding: 0; overflow: hidden; }
-.product-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.product-media { position: relative; padding: 0; overflow: hidden; }
+
+/* 기본/착용 이미지를 겹쳐 두고 Try on 시 crossfade */
+.product-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.product-img.is-on { opacity: 1; }
+
+/* 상세 설명 하단 각주 (· 항목) */
+.detail-notes {
+  display: block;
+  margin-top: 18px;
+  color: #9aa1ab;
+  line-height: 1.9;
+}
 
 .shop-meta { justify-content: space-between; }
 .shop-meta-right { display: inline-flex; align-items: center; gap: 44px; }
