@@ -22,5 +22,10 @@ archive_photo/
 
 # Windows 탐색기가 만드는 시스템 파일
 desktop.ini
+
+# 아직 어느 페이지에도 붙지 않은 소재. 저장소가 public이라 실수로 공개되지 않게 막아둔다.
+# 실제로 페이지에 연결할 때 아래 두 줄을 지우고 함께 커밋할 것.
+/Error/
+/FAQ_easteregg/
 # 레그 전환 자동클릭 테스트용 사본 (adoption.html의 사본이라 배포에 불필요)
 _t_leg.html
