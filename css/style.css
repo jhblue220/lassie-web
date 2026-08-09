@@ -31,9 +31,9 @@ input { font-family: inherit; }
 .nav-ic-14 { width: 14.98px; height: 14.98px; }   /* Archive·FAQ */
 .nav-ic-15 { width: 16.05px; height: 16.05px; }   /* Club */
 
-/* 현재 페이지의 우측 아이콘(장바구니·프로필)만 15% 투명 — 배지 숫자는 제외 */
-.icon-btn.icon-current .ic { opacity: 0.15; }
-.icon-btn.icon-current { border-color: rgba(30, 42, 61, 0.075); }
+/* 현재 페이지의 우측 아이콘(장바구니·프로필): 투명도 15%만큼 낮춤 — 배지 숫자는 제외 */
+.icon-btn.icon-current .ic { opacity: 0.85; }
+.icon-btn.icon-current { border-color: rgba(30, 42, 61, 0.425); }
 
 /* Placeholder boxes */
 .ph {
@@ -1664,25 +1664,25 @@ body.detail-open { overflow: hidden; }
 }
 .detail-overlay.open .detail-panel { transform: translateX(0); }
 
+/* 닫기 화살표: 원형 배경 없이, 화면 좌측 끝에서 30px 안쪽(어두운 backdrop 위)에 배치 */
 .detail-back {
   position: absolute;
-  left: -22px;
-  top: 460px;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: #fff;
-  border: 1px solid #e7e7e9;
+  left: 30px;
+  top: 50%;
+  margin-top: -12px;
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  box-shadow: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--navy);
   z-index: 2;
-  box-shadow: 0 4px 14px rgba(30, 42, 61, 0.1);
+  transition: opacity 0.2s ease;
 }
-.detail-back svg { width: 8px; height: 12px; }
-.detail-back-ic { width: 13px; height: 13px; display: block; }
-.detail-back:hover { background: #f5f5f4; }
+.detail-back-ic { width: 24px; height: 24px; display: block; }
+.detail-back:hover { opacity: 0.65; }
 
 .detail-scroll {
   height: 100%;
@@ -1983,13 +1983,15 @@ body.adoption-page .site-header {
   gap: 0;
   align-items: stretch;
   padding: 90px 0 0;
+  margin-bottom: 32px;       /* 하단 끝 ~ 검은색 푸터 사이 간격 */
   background: #fff;
 }
 
+/* 텍스트 컬럼 폭 = 본문(가장 넓은 줄) 폭 → 선·Weatherproof·Add to Cart 우측 끝이 본문 우측 끝과 일치 */
 .adopt-move-col {
-  flex: 0 0 731px;
+  flex: 0 0 auto;
   min-width: 0;
-  padding: 0 120px 0 51px;   /* 우측 120px = Add to Cart ~ 이미지 박스 간격 */
+  padding: 0 130px 0 51px;   /* 우측 130px = 본문 우측 끝 ~ 이미지 박스 시작 */
 }
 
 .adopt-move-title {
@@ -2001,20 +2003,21 @@ body.adoption-page .site-header {
   color: var(--navy);
 }
 
+/* 지정된 줄바꿈(<br>)대로만 개행 → 가장 긴 줄의 폭이 컬럼 폭 기준선이 된다 */
 .adopt-move-desc {
   margin-top: 22px;
-  max-width: 560px;
+  width: max-content;
+  max-width: none;
   font-size: 15.5px;
   line-height: 1.75;
   color: #6f7680;
 }
 
-/* 4개 태그를 560px 폭에 고르게 펼쳐 Weatherproof 우측 끝이 본문 우측 끝과 일치 */
+/* 4개 태그를 본문 폭에 고르게 펼쳐 Weatherproof 우측 끝이 본문 우측 끝과 일치 */
 .adopt-tags {
   margin-top: 36px;
   padding-top: 30px;
   border-top: 1px solid #ececee;
-  max-width: 560px;
   justify-content: space-between;
 }
 
@@ -2022,8 +2025,10 @@ body.adoption-page .site-header {
   margin-top: 30px;
   padding-top: 30px;
   border-top: 1px solid #ececee;
-  max-width: 560px;
+  align-items: stretch;      /* 수량 박스 세로 폭을 Add to Cart와 동일하게 */
 }
+
+.adopt-buy-row .detail-qty { padding-top: 0; padding-bottom: 0; }
 
 /* Add to Cart도 Pretendard SemiBold */
 .adopt-buy-row .detail-add-cart {
@@ -2031,7 +2036,8 @@ body.adoption-page .site-header {
   font-weight: 600;
 }
 
-/* 우측 이미지 박스: Adoption_Photo 1~9를 페이드로 순환 */
+/* 우측 이미지 박스: 좌측은 본문 우측 끝 +130px, 우측은 화면 끝까지
+   세로는 제목 상단 ~ Add to Cart 하단 (컬럼 높이에 stretch) */
 .adopt-move-media {
   position: relative;
   flex: 1 1 auto;
@@ -2039,19 +2045,17 @@ body.adoption-page .site-header {
   background: #f0eeed;
   overflow: hidden;
 }
+/* absolute: 사진의 고유 높이가 행 높이를 밀어내지 않도록(= 텍스트 컬럼 높이에 정확히 맞춤) */
 .adopt-move-media img {
   position: absolute;
   inset: 0;
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;         /* 비율 유지 + 박스에 꽉 차게 크롭 */
-  opacity: 0;
-  transition: opacity 1.1s ease;
+  object-fit: cover;         /* 비율 유지 + 박스에 꽉 차게 */
   -webkit-user-drag: none;
   user-select: none;
 }
-.adopt-move-media img.is-active { opacity: 1; }
 
 /* 장바구니 항목에 실제 상품 이미지가 있을 때 */
 .cart-item-media-photo { background: #f4f4f3; }

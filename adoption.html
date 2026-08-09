@@ -125,8 +125,8 @@
       <div class="adopt-move-col">
         <h2 class="adopt-move-title">Made to Move Together</h2>
         <p class="adopt-move-desc">
-          당신과 래시는 활동적인 일상과 새로운 야외 경험을 즐긴다는 공통점을 가지고 있어요.
-          함께 달리며 서로의 속도를 맞추고, 익숙한 길을 벗어나 새로운 장소를 탐색하며
+          당신과 래시는 활동적인 일상과 새로운 야외 경험을 즐긴다는 공통점을 가지고 있어<br />
+          요. 함께 달리며 서로의 속도를 맞추고, 익숙한 길을 벗어나 새로운 장소를 탐색하며<br />
           자연스럽게 더 많은 시간을 바깥에서 보내게 됩니다.
         </p>
 
@@ -147,8 +147,9 @@
         </div>
       </div>
 
-      <!-- Adoption_Photo 1~9가 페이드 인/아웃으로 순환 (JS에서 생성) -->
-      <div class="adopt-move-media" id="adoptMoveMedia" aria-hidden="true"></div>
+      <div class="adopt-move-media">
+        <img src="assets/club_image/1.jpg" alt="래시와 함께하는 야외 활동" draggable="false" />
+      </div>
     </div>
   </section>
 
@@ -274,31 +275,6 @@
     // 진입 즉시 360 프레임 프리로드
     window.addEventListener('load', () => preloadFrames('gray'));
 
-    // ---- 우측 이미지 박스: Adoption_Photo 1~9 페이드 순환 ----
-    (function initMovePhotos() {
-      const box = document.getElementById('adoptMoveMedia');
-      if (!box) return;
-      const PHOTO_N = 9;
-      const HOLD_MS = 3200;            // 한 장이 머무는 시간 (페이드 1.1s 포함)
-
-      const imgs = [];
-      for (let i = 1; i <= PHOTO_N; i++) {
-        const im = new Image();
-        im.src = `Adoption_Photo/${i}.png`;
-        im.alt = '';
-        im.draggable = false;
-        box.appendChild(im);
-        imgs.push(im);
-      }
-      imgs[0].classList.add('is-active');
-
-      let cur = 0;
-      setInterval(() => {
-        imgs[cur].classList.remove('is-active');       // fade out
-        cur = (cur + 1) % PHOTO_N;
-        imgs[cur].classList.add('is-active');          // fade in
-      }, HOLD_MS);
-    })();
 
     // ---- 360 턴테이블 뷰어 ----
     // 색상별 프레임 세트: 새 색상이 나오면 여기에 추가하면 됨
