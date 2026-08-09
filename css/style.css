@@ -341,8 +341,8 @@ textarea:focus-visible {
 .search-pill-input::placeholder { color: #9aa1ab; }
 
 .icon-btn {
-  width: 46px;
-  height: 46px;
+  width: 50.6px;                              /* 46px에서 10% 확대 */
+  height: 50.6px;
   border-radius: 50%;
   background: transparent;                    /* 흰 배경 제거 → 투명 */
   border: 1px solid rgba(30, 42, 61, 0.5);    /* 스트로크 50% */
@@ -351,7 +351,7 @@ textarea:focus-visible {
   justify-content: center;
   color: var(--navy);
 }
-.icon-btn .ic { width: 16.38px; height: 16.38px; }   /* 12.6px에서 1.3배 */
+.icon-btn .ic { width: 18.02px; height: 18.02px; }   /* 16.38px에서 10% 확대 */
 
 
 /* ===== Hero (배경 이미지 + Click & See 영상 재생) ===== */
@@ -893,6 +893,8 @@ textarea:focus-visible {
 
 .filter-links-light .filter-link { color: #b3b8bf; }
 .filter-links-light .filter-link:hover { color: var(--navy); }
+/* 연한 목록(Style)은 위 규칙이 .active와 우선순위가 같아 색을 덮어쓰므로 따로 지정한다 */
+.filter-links-light .filter-link.active { opacity: 1; color: var(--navy); font-weight: 600; }
 
 .filter-section {
   border-top: 1px solid #e7e7e9;
@@ -1901,7 +1903,7 @@ body.adoption-page .site-header {
 }
 .turn-viewport.grabbing { cursor: grabbing; }
 
-/* ===== Adoption 히어로 (Reference 11) — 좌:정보 / 중앙:360 / 우:이미지 박스 4개 ===== */
+/* ===== Adoption 히어로 (Reference 11) — 좌:정보 / 중앙:360 ===== */
 .adopt-hero { padding: 24px 26px 40px; }
 
 .adopt-lassie-title {
@@ -1914,12 +1916,12 @@ body.adoption-page .site-header {
 }
 
 .adopt-cols {
-  --abox: 104px;             /* 우측 정방형 박스 한 변 */
-  --agap: 16px;              /* 박스 사이 간격 */
+  --abox: 104px;             /* 행 높이 산출용 기준값 (과거 우측 박스 한 변) */
+  --agap: 16px;              /* 행 높이 산출용 간격 */
   display: flex;
-  align-items: stretch;      /* 좌·중앙·우 높이를 맞춰 상·하단 끝선을 정렬 */
+  align-items: stretch;      /* 좌·중앙 높이를 맞춰 상·하단 끝선을 정렬 */
   gap: 24px;
-  /* 행 높이 = 정방형 박스 4개 + 간격 3개 → 강아지 상·하단, 버튼 하단이 모두 이 선에 맞는다 */
+  /* 행 높이는 그대로 유지 → 강아지 상·하단, 버튼 하단이 모두 이 선에 맞는다 */
   height: calc(var(--abox) * 4 + var(--agap) * 3);
 }
 
@@ -1951,7 +1953,7 @@ body.adoption-page .site-header {
 
 /* 중앙 360 뷰어 — 360 인디케이터를 강아지 이미지에 겹쳐 배치 */
 .adopt-center { flex: 1 1 auto; min-width: 0; position: relative; display: flex; align-items: stretch; justify-content: center; }
-.adopt-center .turn-viewport { position: relative; width: 100%; margin: 0; }
+.adopt-center .turn-viewport { position: relative; width: 100%; margin: 0; z-index: 1; }
 /* 프레임 PNG는 상 9.21% / 하 9.69%가 투명 여백이라, 강아지 실물이 행 높이를 꽉 채우도록 보정
    (높이 100/81.1 = 123.3%, 위로 9.21%×1.233 = 11.36% 끌어올림) */
 .adopt-center .turn-viewport img {
@@ -1965,18 +1967,19 @@ body.adoption-page .site-header {
 }
 .adopt-360 {
   position: absolute;
-  left: 50%;
-  bottom: 4%;
+  /* 12번 프레임에서 강아지 중심(x=594.5)이 이미지 중심(550)보다 오른쪽으로 치우쳐 있다.
+     원본 +44.5px에 렌더 배율(행높이 464px×1.233 ÷ 619)을 곱해 약 +41px 보정. */
+  left: calc(50% + 41px);
+  bottom: calc(4% - 20px);   /* 강아지에 너무 붙어 있어 20px 내림 */
   transform: translateX(-50%);
   width: 42%;
   max-width: 420px;
   height: auto;
   pointer-events: none;
+  z-index: 0;                /* 투명배경 강아지 이미지보다 아래 레이어 */
 }
 
-/* 우측 이미지 박스 4개 — 정방형, 상단은 소개글 상단에 정렬 */
-.adopt-boxes { flex: 0 0 var(--abox); display: flex; flex-direction: column; gap: var(--agap); }
-.adopt-box { flex: none; width: var(--abox); height: var(--abox); background: #F6F6F6; border-radius: 16px; display: block; }
+/* 우측 이미지 박스 4개는 제거했다. --abox·--agap은 행 높이 계산에만 남겨둔다. */
 
 /* ===== Adoption: Leg 선택 ===== */
 /* 태그 ↔ 레그 썸네일 자리 (겹치지 않게 같은 영역 사용) */
@@ -1984,27 +1987,32 @@ body.adoption-page .site-header {
 .adopt-swap > * { transition: opacity 0.5s ease; }
 .adopt-swap > .is-hidden { opacity: 0; }
 
-.adopt-legs { display: flex; gap: 12px; }
+/* 태그가 있던 자리의 상단 끝선에 맞춰 띄운다 (아래 요소를 밀지 않도록 절대배치) */
+.adopt-legs { position: absolute; top: 0; left: 0; right: 0; display: flex; gap: 12px; }
 .leg-thumb {
   flex: 1 1 0;
   aspect-ratio: 1 / 1;
   padding: 0;
   background: #F6F6F6;
-  border: 1.5px solid transparent;
+  border: 4px solid transparent;   /* border-box라 선택 시에도 크기가 변하지 않는다 */
   border-radius: 18px;
   overflow: hidden;
-  transition: border-color 0.25s ease, background 0.25s ease;
+  opacity: 0.6;
 }
 .leg-thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
-.leg-thumb.selected { border-color: #c9ccd1; background: #fff; }
+/* 고른 레그만 불투명 + 4px 스트로크 */
+.leg-thumb.selected { opacity: 1; border-color: #E1E1E1; }
 
 /* 소개글 ↔ 레그 설명 전환 */
 .adopt-lassie-sub { transition: opacity 0.5s ease; }
 .adopt-lassie-sub.is-hidden { opacity: 0; }
 
 /* 턴테이블 위에 겹치는 레그 이미지 (본체와 같은 위치·크기) */
-#turnImg, .leg-overlay { transition: opacity 0.5s ease; }
-#turnImg.is-hidden, .leg-overlay.is-hidden { opacity: 0; }
+/* 페이드는 Choose a Leg 진입 시 각도 초기화에만 쓴다. 레그 교체는 즉시 전환. */
+#turnImg { transition: opacity 0.5s ease; }
+#turnImg.is-hidden { opacity: 0; }
+.leg-overlay { transition: none; }
+#turnImg.is-off { visibility: hidden; }   /* 레그를 보는 동안 본체를 즉시 감춤 */
 .leg-overlay {
   position: absolute;
   top: -11.36%;

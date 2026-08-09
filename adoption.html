@@ -162,14 +162,6 @@
           </div>
           <img class="adopt-360" src="Icon/Icon_SVG/Adoption_360.svg" alt="360도 회전" draggable="false" />
         </div>
-
-        <!-- 우: 이미지 박스 4개 -->
-        <div class="adopt-boxes" aria-hidden="true">
-          <span class="adopt-box"></span>
-          <span class="adopt-box"></span>
-          <span class="adopt-box"></span>
-          <span class="adopt-box"></span>
-        </div>
       </div>
     </div>
 
@@ -401,53 +393,22 @@
       });
     }
 
-    // 연속 클릭 시 늦게 도착한 타이머가 최신 상태를 덮어쓰지 않도록 하는 토큰
-    let legSwapToken = 0;
-
     // 선택한 레그를 뷰어에 반영 (basic이면 1번 프레임, 그 외엔 전용 이미지)
+    // 교체는 페이드 없이 즉시 이뤄진다.
     function applyLeg(leg) {
       selectedLeg = leg;
       const info = LEGS[leg];
       adoptLegNote.innerHTML = `${info.name} / ${info.note}<br />${info.desc}`;
 
-      const token = ++legSwapToken;
-      const nextSrc = leg === 'basic' ? '' : `assets/legs/${selectedColor.id}_${leg}.png`;
-      const showingOverlay = !legImg.hidden;
-
-      // 이미 같은 이미지를 띄우고 있으면 굳이 다시 페이드하지 않는다
-      if (nextSrc && showingOverlay && legImg.getAttribute('src') === nextSrc) return;
-
-      // 레그 → Basic : 오버레이 fade out ↔ 본체 fade in (교차)
-      if (!nextSrc) {
-        if (!showingOverlay) return;
-        legImg.classList.add('is-hidden');
-        turnImg.classList.remove('is-hidden');
-        setTimeout(() => { if (token === legSwapToken) legImg.hidden = true; }, FADE);
+      if (leg === 'basic') {
+        legImg.hidden = true;
+        turnImg.classList.remove('is-off');
         return;
       }
 
-      // Basic → 레그 : 본체 fade out ↔ 오버레이 fade in (교차)
-      if (!showingOverlay) {
-        legImg.src = nextSrc;
-        legImg.hidden = false;
-        legImg.classList.add('is-hidden');
-        requestAnimationFrame(() => {
-          if (token !== legSwapToken) return;
-          legImg.classList.remove('is-hidden');
-          turnImg.classList.add('is-hidden');
-        });
-        return;
-      }
-
-      // 레그 → 다른 레그(또는 컬러 변경) : 같은 자리이므로 fade out 후 교체해 fade in
-      legImg.classList.add('is-hidden');
-      setTimeout(() => {
-        if (token !== legSwapToken) return;
-        legImg.src = nextSrc;
-        requestAnimationFrame(() => {
-          if (token === legSwapToken) legImg.classList.remove('is-hidden');
-        });
-      }, FADE);
+      legImg.src = `assets/legs/${selectedColor.id}_${leg}.png`;
+      legImg.hidden = false;
+      turnImg.classList.add('is-off');
     }
 
     // Choose a Leg → 태그 자리에 레그 썸네일 노출 + 1번 프레임으로 복귀
