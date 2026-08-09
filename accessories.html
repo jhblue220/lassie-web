@@ -74,7 +74,7 @@
         </div>
       </div>
       <a class="icon-btn" href="cart.html" aria-label="Cart">
-        <img class="ic" src="Icon/Icon_SVG/Cart_Icon.svg" alt="" aria-hidden="true" draggable="false" />
+        <img class="ic" src="Icon/Icon_SVG/Main_Carticon.svg" alt="" aria-hidden="true" draggable="false" />
         <span class="cart-badge" id="cartBadge"></span>
       </a>
       <a class="icon-btn" href="profile.html" aria-label="Account">
@@ -95,12 +95,11 @@
         </svg>
       </div>
 
-      <nav class="filter-links">
-        <a class="filter-link" href="#">All</a>
-        <a class="filter-link" href="#">Wearables</a>
-        <a class="filter-link" href="#">Outdoor Gear</a>
-        <a class="filter-link" href="#">Carry &amp; Utility</a>
-        <a class="filter-link" href="#">Safety &amp; Visibility</a>
+      <nav class="filter-links" id="catFilters">
+        <button class="filter-link active" type="button" data-cat="all">All</button>
+        <button class="filter-link" type="button" data-cat="home">Home</button>
+        <button class="filter-link" type="button" data-cat="outdoor">Outdoor</button>
+        <button class="filter-link" type="button" data-cat="protection">Protection</button>
       </nav>
 
       <div class="filter-section">
@@ -164,12 +163,6 @@
         </a>
         <div class="page-numbers">
           <a class="page-num current" href="#">1</a>
-          <a class="page-num" href="#">2</a>
-          <a class="page-num" href="#">3</a>
-          <span class="page-ellipsis">&hellip;</span>
-          <a class="page-num" href="#">8</a>
-          <a class="page-num" href="#">9</a>
-          <a class="page-num" href="#">10</a>
         </div>
         <a class="page-next" href="#">
           Next
@@ -235,39 +228,6 @@
     </aside>
   </div>
 
-  <!-- ===== Site footer ===== -->
-  <footer class="site-footer-lg">
-
-    <div class="footer-main">
-      <p class="footer-brand">Lassie INC.</p>
-
-      <dl class="footer-info">
-        <dt>Address</dt>
-        <dd>seoul, republic of korea</dd>
-
-        <dt>Designers</dt>
-        <dd>
-          <span class="footer-ceo">
-            <span>Jang byeol</span><span>Park Jungmin</span>
-            <span>Yang Hyunji</span><span>Kim Junghyun</span>
-          </span>
-        </dd>
-
-        <dt>Online business<br />license</dt>
-        <dd>2026-Seoul-0811</dd>
-
-        <dt>Business<br />license</dt>
-        <dd>617-42-08216</dd>
-
-        <dt>Email</dt>
-        <dd><a href="mailto:support@lassie.com">support@lassie.com</a></dd>
-
-        <dt>Customer service</dt>
-        <dd>+82 70-4821-0803</dd>
-      </dl>
-
-    </div>
-  </footer>
 
   <script src="assets/cart.js"></script>
   <script>
@@ -310,8 +270,13 @@
     ];
 
     // ---- 그리드 렌더 (처음엔 01_Basic) ----
+    // 카테고리: Home=01·02, Outdoor=03·04·05·07, Protection=06·08
+    const CATS = { home: [1, 2], outdoor: [3, 4, 5, 7], protection: [6, 8] };
     const grid = document.getElementById('productGrid');
-    grid.innerHTML = PRODUCTS.map((p) => `
+    const shopCount = document.querySelector('.shop-count');
+
+    function renderGrid(list) {
+      grid.innerHTML = list.map((p) => `
       <article class="product" data-id="${p.id}">
         <div class="product-media">
           <img class="product-img p-basic is-on" src="${imgP(p.num, '01.jpg')}" alt="${p.name}" />
@@ -320,12 +285,16 @@
         <h3 class="product-name">${p.name}</h3>
         <p class="product-price">${priceText(p)}</p>
       </article>`).join('');
+      if (shopCount) shopCount.textContent = `Showing 1-${list.length} of ${list.length} Products`;
+      setGridImages(triedOn);          // 현재 Try on 상태 유지
+      bindProductClicks();
+    }
 
     const catalog = PRODUCTS;
+    let triedOn = false;
 
     // ---- Try on / Take off: 버튼 색상만 바뀌고 이미지 교체 ----
     const tryOnBtn = document.getElementById('tryOnBtn');
-    let triedOn = false;
 
     function setGridImages(tryon) {
       // 이전 이미지 fade out / 이후 이미지 fade in (CSS transition)
@@ -419,8 +388,21 @@
       document.body.classList.remove('detail-open');
     }
 
-    document.querySelectorAll('.product').forEach((product) => {
-      product.querySelector('.product-media').addEventListener('click', () => openDetail(product.dataset.id));
+    function bindProductClicks() {
+      document.querySelectorAll('.product').forEach((product) => {
+        product.querySelector('.product-media').addEventListener('click', () => openDetail(product.dataset.id));
+      });
+    }
+
+    // 초기 렌더 + 카테고리 필터
+    renderGrid(PRODUCTS);
+    document.querySelectorAll('#catFilters .filter-link').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#catFilters .filter-link').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.dataset.cat;
+        renderGrid(cat === 'all' ? PRODUCTS : PRODUCTS.filter((p) => CATS[cat].includes(p.num)));
+      });
     });
 
     document.getElementById('detailBackdrop').addEventListener('click', closeDetail);
@@ -447,7 +429,7 @@
         desc: detailCurrent.name,
         color: Cart.colorLabel(detailColor),
         colorCode: detailColor || '',
-        image: imgP(detailCurrent.num, '01.jpg'),
+        image: imgP(detailCurrent.num, detailColor ? ('03_' + detailColor + '.jpg') : '01.jpg'),
         qty: detailQty,
       });
       detailEls.addCart.textContent = 'Added ✓';

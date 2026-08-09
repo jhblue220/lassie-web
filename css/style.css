@@ -351,7 +351,7 @@ textarea:focus-visible {
   justify-content: center;
   color: var(--navy);
 }
-.icon-btn .ic { width: 21px; height: 21px; }
+.icon-btn .ic { width: 12.6px; height: 12.6px; }   /* 기존 21px에서 40% 축소 */
 
 
 /* ===== Hero (배경 이미지 + Click & See 영상 재생) ===== */
@@ -882,9 +882,14 @@ textarea:focus-visible {
   text-decoration: none;
   font-size: 13.5px;
   color: #6f7680;
+  text-align: left;
+  padding: 0;
 }
 
 .filter-link:hover { color: var(--navy); }
+
+/* 선택된 카테고리는 투명도를 15% 낮춤 */
+.filter-link.active { opacity: 0.85; color: var(--navy); font-weight: 600; }
 
 .filter-links-light .filter-link { color: #b3b8bf; }
 .filter-links-light .filter-link:hover { color: var(--navy); }
@@ -1850,17 +1855,7 @@ body.adoption-page .site-header {
 }
 .adopt-studio.entered { opacity: 1; }
 
-.studio-stage {
-  position: relative;
-  background: #fff;
-  padding: 34px 0 40px;
-}
 
-.studio-colors {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-}
 
 .color-dot-lg {
   position: relative;
@@ -1889,6 +1884,53 @@ body.adoption-page .site-header {
 }
 .turn-viewport.grabbing { cursor: grabbing; }
 
+/* ===== Adoption 히어로 (Reference 11) — 좌:정보 / 중앙:360 / 우:이미지 박스 4개 ===== */
+.adopt-hero { padding: 24px 26px 40px; }
+
+.adopt-lassie-title {
+  font-size: 72px;
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: var(--navy);
+  margin-bottom: 34px;
+}
+
+.adopt-cols {
+  display: flex;
+  align-items: stretch;      /* 좌·중앙·우 높이를 맞춰 상·하단 끝선을 정렬 */
+  gap: 24px;
+  min-height: calc(100vh - 300px);
+}
+
+/* 좌측 컬럼 */
+.adopt-left { flex: 0 0 33%; display: flex; flex-direction: column; min-width: 0; }
+.adopt-lassie-sub { font-size: 15px; line-height: 1.7; color: #8E9297; }
+.adopt-rule { height: 1px; background: #ececee; margin: 26px 0; }
+.adopt-bottom { margin-top: auto; }        /* 컬러·구분선·구매행을 하단에 정렬 */
+.adopt-hero .adopt-tags {
+  margin-top: 0; padding-top: 0; border-top: none; max-width: none;
+  display: flex; flex-wrap: nowrap; gap: 12px; justify-content: flex-start;
+}
+.adopt-hero .detail-tag { padding: 9px 15px; font-size: 13.5px; white-space: nowrap; }
+/* 컬러칩은 가로 한 줄 */
+.adopt-hero .studio-colors {
+  display: flex; flex-direction: row; align-items: center;
+  justify-content: flex-start; gap: 14px; margin-bottom: 0;
+}
+.adopt-hero .adopt-buy-row { margin-top: 0; padding-top: 0; border-top: none; }
+
+/* 중앙 360 뷰어 */
+.adopt-center { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; align-items: center; }
+.adopt-center .turn-viewport { flex: 1 1 auto; width: 100%; margin: 0; display: flex; align-items: center; justify-content: center; }
+.adopt-center .turn-viewport img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.adopt-360 { width: 40%; max-width: 400px; height: auto; display: block; margin-top: -9%; }
+
+/* 우측 이미지 박스 4개 — 상단은 소개글 상단, 하단은 Choose a Plan 하단에 정렬 */
+.adopt-boxes { flex: 0 0 104px; display: flex; flex-direction: column; gap: 14px; }
+.adopt-box { flex: 1 1 0; background: #F6F6F6; border-radius: 16px; display: block; }
+
+
 .turn-viewport img {
   display: block;
   width: 100%;
@@ -1898,32 +1940,8 @@ body.adoption-page .site-header {
   user-select: none;
 }
 
-.turn-hint {
-  text-align: center;
-  font-size: 13.5px;
-  color: #9aa1ab;
-}
 
-.adopt-accessories {
-  position: absolute;
-  right: 40px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  z-index: 2;
-}
 
-.adopt-accessory-thumb {
-  width: 100px;
-  height: 100px;
-  border-radius: 20px;
-  background: #fff;
-  box-shadow: 0 10px 28px rgba(30, 42, 61, 0.1);
-  overflow: hidden;          /* 박스 밖 이미지 클립 */
-}
-.adopt-accessory-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* --- Made to Move Together --- */
 /*
@@ -2024,6 +2042,9 @@ body.adoption-page .site-header {
   object-fit: contain;
   mix-blend-mode: multiply;
 }
+/* Adoption(Lassie) 이미지는 작게 보여 1.6배 확대 (중앙 기준) */
+.cart-item-media-lassie { overflow: hidden; }
+.cart-item-media-lassie img { transform: scale(1.6); transform-origin: center center; }
 
 .promo-coupon-ic { width: 16px; height: 16px; flex-shrink: 0; display: block; }
 
