@@ -25,6 +25,30 @@ body {
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
 input { font-family: inherit; }
 
+/* Android Chromium(Chrome·Samsung Internet)의 기본 파란 탭 하이라이트만 제거.
+   디자인과 hover/active 애니메이션은 그대로 유지된다. */
+a,
+button,
+[role="button"],
+input,
+select,
+textarea,
+label,
+summary {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 키보드 접근성: 탭 이동 시 포커스 링은 명확히 보이도록 유지 */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #34c9dc;
+  outline-offset: 2px;
+}
+
 .ic { width: 20px; height: 20px; display: block; }
 /* Plans·Archive·FAQ·Club 아이콘: 기존 13/14/15px에서 7% 확대 */
 .nav-ic-13 { width: 13.91px; height: 13.91px; }   /* Plans */
@@ -51,22 +75,6 @@ input { font-family: inherit; }
   align-items: center;
   justify-content: space-between;
   padding: 21px 26px;
-}
-
-/* Android Chromium(Chrome·Samsung Internet)의 기본 파란 탭 하이라이트만 제거.
-   hover/active 애니메이션과 :focus-visible 포커스 링은 그대로 유지된다. */
-.site-header a,
-.site-header button,
-.site-header [role="button"] {
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* 키보드 접근성: 탭 이동 시 포커스 링은 명확히 보이도록 유지 */
-.site-header a:focus-visible,
-.site-header button:focus-visible,
-.site-header [role="button"]:focus-visible {
-  outline: 2px solid #34c9dc;
-  outline-offset: 2px;
 }
 
 .logo {
@@ -366,67 +374,6 @@ input { font-family: inherit; }
   pointer-events: none;
 }
 
-/* 영상 종료 후 나타나는 하단 CTA 바 (Reference 06_Main_Down) */
-.home-cta {
-  position: absolute;
-  /* 좌측 끝은 기존(1140px 중앙정렬) 위치 그대로 고정하고, 폭은 내용에 맞춰 줄어든다 */
-  left: max(40px, calc(50% - 570px));
-  bottom: 40px;
-  transform: translateY(14px);
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  gap: 44px;
-  width: auto;
-  max-width: calc(100vw - 80px);
-  padding: 20px 44px 20px 20px;
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
-  border-radius: 999px;
-  box-shadow: 0 20px 50px rgba(30, 42, 61, 0.10);
-  text-decoration: none;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.home-cta.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
-
-.home-cta-avatar {
-  flex-shrink: 0;
-  width: 116px;
-  height: 116px;
-  border-radius: 50%;
-  overflow: hidden;
-  background: #e6e6e6;
-}
-.home-cta-avatar img { width: 100%; height: 100%; object-fit: cover; }
-
-/* 영·한 모두 Pretendard SemiBold(600) — 크기는 기존 그대로 */
-.home-cta-title,
-.home-cta-head,
-.home-cta-sub {
-  font-family: 'Pretendard Variable', Pretendard, sans-serif;
-  font-weight: 600;
-}
-
-.home-cta-title {
-  flex-shrink: 0;
-  font-size: 28px;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-  color: var(--navy);
-  white-space: nowrap;
-}
-
-/* 텍스트 폭에 딱 맞게 줄어들어야 화살표까지의 간격을 정확히 잡을 수 있다 */
-.home-cta-main { flex: 0 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
-.home-cta-head { font-size: 26px; letter-spacing: -0.02em; color: var(--navy); white-space: nowrap; }
-.home-cta-sub { font-size: 16px; color: #9aa1ab; letter-spacing: -0.01em; white-space: nowrap; }
-
-/* 한글 문장 끝 ~ 화살표 간격 110px (flex gap 44px + 66px) */
-.home-cta-arrow { flex-shrink: 0; margin-left: 66px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; }
-.home-cta-arrow img { width: 100%; height: 100%; display: block; }
 
 /* 홈: 헤더를 히어로 위에 겹쳐 뜨고, 스크롤해도 고정 */
 .home-page .site-header {
@@ -1575,7 +1522,7 @@ input { font-family: inherit; }
 
 /* ===== Club page ===== */
 .club-hero {
-  padding: 8px 144px 0 51px;
+  padding: 8px 26px 0 26px;   /* 좌측을 헤더 로고 좌측 끝에 정렬 */
 }
 
 .club-title {
@@ -1593,17 +1540,10 @@ input { font-family: inherit; }
   color: var(--navy);
 }
 
-.club-desc {
-  margin-top: 32px;
-  width: fit-content;        /* 실제 문장 폭 = 아래 영상의 폭 기준선 */
-  font-size: 16px;
-  line-height: 1.75;
-  color: #9aa1ab;
-}
 
 .club-body {
   display: flex;
-  padding: 76px 26px 120px 51px;   /* 좌측은 Club 제목과, 우측은 프로필 아이콘과 정렬 */
+  padding: 76px 26px 120px 26px;   /* 좌우 모두 헤더(로고·프로필) 끝선에 정렬 */
   align-items: flex-start;
 }
 
@@ -2587,14 +2527,14 @@ body.adoption-page .site-header {
 /* 카드 그리드 */
 .plans-grid {
   display: flex;
-  justify-content: center;
   align-items: stretch;
-  gap: 40px;
-  max-width: 1680px;
-  margin: 0 auto;
-  padding: 70px 40px 130px;
+  gap: 70px;                    /* 카드 사이 간격 */
+  margin: 0;
+  padding: 70px 120px 130px;    /* 화면 좌우 끝 ~ 카드 간격 */
 }
-.plans-grid.view-top [data-plan="adopt"] { order: -1; }   /* Top Pick: Adopt 먼저 */
+
+/* Top Pick: Long Stay + Adopt 두 장만 (Short Stay 숨김) */
+.plans-grid.view-top [data-plan="short"] { display: none; }
 
 .plan-card {
   flex: 1 1 0;

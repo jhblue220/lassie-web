@@ -88,16 +88,6 @@
     <video class="hero-main-video" id="heroMainVideo" src="Video/01_Main_Video.mp4"
            autoplay muted playsinline preload="auto"></video>
 
-    <!-- 영상 종료 후 나타나는 하단 CTA (우측 화살표 → Adoption) -->
-    <a class="home-cta" id="homeCta" href="adoption.html" aria-hidden="true">
-      <span class="home-cta-avatar"><img src="assets/adoption-hero.jpg" alt="" draggable="false" /></span>
-      <span class="home-cta-title">Bring Lassie<br />Home</span>
-      <span class="home-cta-main">
-        <span class="home-cta-head">Find Your Perfect Lassie</span>
-        <span class="home-cta-sub">오늘부터 함께 걸을 새로운 동반자가 기다리고 있습니다.</span>
-      </span>
-      <span class="home-cta-arrow"><img src="Icon/Icon_SVG/Main_Rightsign.svg" alt="" draggable="false" /></span>
-    </a>
   </section>
 
   <!-- ===== Site footer ===== -->
@@ -213,22 +203,10 @@
 
     // ---- 히어로: 메인 영상 로드 즉시 재생 → 끝나면 마지막 프레임에서 정지(loop 없음) ----
     const heroMainVideo = document.getElementById('heroMainVideo');
-    const homeCta = document.getElementById('homeCta');
-    const showHomeCta = () => {
-      if (!homeCta) return;
-      homeCta.classList.add('show');
-      homeCta.setAttribute('aria-hidden', 'false');
-    };
     if (heroMainVideo) {
       const playHero = () => heroMainVideo.play().catch(() => {});
       if (heroMainVideo.readyState >= 2) playHero();
       else heroMainVideo.addEventListener('loadeddata', playHero, { once: true });
-      // 영상이 끝나 마지막 프레임에서 멈추면 CTA 노출
-      heroMainVideo.addEventListener('ended', showHomeCta);
-      // 자동재생 차단/오류 대비 폴백
-      setTimeout(showHomeCta, 6000);
-    } else {
-      showHomeCta();
     }
   </script>
 </body>
