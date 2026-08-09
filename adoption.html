@@ -149,7 +149,7 @@
                 <span class="qty-val" id="adoptQtyVal">1</span>
                 <button type="button" class="qty-btn" id="adoptQtyPlus" aria-label="수량 증가">+</button>
               </div>
-              <button class="detail-add-cart" type="button" id="adoptAddCart">Choose a Leg</button>
+              <button class="detail-add-cart" type="button" id="adoptAddCart">Select Color</button>
             </div>
           </div>
         </div>
@@ -351,7 +351,7 @@
         turnColor = TURN_SETS[selectedColor.id] ? selectedColor.id : 'gray';
         preloadFrames(turnColor);
         showFrame();
-        if (legMode) { preloadLegs(turnColor); applyLeg(selectedLeg); }   // 레그 선택 중이면 해당 컬러로 갱신
+        // 레그 선택 단계에서는 컬러칩이 사라지므로 여기로 다시 들어올 일은 없다
       });
     });
 
@@ -367,6 +367,7 @@
     const adoptLegNote = document.getElementById('adoptLegNote');
     const adoptTags = document.getElementById('adoptTags');
     const adoptLegs = document.getElementById('adoptLegs');
+    const studioColors = document.getElementById('studioColors');
     const legImg = document.getElementById('legImg');
     let legMode = false;
     let selectedLeg = 'basic';
@@ -411,12 +412,16 @@
       turnImg.classList.add('is-off');
     }
 
-    // Choose a Leg → 태그 자리에 레그 썸네일 노출 + 1번 프레임으로 복귀
+    // Select Color → 태그 자리에 레그 썸네일 노출 + 1번 프레임으로 복귀
+    // 이 단계부터는 컬러를 바꿀 수 없고 레그만 고른다.
     function enterLegMode() {
       legMode = true;
       preloadLegs(turnColor);
       fadeSwap(adoptTags, adoptLegs);
       fadeSwap(adoptSub, adoptLegNote);
+      // 컬러칩은 페이드아웃 후 자리까지 비운다
+      studioColors.classList.add('is-hidden');
+      setTimeout(() => { studioColors.hidden = true; }, FADE);
       // 다른 각도를 보고 있었다면 해당 컬러의 1번 프레임으로 되돌린다
       turnImg.classList.add('is-hidden');
       setTimeout(() => {

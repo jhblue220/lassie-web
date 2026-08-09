@@ -12,6 +12,10 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* hidden 속성이 항상 이기도록. display를 지정한 클래스가 붙어 있으면
+   브라우저 기본 display:none을 덮어써 숨겨지지 않는다. */
+[hidden] { display: none !important; }
+
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; touch-action: pan-x pan-y; }
 
 body {
@@ -1950,6 +1954,9 @@ body.adoption-page .site-header {
   justify-content: flex-start; gap: 14px; margin-bottom: 0;
 }
 .adopt-hero .adopt-buy-row { margin-top: 0; padding-top: 0; border-top: none; }
+/* 레그 선택 단계로 넘어가면 컬러칩은 페이드아웃 후 사라진다 */
+.adopt-hero .studio-colors { transition: opacity 0.5s ease; }
+.adopt-hero .studio-colors.is-hidden { opacity: 0; }
 
 /* 중앙 360 뷰어 — 360 인디케이터를 강아지 이미지에 겹쳐 배치 */
 .adopt-center { flex: 1 1 auto; min-width: 0; position: relative; display: flex; align-items: stretch; justify-content: center; }
