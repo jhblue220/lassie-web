@@ -1897,10 +1897,13 @@ body.adoption-page .site-header {
 }
 
 .adopt-cols {
+  --abox: 104px;             /* 우측 정방형 박스 한 변 */
+  --agap: 16px;              /* 박스 사이 간격 */
   display: flex;
   align-items: stretch;      /* 좌·중앙·우 높이를 맞춰 상·하단 끝선을 정렬 */
   gap: 24px;
-  min-height: calc(100vh - 300px);
+  /* 행 높이 = 정방형 박스 4개 + 간격 3개 → 강아지 상·하단, 버튼 하단이 모두 이 선에 맞는다 */
+  height: calc(var(--abox) * 4 + var(--agap) * 3);
 }
 
 /* 좌측 컬럼 */
@@ -1910,9 +1913,18 @@ body.adoption-page .site-header {
 .adopt-bottom { margin-top: auto; }        /* 컬러·구분선·구매행을 하단에 정렬 */
 .adopt-hero .adopt-tags {
   margin-top: 0; padding-top: 0; border-top: none; max-width: none;
-  display: flex; flex-wrap: nowrap; gap: 12px; justify-content: flex-start;
+  display: flex; flex-wrap: nowrap; gap: 12px; justify-content: space-between;
 }
-.adopt-hero .detail-tag { padding: 9px 15px; font-size: 13.5px; white-space: nowrap; }
+/* 표시 전용(선택 불가) · 비율 유지한 채 좌우 끝이 구분선과 일치하도록 균등 확장 */
+.adopt-hero .detail-tag {
+  flex: 1 1 auto;
+  padding: 11px 4px;
+  font-size: 14px;
+  white-space: nowrap;
+  text-align: center;
+  cursor: default;
+  pointer-events: none;
+}
 /* 컬러칩은 가로 한 줄 */
 .adopt-hero .studio-colors {
   display: flex; flex-direction: row; align-items: center;
@@ -1920,15 +1932,34 @@ body.adoption-page .site-header {
 }
 .adopt-hero .adopt-buy-row { margin-top: 0; padding-top: 0; border-top: none; }
 
-/* 중앙 360 뷰어 */
-.adopt-center { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; align-items: center; }
-.adopt-center .turn-viewport { flex: 1 1 auto; width: 100%; margin: 0; display: flex; align-items: center; justify-content: center; }
-.adopt-center .turn-viewport img { max-width: 100%; max-height: 100%; object-fit: contain; }
-.adopt-360 { width: 40%; max-width: 400px; height: auto; display: block; margin-top: -9%; }
+/* 중앙 360 뷰어 — 360 인디케이터를 강아지 이미지에 겹쳐 배치 */
+.adopt-center { flex: 1 1 auto; min-width: 0; position: relative; display: flex; align-items: stretch; justify-content: center; }
+.adopt-center .turn-viewport { position: relative; width: 100%; margin: 0; }
+/* 프레임 PNG는 상 9.21% / 하 9.69%가 투명 여백이라, 강아지 실물이 행 높이를 꽉 채우도록 보정
+   (높이 100/81.1 = 123.3%, 위로 9.21%×1.233 = 11.36% 끌어올림) */
+.adopt-center .turn-viewport img {
+  position: absolute;
+  top: -11.36%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 123.3%;
+  width: auto;
+  max-width: none;
+}
+.adopt-360 {
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  transform: translateX(-50%);
+  width: 42%;
+  max-width: 420px;
+  height: auto;
+  pointer-events: none;
+}
 
-/* 우측 이미지 박스 4개 — 상단은 소개글 상단, 하단은 Choose a Plan 하단에 정렬 */
-.adopt-boxes { flex: 0 0 104px; display: flex; flex-direction: column; gap: 14px; }
-.adopt-box { flex: 1 1 0; background: #F6F6F6; border-radius: 16px; display: block; }
+/* 우측 이미지 박스 4개 — 정방형, 상단은 소개글 상단에 정렬 */
+.adopt-boxes { flex: 0 0 var(--abox); display: flex; flex-direction: column; gap: var(--agap); }
+.adopt-box { flex: none; width: var(--abox); height: var(--abox); background: #F6F6F6; border-radius: 16px; display: block; }
 
 
 .turn-viewport img {
@@ -2044,7 +2075,8 @@ body.adoption-page .site-header {
 }
 /* Adoption(Lassie) 이미지는 작게 보여 1.6배 확대 (중앙 기준) */
 .cart-item-media-lassie { overflow: hidden; }
-.cart-item-media-lassie img { transform: scale(1.6); transform-origin: center center; }
+/* PNG 안에서 강아지가 5.77% 우측으로 치우쳐 있어 보정 후 확대 */
+.cart-item-media-lassie img { transform: scale(1.6) translateX(-5.77%); transform-origin: center center; }
 
 .promo-coupon-ic { width: 16px; height: 16px; flex-shrink: 0; display: block; }
 

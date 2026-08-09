@@ -61,13 +61,13 @@
                     </div>
                   </div>
                 </div>
-                <a class="menu-link" href="archive.html">Archive</a>
                 <a class="menu-link" href="club.html">Club</a>
                 <a class="menu-link" href="plans.html">Plans</a>
               </div>
               <div class="menu-group">
                 <img class="menu-group-ic" src="Icon/Menu_i_icon.png" alt="" aria-hidden="true" draggable="false" />
                 <a class="menu-link" href="faq.html">FAQ</a>
+                <a class="menu-link" href="archive.html">Archive</a>
               </div>
             </div>
           </div>
@@ -95,10 +95,10 @@
           <div class="adopt-rule"></div>
 
           <div class="detail-tags adopt-tags">
-            <button class="detail-tag" type="button">Cleaning</button>
-            <button class="detail-tag" type="button">Leg Variation</button>
-            <button class="detail-tag" type="button">Modular Port</button>
-            <button class="detail-tag" type="button">Waterproof</button>
+            <span class="detail-tag">Cleaning</span>
+            <span class="detail-tag">Leg Variation</span>
+            <span class="detail-tag">Modular Port</span>
+            <span class="detail-tag">Waterproof</span>
           </div>
 
           <div class="adopt-bottom">
@@ -154,36 +154,6 @@
       </div>
     </div>
 
-    <div class="adopt-move-wrap">
-      <div class="adopt-move-col">
-        <h2 class="adopt-move-title">Made to Move Together</h2>
-        <p class="adopt-move-desc">
-          당신과 래시는 활동적인 일상과 새로운 야외 경험을 즐긴다는 공통점을 가지고 있어<br />
-          요. 함께 달리며 서로의 속도를 맞추고, 익숙한 길을 벗어나 새로운 장소를 탐색하며<br />
-          자연스럽게 더 많은 시간을 바깥에서 보내게 됩니다.
-        </p>
-
-        <div class="detail-tags adopt-tags">
-          <button class="detail-tag" type="button">Cleaning</button>
-          <button class="detail-tag" type="button">Charging</button>
-          <button class="detail-tag" type="button">Modular Port</button>
-          <button class="detail-tag active" type="button">Weatherproof</button>
-        </div>
-
-        <div class="detail-buy-row adopt-buy-row">
-          <div class="qty-stepper detail-qty">
-            <button type="button" class="qty-btn" id="adoptQtyMinus" aria-label="수량 감소">−</button>
-            <span class="qty-val" id="adoptQtyVal">1</span>
-            <button type="button" class="qty-btn" id="adoptQtyPlus" aria-label="수량 증가">+</button>
-          </div>
-          <button class="detail-add-cart" type="button" id="adoptAddCart">Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="adopt-move-media">
-        <img src="assets/club_image/1.jpg" alt="래시와 함께하는 야외 활동" draggable="false" />
-      </div>
-    </div>
   </section>
 
 
@@ -369,15 +339,6 @@
         turnColor = TURN_SETS[selectedColor.id] ? selectedColor.id : 'gray';
         preloadFrames(turnColor);
         showFrame();
-      });
-    });
-
-    // ---- 기능 태그 선택 (Cleaning / Charging / Modular Port / Weatherproof) - 단일 선택 ----
-    const adoptTags = document.querySelectorAll('.adopt-tags .detail-tag');
-    adoptTags.forEach((tag) => {
-      tag.addEventListener('click', () => {
-        adoptTags.forEach((t) => t.classList.remove('active'));
-        tag.classList.add('active');
       });
     });
 
