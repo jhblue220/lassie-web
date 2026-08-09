@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Meet Your Lassie — Lassie</title>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
   <link rel="stylesheet" href="css/style.css" />
@@ -91,14 +91,32 @@
       <div class="adopt-cols">
         <!-- 좌: 소개 · 태그 · 컬러 · 구매 -->
         <div class="adopt-left">
-          <p class="adopt-lassie-sub">The New Compaionship.<br />Buy from ₩2,490,000 or ₩103,750/mo. for 24 mo.</p>
+          <p class="adopt-lassie-sub" id="adoptSub">The New Compaionship.<br />Buy from ₩2,490,000 or ₩103,750/mo. for 24 mo.</p>
+          <p class="adopt-lassie-sub adopt-leg-note" id="adoptLegNote" hidden></p>
           <div class="adopt-rule"></div>
 
-          <div class="detail-tags adopt-tags">
-            <span class="detail-tag">Cleaning</span>
-            <span class="detail-tag">Leg Variation</span>
-            <span class="detail-tag">Modular Port</span>
-            <span class="detail-tag">Waterproof</span>
+          <div class="adopt-swap">
+            <div class="detail-tags adopt-tags" id="adoptTags">
+              <span class="detail-tag">Cleaning</span>
+              <span class="detail-tag">Leg Variation</span>
+              <span class="detail-tag">Modular Port</span>
+              <span class="detail-tag">Waterproof</span>
+            </div>
+
+            <div class="adopt-legs" id="adoptLegs" hidden>
+              <button class="leg-thumb selected" type="button" data-leg="basic" aria-label="Basic Leg">
+                <img src="assets/legs/thumb_basic.png" alt="Basic Leg" draggable="false" />
+              </button>
+              <button class="leg-thumb" type="button" data-leg="explore" aria-label="Explore Leg">
+                <img src="assets/legs/thumb_explore.png" alt="Explore Leg" draggable="false" />
+              </button>
+              <button class="leg-thumb" type="button" data-leg="running" aria-label="Running Leg">
+                <img src="assets/legs/thumb_running.png" alt="Running Leg" draggable="false" />
+              </button>
+              <button class="leg-thumb" type="button" data-leg="wheel" aria-label="Wheel Leg">
+                <img src="assets/legs/thumb_wheel.png" alt="Wheel Leg" draggable="false" />
+              </button>
+            </div>
           </div>
 
           <div class="adopt-bottom">
@@ -131,7 +149,7 @@
                 <span class="qty-val" id="adoptQtyVal">1</span>
                 <button type="button" class="qty-btn" id="adoptQtyPlus" aria-label="수량 증가">+</button>
               </div>
-              <button class="detail-add-cart" type="button" id="adoptAddCart">Choose a Plan</button>
+              <button class="detail-add-cart" type="button" id="adoptAddCart">Choose a Leg</button>
             </div>
           </div>
         </div>
@@ -140,6 +158,7 @@
         <div class="adopt-center">
           <div class="turn-viewport" id="turnViewport">
             <img id="turnImg" src="assets/lassie_turn/Gray_Turn/0330.bip.276.1.png" alt="Lassie 360도 보기" draggable="false" />
+            <img id="legImg" class="leg-overlay" alt="" draggable="false" hidden />
           </div>
           <img class="adopt-360" src="Icon/Icon_SVG/Adoption_360.svg" alt="360도 회전" draggable="false" />
         </div>
@@ -293,6 +312,7 @@
     let dragStartFrame = 0;
 
     turnViewport.addEventListener('pointerdown', (e) => {
+      if (!legImg.hidden) return;   // 레그 이미지를 보는 중엔 회전 잠금 (Basic 복귀 시 1번 프레임 유지)
       dragging = true;
       dragStartX = e.clientX;
       dragStartFrame = frameIndex;
@@ -339,6 +359,119 @@
         turnColor = TURN_SETS[selectedColor.id] ? selectedColor.id : 'gray';
         preloadFrames(turnColor);
         showFrame();
+        if (legMode) { preloadLegs(turnColor); applyLeg(selectedLeg); }   // 레그 선택 중이면 해당 컬러로 갱신
+      });
+    });
+
+    // ---- Leg 선택 ----
+    const LEGS = {
+      basic:   { name: 'Basic Leg',   price: 0,      note: '기본 포함',   desc: '일상적인 산책과 일반 보행' },
+      explore: { name: 'Explore Leg', price: 120000, note: '+₩120,000', desc: '하이킹·트레일 / 하부 보호·접지' },
+      running: { name: 'Running Leg', price: 180000, note: '+₩180,000', desc: '러닝 / 후륜 탄성·추진 보조' },
+      wheel:   { name: 'Wheel Leg',   price: 150000, note: '+₩150,000', desc: '실내 / 저소음·매끄러운 이동' },
+    };
+    const FADE = 500;                       // Try on과 동일한 속도
+    const adoptSub = document.getElementById('adoptSub');
+    const adoptLegNote = document.getElementById('adoptLegNote');
+    const adoptTags = document.getElementById('adoptTags');
+    const adoptLegs = document.getElementById('adoptLegs');
+    const legImg = document.getElementById('legImg');
+    let legMode = false;
+    let selectedLeg = 'basic';
+
+    function fadeSwap(hideEl, showEl, after) {
+      hideEl.classList.add('is-hidden');
+      setTimeout(() => {
+        hideEl.hidden = true;
+        showEl.hidden = false;
+        showEl.classList.add('is-hidden');
+        requestAnimationFrame(() => showEl.classList.remove('is-hidden'));
+        if (after) after();
+      }, FADE);
+    }
+
+    // 레그 이미지 미리 받아두기 (교체 순간 빈 화면이 뜨지 않도록)
+    const legPreloaded = {};
+    function preloadLegs(colorId) {
+      if (legPreloaded[colorId]) return;
+      legPreloaded[colorId] = true;
+      ['explore', 'running', 'wheel'].forEach((l) => {
+        const im = new Image();
+        im.src = `assets/legs/${colorId}_${l}.png`;
+      });
+    }
+
+    // 연속 클릭 시 늦게 도착한 타이머가 최신 상태를 덮어쓰지 않도록 하는 토큰
+    let legSwapToken = 0;
+
+    // 선택한 레그를 뷰어에 반영 (basic이면 1번 프레임, 그 외엔 전용 이미지)
+    function applyLeg(leg) {
+      selectedLeg = leg;
+      const info = LEGS[leg];
+      adoptLegNote.innerHTML = `${info.name} / ${info.note}<br />${info.desc}`;
+
+      const token = ++legSwapToken;
+      const nextSrc = leg === 'basic' ? '' : `assets/legs/${selectedColor.id}_${leg}.png`;
+      const showingOverlay = !legImg.hidden;
+
+      // 이미 같은 이미지를 띄우고 있으면 굳이 다시 페이드하지 않는다
+      if (nextSrc && showingOverlay && legImg.getAttribute('src') === nextSrc) return;
+
+      // 레그 → Basic : 오버레이 fade out ↔ 본체 fade in (교차)
+      if (!nextSrc) {
+        if (!showingOverlay) return;
+        legImg.classList.add('is-hidden');
+        turnImg.classList.remove('is-hidden');
+        setTimeout(() => { if (token === legSwapToken) legImg.hidden = true; }, FADE);
+        return;
+      }
+
+      // Basic → 레그 : 본체 fade out ↔ 오버레이 fade in (교차)
+      if (!showingOverlay) {
+        legImg.src = nextSrc;
+        legImg.hidden = false;
+        legImg.classList.add('is-hidden');
+        requestAnimationFrame(() => {
+          if (token !== legSwapToken) return;
+          legImg.classList.remove('is-hidden');
+          turnImg.classList.add('is-hidden');
+        });
+        return;
+      }
+
+      // 레그 → 다른 레그(또는 컬러 변경) : 같은 자리이므로 fade out 후 교체해 fade in
+      legImg.classList.add('is-hidden');
+      setTimeout(() => {
+        if (token !== legSwapToken) return;
+        legImg.src = nextSrc;
+        requestAnimationFrame(() => {
+          if (token === legSwapToken) legImg.classList.remove('is-hidden');
+        });
+      }, FADE);
+    }
+
+    // Choose a Leg → 태그 자리에 레그 썸네일 노출 + 1번 프레임으로 복귀
+    function enterLegMode() {
+      legMode = true;
+      preloadLegs(turnColor);
+      fadeSwap(adoptTags, adoptLegs);
+      fadeSwap(adoptSub, adoptLegNote);
+      // 다른 각도를 보고 있었다면 해당 컬러의 1번 프레임으로 되돌린다
+      turnImg.classList.add('is-hidden');
+      setTimeout(() => {
+        frameIndex = 0;
+        showFrame();
+        turnImg.classList.remove('is-hidden');
+      }, FADE);
+      applyLeg('basic');
+      adoptAddCart.textContent = 'Choose a Plan';
+    }
+
+    document.querySelectorAll('.leg-thumb').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.leg-thumb').forEach((b) => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        applyLeg(btn.dataset.leg);
       });
     });
 
@@ -357,19 +490,21 @@
     // ---- Add to Cart ----
     const adoptAddCart = document.getElementById('adoptAddCart');
     adoptAddCart.addEventListener('click', () => {
-      // Choose a Plan: 선택한 색상을 담고 Plans 페이지로 이동
-      if (selectedColor) {
-        Cart.add({
-          id: 'lassie-' + selectedColor.id,
-          name: 'Lassie',
-          price: LASSIE_PRICE,
-          desc: 'Color: ' + selectedColor.label,
-          color: selectedColor.label,
-          colorCode: CART_HEX[selectedColor.id] || '',
-          image: CART_IMG[selectedColor.id] || CART_IMG.gray,
-          qty: adoptQty,
-        });
-      }
+      if (!legMode) { enterLegMode(); return; }   // 1단계: 레그 선택 열기
+
+      const leg = LEGS[selectedLeg];
+      Cart.add({
+        id: 'lassie-' + selectedColor.id + '-' + selectedLeg,
+        name: 'Lassie' + (selectedLeg === 'basic' ? '' : ' · ' + leg.name),
+        price: LASSIE_PRICE + leg.price,        // 레그 추가금 반영
+        desc: 'Color: ' + selectedColor.label + ' / ' + leg.name,
+        color: selectedColor.label,
+        colorCode: CART_HEX[selectedColor.id] || '',
+        image: selectedLeg === 'basic'
+          ? (CART_IMG[selectedColor.id] || CART_IMG.gray)
+          : `assets/legs/${selectedColor.id}_${selectedLeg}.png`,   // 화면에서 고른 레그 그대로
+        qty: adoptQty,
+      });
       window.location.href = 'plans.html';
     });
   </script>

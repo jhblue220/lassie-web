@@ -12,7 +12,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; touch-action: pan-x pan-y; }
 
 body {
   font-family: var(--font);
@@ -351,7 +351,7 @@ textarea:focus-visible {
   justify-content: center;
   color: var(--navy);
 }
-.icon-btn .ic { width: 12.6px; height: 12.6px; }   /* 기존 21px에서 40% 축소 */
+.icon-btn .ic { width: 16.38px; height: 16.38px; }   /* 12.6px에서 1.3배 */
 
 
 /* ===== Hero (배경 이미지 + Click & See 영상 재생) ===== */
@@ -924,18 +924,35 @@ textarea:focus-visible {
 
 .price-fill {
   position: absolute;
-  left: 18%;
-  width: 60%;
+  left: 0%;
+  width: 100%;
   height: 100%;
   background: #2b3648;
   border-radius: 999px;
 }
 
+/* 드래그 핸들 — 기존 디자인을 해치지 않도록 작고 단순하게 */
+.price-track { touch-action: none; }
+.price-knob {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  padding: 0;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #2b3648;
+  cursor: grab;
+  z-index: 2;
+}
+.price-knob:active { cursor: grabbing; }
+
 .price-labels {
   display: flex;
   justify-content: space-between;
-  margin-top: 14px;
-  padding: 0 6%;
+  margin-top: 18px;
+  padding: 0;
   font-size: 12.5px;
   color: #4b5563;
 }
@@ -1961,6 +1978,45 @@ body.adoption-page .site-header {
 .adopt-boxes { flex: 0 0 var(--abox); display: flex; flex-direction: column; gap: var(--agap); }
 .adopt-box { flex: none; width: var(--abox); height: var(--abox); background: #F6F6F6; border-radius: 16px; display: block; }
 
+/* ===== Adoption: Leg 선택 ===== */
+/* 태그 ↔ 레그 썸네일 자리 (겹치지 않게 같은 영역 사용) */
+.adopt-swap { position: relative; }
+.adopt-swap > * { transition: opacity 0.5s ease; }
+.adopt-swap > .is-hidden { opacity: 0; }
+
+.adopt-legs { display: flex; gap: 12px; }
+.leg-thumb {
+  flex: 1 1 0;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  background: #F6F6F6;
+  border: 1.5px solid transparent;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+.leg-thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.leg-thumb.selected { border-color: #c9ccd1; background: #fff; }
+
+/* 소개글 ↔ 레그 설명 전환 */
+.adopt-lassie-sub { transition: opacity 0.5s ease; }
+.adopt-lassie-sub.is-hidden { opacity: 0; }
+
+/* 턴테이블 위에 겹치는 레그 이미지 (본체와 같은 위치·크기) */
+#turnImg, .leg-overlay { transition: opacity 0.5s ease; }
+#turnImg.is-hidden, .leg-overlay.is-hidden { opacity: 0; }
+.leg-overlay {
+  position: absolute;
+  top: -11.36%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 123.3%;
+  width: auto;
+  max-width: none;
+  z-index: 2;
+}
+
+
 
 .turn-viewport img {
   display: block;
@@ -2534,6 +2590,11 @@ body.adoption-page .site-header {
   transition: opacity 0.5s ease;
 }
 .product-img.is-on { opacity: 1; }
+
+/* Apply Filter 시 그리드 전체를 Try on과 동일한 속도로 페이드 */
+.product-grid { transition: opacity 0.5s ease; }
+.product-grid.grid-fading { opacity: 0; }
+
 
 /* 상세 설명 하단 각주 (· 항목) */
 .detail-notes {
