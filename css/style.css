@@ -53,6 +53,22 @@ input { font-family: inherit; }
   padding: 21px 26px;
 }
 
+/* Android Chromium(Chrome·Samsung Internet)의 기본 파란 탭 하이라이트만 제거.
+   hover/active 애니메이션과 :focus-visible 포커스 링은 그대로 유지된다. */
+.site-header a,
+.site-header button,
+.site-header [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 키보드 접근성: 탭 이동 시 포커스 링은 명확히 보이도록 유지 */
+.site-header a:focus-visible,
+.site-header button:focus-visible,
+.site-header [role="button"]:focus-visible {
+  outline: 2px solid #34c9dc;
+  outline-offset: 2px;
+}
+
 .logo {
   display: flex;
   align-items: center;
