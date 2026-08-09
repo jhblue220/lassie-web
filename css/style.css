@@ -329,47 +329,6 @@ input { font-family: inherit; }
 }
 .icon-btn .ic { width: 21px; height: 21px; }
 
-/* 언어 선택: 아이콘 아래로 펼쳐지는 다크 세로 캡슐 (Reference 09_LanguageSelect) */
-.lang-wrap { position: relative; display: flex; }
-.lang-btn { position: relative; z-index: 2; transition: border-color 0.25s ease; }
-.lang-wrap.open .lang-btn { border-color: transparent; }
-.lang-wrap.open .lang-btn .ic { filter: brightness(0) invert(1); }
-
-.lang-panel {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  z-index: 1;
-  width: 46px;
-  padding: 54px 0 16px;
-  background: #1D2737;
-  border-radius: 999px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(-50%) translateY(-10px);
-  transition: opacity 0.28s ease, transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.28s;
-}
-.lang-panel.open {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
-}
-
-.lang-opt {
-  color: #fff;
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  padding: 2px 0;
-  opacity: 0.9;
-  transition: opacity 0.2s ease;
-}
-.lang-opt:hover { opacity: 1; }
-.lang-div { width: 18px; height: 1px; background: rgba(255, 255, 255, 0.3); }
 
 /* ===== Hero (배경 이미지 + Click & See 영상 재생) ===== */
 .hero {
@@ -1628,30 +1587,11 @@ input { font-family: inherit; }
 
 .club-body {
   display: flex;
-  gap: 20px;                       /* Level 컬럼 좌측 = 설명글 우측 끝 + 20px */
-  padding: 76px 26px 120px 51px;   /* 우측 끝을 Language 아이콘 우측 끝에 정렬 */
+  padding: 76px 26px 120px 51px;   /* 좌측은 Club 제목과, 우측은 프로필 아이콘과 정렬 */
   align-items: flex-start;
 }
 
-/* 좌측 영상: 좌측 끝은 Club 제목과, 우측 끝은 설명글 우측 끝과 일치
-   (실제 폭은 club.html에서 .club-desc를 측정해 지정) */
-.club-media {
-  flex: 0 0 auto;
-  width: 630px;
-  aspect-ratio: 1 / 1;
-  background: var(--ph-gray);
-  overflow: hidden;
-}
-
-.club-video {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  -webkit-user-drag: none;
-  user-select: none;
-}
-
+/* 표가 좌측 Club 제목 라인부터 우측 끝까지 전체 폭을 차지 */
 .club-table {
   flex: 1;
   min-width: 0;
@@ -1939,82 +1879,13 @@ body.adoption-page .site-header {
 }
 
 /* --- Intro (view 1): 이미지 + 텍스트가 한 화면(뷰포트)에 모두 보이도록 --- */
-.adopt-intro {
-  position: relative;
-  overflow: hidden;
-  height: calc(100vh - 90px); /* 헤더(90px) 아래로 한 화면을 정확히 채움 */
-  background: #FFFFFF;
-  transition: opacity 0.32s ease;
-}
-.adopt-intro.leaving { opacity: 0; }
 
-/* 마우스 상·하 위치에 따라 헤드 프레임이 바뀌는 인터랙티브 스테이지 */
-.adopt-intro-stage {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-.adopt-intro-head {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 42%;
-  -webkit-user-drag: none;
-  user-select: none;
-  pointer-events: none;
-}
 
-.adopt-intro-copy {
-  position: absolute;
-  left: 51px;
-  top: 48px;                 /* 좌상단 배치 (Reference 08_Adoption) */
-  z-index: 2;
-}
 
-.adopt-intro-title {
-  font-size: 6.8vw;
-  line-height: 1.04;
-  font-weight: 600;
-  letter-spacing: -0.06em;
-  color: var(--navy);   /* Archiving 페이지 타이틀과 동일 색상 */
-}
 
-.adopt-intro-row {
-  display: inline-flex;
-  align-items: center;
-  gap: 2.2vw;
-}
 
-.intro-pop {
-  opacity: 0;
-  animation: intro-pop-in 0.62s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-.adopt-intro-title span.intro-pop { display: inline-block; }
-.intro-pop-1 { animation-delay: 0.15s; }
-.intro-pop-2 { animation-delay: 0.5s; }
-.intro-pop-3 { animation-delay: 0.85s; }
 
-@keyframes intro-pop-in {
-  0% { opacity: 0; transform: translateY(28px) scale(0.94); }
-  65% { opacity: 1; transform: translateY(-5px) scale(1.015); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
-}
 
-.click-here-btn {
-  display: inline-block;
-  margin-top: 1.6vw;                     /* 타이틀 아래 배치 */
-  background: transparent;               /* 안쪽 완전 투명 */
-  color: var(--navy);
-  border: 1.5px solid var(--navy);       /* 스트로크만 */
-  font-size: 0.95vw;                     /* 레퍼런스 기준 축소 */
-  font-weight: 600;
-  padding: 0.62vw 1.5vw;
-  border-radius: 999px;
-  letter-spacing: -0.01em;
-  transition: transform 0.15s ease, background 0.2s ease;
-}
-.click-here-btn:hover { background: rgba(30, 42, 61, 0.06); transform: translateY(-2px); }
 
 /* --- Studio (view 2) --- */
 .adopt-studio {

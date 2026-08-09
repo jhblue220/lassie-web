@@ -80,16 +80,6 @@
       <a class="icon-btn" href="profile.html" aria-label="Account">
         <img class="ic" src="Icon/Icon_SVG/Profile_Icon.svg" alt="" aria-hidden="true" draggable="false" />
       </a>
-      <div class="lang-wrap" id="langWrap">
-        <button class="icon-btn lang-btn" type="button" id="langToggle" aria-label="Language">
-          <img class="ic" src="Icon/Icon_SVG/Menu_Languageicon.svg" alt="" aria-hidden="true" draggable="false" />
-        </button>
-        <div class="lang-panel" id="langPanel" aria-hidden="true">
-          <button class="lang-opt" type="button">Kr</button>
-          <span class="lang-div"></span>
-          <button class="lang-opt" type="button">En</button>
-        </div>
-      </div>
     </div>
   </header>
 
@@ -388,29 +378,6 @@
       }
     });
 
-    // ---- 언어 선택 팝업 (실제 언어 전환은 추후) ----
-    const langWrap = document.getElementById('langWrap');
-    const langToggle = document.getElementById('langToggle');
-    const langPanel = document.getElementById('langPanel');
-    function closeLang() {
-      if (!langPanel) return;
-      langPanel.classList.remove('open');
-      langWrap.classList.remove('open');
-      langPanel.setAttribute('aria-hidden', 'true');
-    }
-    if (langToggle) {
-      langToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isOpen = langPanel.classList.toggle('open');
-        langWrap.classList.toggle('open', isOpen);
-        langPanel.setAttribute('aria-hidden', String(!isOpen));
-        if (isOpen) { closeMenu(); closeSearch(); }
-      });
-      document.addEventListener('click', (e) => {
-        if (!langWrap.contains(e.target)) closeLang();
-      });
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLang(); });
-    }
 
     // ---- 장바구니 / 체크아웃 흐름 ----
     let step = 'purchase'; // details | purchase | shipping | card | success

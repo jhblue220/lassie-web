@@ -80,35 +80,11 @@
       <a class="icon-btn" href="profile.html" aria-label="Account">
         <img class="ic" src="Icon/Icon_SVG/Profile_Icon.svg" alt="" aria-hidden="true" draggable="false" />
       </a>
-      <div class="lang-wrap" id="langWrap">
-        <button class="icon-btn lang-btn" type="button" id="langToggle" aria-label="Language">
-          <img class="ic" src="Icon/Icon_SVG/Menu_Languageicon.svg" alt="" aria-hidden="true" draggable="false" />
-        </button>
-        <div class="lang-panel" id="langPanel" aria-hidden="true">
-          <button class="lang-opt" type="button">Kr</button>
-          <span class="lang-div"></span>
-          <button class="lang-opt" type="button">En</button>
-        </div>
-      </div>
     </div>
   </header>
 
-  <!-- ===== Intro: Meet Your Lassie ===== -->
-  <section class="adopt-intro" id="adoptIntro">
-    <div class="adopt-intro-stage intro-pop intro-pop-3" id="adoptHeadStage">
-      <img class="adopt-intro-head" id="adoptHeadImg" src="assets/adoption_head/0330.bip.1.16.png" alt="Lassie" draggable="false" />
-    </div>
-    <div class="adopt-intro-copy">
-      <h1 class="adopt-intro-title">
-        <span class="intro-pop intro-pop-1">Meet Your</span><br />
-        <span class="intro-pop intro-pop-1">Lassie</span>
-      </h1>
-      <button class="click-here-btn intro-pop intro-pop-2" type="button" id="clickHereBtn">Click here</button>
-    </div>
-  </section>
-
-  <!-- ===== Studio: 360 뷰어 (Click Here 후 표시) ===== -->
-  <section class="adopt-studio" id="adoptStudio" hidden>
+  <!-- ===== Studio: 360 뷰어 ===== -->
+  <section class="adopt-studio entered" id="adoptStudio">
     <div class="studio-stage">
       <div class="studio-colors" id="studioColors">
         <button class="color-dot-lg selected" type="button" data-color="gray" data-label="Gray" aria-label="Gray 선택">
@@ -287,77 +263,16 @@
       }
     });
 
-    // ---- 언어 선택 팝업 (실제 언어 전환은 추후) ----
-    const langWrap = document.getElementById('langWrap');
-    const langToggle = document.getElementById('langToggle');
-    const langPanel = document.getElementById('langPanel');
-    function closeLang() {
-      if (!langPanel) return;
-      langPanel.classList.remove('open');
-      langWrap.classList.remove('open');
-      langPanel.setAttribute('aria-hidden', 'true');
-    }
-    if (langToggle) {
-      langToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isOpen = langPanel.classList.toggle('open');
-        langWrap.classList.toggle('open', isOpen);
-        langPanel.setAttribute('aria-hidden', String(!isOpen));
-        if (isOpen) { closeMenu(); closeSearch(); }
-      });
-      document.addEventListener('click', (e) => {
-        if (!langWrap.contains(e.target)) closeLang();
-      });
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLang(); });
-    }
 
-    // ---- 등장 애니메이션이 끝나면 잠긴 transform을 풀어 hover 트랜지션과 충돌 방지 ----
-    document.querySelectorAll('.intro-pop').forEach((el) => {
-      el.addEventListener('animationend', () => {
-        el.style.animation = 'none';
-        el.style.opacity = '1';
-        el.style.transform = 'none';
-      }, { once: true });
-    });
 
-    // ---- Click Here: 인트로 -> 360 스튜디오 전환 ----
     const LASSIE_PRICE = 2490000;
 
     // Plans에서 선택한 플랜 불러오기 → 금액·하단 표시에 사용
     let selectedPlan = null;
     try { selectedPlan = JSON.parse(localStorage.getItem('lassie_plan') || 'null'); } catch (e) {}
     // 선택한 플랜은 이 화면에 표시하지 않고, 장바구니 담기에만 반영한다
-    const adoptIntro = document.getElementById('adoptIntro');
-    const adoptStudio = document.getElementById('adoptStudio');
-
-    // ---- 인트로 헤드: 마우스 상·하 위치로 프레임 전환 (하단=1, 상단=31) ----
-    (function initAdoptHead() {
-      const stage = document.getElementById('adoptHeadStage');
-      const headImg = document.getElementById('adoptHeadImg');
-      if (!stage || !headImg) return;
-      const HEAD_N = 31;
-      const headSrc = (i) => `assets/adoption_head/0330.bip.1.${i}.png`;
-      for (let i = 1; i <= HEAD_N; i++) { const im = new Image(); im.src = headSrc(i); }
-      let curHead = 16;
-      window.addEventListener('mousemove', (e) => {
-        if (adoptStudio && !adoptStudio.hidden) return;   // 스튜디오 진입 후에는 중단
-        const vh = window.innerHeight || 1;
-        const t = Math.min(1, Math.max(0, e.clientY / vh));      // 0(위)~1(아래)
-        const i = Math.round(HEAD_N - t * (HEAD_N - 1));          // 위=31, 아래=1
-        if (i !== curHead) { curHead = i; headImg.src = headSrc(i); }
-      });
-    })();
-
-    document.getElementById('clickHereBtn').addEventListener('click', () => {
-      adoptIntro.classList.add('leaving');
-      setTimeout(() => {
-        adoptIntro.hidden = true;
-        adoptStudio.hidden = false;
-        requestAnimationFrame(() => adoptStudio.classList.add('entered'));
-        window.scrollTo({ top: 0 });
-        preloadFrames('gray');
-      }, 320);
-    });
+    // 진입 즉시 360 프레임 프리로드
+    window.addEventListener('load', () => preloadFrames('gray'));
 
     // ---- 우측 이미지 박스: Adoption_Photo 1~9 페이드 순환 ----
     (function initMovePhotos() {

@@ -80,16 +80,6 @@
       <a class="icon-btn" href="profile.html" aria-label="Account">
         <img class="ic" src="Icon/Icon_SVG/Profile_Icon.svg" alt="" aria-hidden="true" draggable="false" />
       </a>
-      <div class="lang-wrap" id="langWrap">
-        <button class="icon-btn lang-btn" type="button" id="langToggle" aria-label="Language">
-          <img class="ic" src="Icon/Icon_SVG/Menu_Languageicon.svg" alt="" aria-hidden="true" draggable="false" />
-        </button>
-        <div class="lang-panel" id="langPanel" aria-hidden="true">
-          <button class="lang-opt" type="button">Kr</button>
-          <span class="lang-div"></span>
-          <button class="lang-opt" type="button">En</button>
-        </div>
-      </div>
     </div>
   </header>
 
@@ -106,12 +96,6 @@
 
   <!-- ===== Club body ===== -->
   <section class="club-body">
-    <!-- 1~10을 이어붙인 루핑 영상 -->
-    <div class="club-media">
-      <video class="club-video" id="clubVideo" src="Video/Club/루핑.mp4"
-             muted playsinline autoplay loop preload="auto"></video>
-    </div>
-
     <div class="club-table">
       <div class="club-row club-row-head">
         <span>Level</span>
@@ -268,53 +252,8 @@
       }
     });
 
-    // ---- 언어 선택 팝업 (실제 언어 전환은 추후) ----
-    const langWrap = document.getElementById('langWrap');
-    const langToggle = document.getElementById('langToggle');
-    const langPanel = document.getElementById('langPanel');
-    function closeLang() {
-      if (!langPanel) return;
-      langPanel.classList.remove('open');
-      langWrap.classList.remove('open');
-      langPanel.setAttribute('aria-hidden', 'true');
-    }
-    if (langToggle) {
-      langToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isOpen = langPanel.classList.toggle('open');
-        langWrap.classList.toggle('open', isOpen);
-        langPanel.setAttribute('aria-hidden', String(!isOpen));
-        if (isOpen) { closeMenu(); closeSearch(); }
-      });
-      document.addEventListener('click', (e) => {
-        if (!langWrap.contains(e.target)) closeLang();
-      });
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLang(); });
-    }
 
-    // ---- 좌측 영상 폭: 상단 설명글의 실제 우측 끝선에 맞춘다 ----
-    (function syncClubMediaWidth() {
-      const desc = document.querySelector('.club-desc');
-      const media = document.querySelector('.club-media');
-      if (!desc || !media) return;
-      const apply = () => {
-        media.style.width = desc.getBoundingClientRect().width + 'px';
-      };
-      apply();
-      window.addEventListener('resize', apply);
-      if (window.ResizeObserver) new ResizeObserver(apply).observe(desc);
-      // 웹폰트 로드 후 폭이 바뀌므로 한 번 더 보정
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(apply);
-    })();
 
-    // ---- 좌측 영상: 1~10을 이어붙인 루핑 영상을 반복 재생 ----
-    (function initClubVideo() {
-      const video = document.getElementById('clubVideo');
-      if (!video) return;
-      const play = () => video.play().catch(() => {});
-      if (video.readyState >= 2) play();
-      else video.addEventListener('loadeddata', play, { once: true });
-    })();
   </script>
 </body>
 </html>
