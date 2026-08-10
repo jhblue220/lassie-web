@@ -2843,7 +2843,7 @@ body.adoption-page .site-header {
 @media (max-width: 600px) {
   /* --- 공통: 헤더 --- */
   .site-header { padding: 12px 14px; gap: 8px; }
-  .logo-typo, .logo-symbol { height: 34px; }
+  .logo-typo, .logo-symbol { height: 27.2px; }   /* 34px에서 20% 축소 — 메인 워드마크가 넓어 헤더가 넘치던 문제 */
   .header-right { gap: 8px; }
   .menu-wrap { margin-right: 4px; }
   .nav-pill { width: auto; min-width: 0; }
@@ -2855,7 +2855,7 @@ body.adoption-page .site-header {
   .icon-btn { width: 34px; height: 34px; }
   .icon-btn .ic { width: 14px; height: 14px; }
   .cart-badge { min-width: 18px; height: 18px; font-size: 11px; }
-  .menu-panel { width: calc(100vw - 28px); max-width: none; }
+  .menu-panel { width: calc(100% + 20px); max-width: calc(100vw - 28px); }   /* 탭과 동일한 좌우 10px 간격 */
   .menu-panel-content { padding: 74px 22px 32px; }
   .menu-close { top: 74px; right: 14px; }
 
@@ -2864,8 +2864,8 @@ body.adoption-page .site-header {
   .club-hero, .club-body,
   .archive-wrap, .profile-hero, .profile-body,
   .faq-section, .adopt-hero, .plans-grid,
-  .site-footer-lg { padding-left: 18px; padding-right: 18px; }
-  .cart-tabs { margin-left: 18px; margin-right: 18px; }
+  .site-footer-lg { padding-left: 14px; padding-right: 14px; }
+  .cart-tabs { margin-left: 14px; margin-right: 14px; }
 
   /* --- 공통: 큰 타이틀 --- */
   .cart-page-title, .club-title, .shop-title, .archive-title,
@@ -2890,12 +2890,12 @@ body.adoption-page .site-header {
   .adopt-center .turn-viewport img,
   .leg-overlay {
     top: 0; left: 0;
-    transform: none;
+    transform: translateX(-2.1%);   /* PNG 안에서 강아지가 2.1% 우측이라 보정 */
     width: 100%;
     height: 100%;
     object-fit: contain;
   }
-  .adopt-360 { width: 56%; bottom: 2%; }
+  .adopt-360 { width: 56%; bottom: 2%; left: 50%; }   /* 데스크톱의 +41px 보정 해제 → 화면 중앙 */
   .adopt-boxes { flex-direction: row; width: 100%; gap: 10px; }
   .adopt-box { flex: 1 1 0; width: auto; height: auto; aspect-ratio: 1 / 1; }
   .adopt-hero .adopt-tags { flex-wrap: wrap; gap: 8px; }
@@ -2906,7 +2906,7 @@ body.adoption-page .site-header {
   .detail-add-cart { font-size: 14px; }
 
   /* --- Accessories: 사이드바 → 상단, 그리드 2열 --- */
-  .shop-layout { flex-direction: column; padding: 0 18px 48px; }
+  .shop-layout { flex-direction: column; align-items: stretch; padding: 0 14px 48px; }
   .shop-sidebar { width: 100%; margin-top: 24px; }
   .shop-main { margin-left: 0; margin-top: 32px; }
   .product-grid { grid-template-columns: repeat(2, 1fr); gap: 34px 12px; }
@@ -2921,7 +2921,8 @@ body.adoption-page .site-header {
   .detail-back { left: 12px; }
 
   /* --- Cart --- */
-  .cart-body { flex-direction: column; gap: 32px; }
+  /* 세로 스택에서 align-items:flex-start면 자식이 내용폭으로 줄어든다 → stretch로 우측 끝 정렬 */
+  .cart-body { flex-direction: column; gap: 32px; align-items: stretch; }
   .cart-items-col { border-right: none; padding-right: 0; }
   .cart-side-col { width: 100%; }
   .cart-tab { font-size: 13px; padding-bottom: 12px; }
@@ -2930,6 +2931,10 @@ body.adoption-page .site-header {
   .cart-item-top h3 { font-size: 16px; }
   .cart-item-price { font-size: 16px; }
   .form-row.two, .form-row.three { grid-template-columns: 1fr; }
+  .promo-row { flex-wrap: nowrap; gap: 6px; }
+  .promo-input-wrap { min-width: 0; padding: 12px 14px; }
+  .promo-row .btn-dark-pill { flex: 0 0 auto; padding: 12px 16px; white-space: nowrap; }
+  .order-summary, .shipping-form, .payment-form, .order-success { width: 100%; min-width: 0; }
   .brand-logos { flex-wrap: wrap; gap: 10px; }
 
   /* --- Plans --- */
@@ -2968,6 +2973,8 @@ body.adoption-page .site-header {
 
   /* --- Profile --- */
   .profile-welcome { font-size: 34px; }
+  .profile-edit { position: static; display: block; margin: 18px auto 0; padding: 12px 28px; font-size: 15px; }
+  .profile-form { grid-template-columns: 1fr; gap: 20px; margin-top: 36px; }
   .profile-tagline { font-size: 17px; }
   .profile-body { padding-top: 40px; padding-bottom: 70px; }
 }
