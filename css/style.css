@@ -2582,18 +2582,7 @@ body.adoption-page .site-header {
 .order-success .btn-checkout { margin-top: 28px; }
 
 /* ===== Small screens: keep it from breaking badly ===== */
-@media (max-width: 900px) {
-  .hero { height: 82vh; min-height: 480px; }
-  .hero-tagline { font-size: 40px; left: 24px; bottom: 3.5vh; top: auto; }
-  .words-strip { flex-wrap: wrap; gap: 18px; }
-  .words-strip .word { margin-right: 24px !important; }
-  .paw-col { width: 100%; }
-  .features { grid-template-columns: 1fr; }
-  .feature-col { border-right: none; border-bottom: 1px solid #e2e2e0; padding: 60px 24px; min-height: 300px; }
-  .cta { padding-top: 200px; }
-  .cta-title { font-size: 36px; }
-  .cta-desc br { display: none; }
-}
+
 
 /* ===== Accessories: 실제 제품 이미지 + Try on ===== */
 .product-media { position: relative; padding: 0; overflow: hidden; }
@@ -2820,3 +2809,165 @@ body.adoption-page .site-header {
 .plan-btn-solid:hover { background: #f0f0f0; }
 
 /* (선택한 플랜 표시 배지는 Adoption 화면에서 제거됨 — 장바구니 반영만 유지) */
+
+/* =========================================================
+   Responsive — 태블릿(≤900px) / 스마트폰(≤600px)
+   데스크톱 레이아웃은 그대로 두고, 좁은 화면에서만 세로로 쌓는다.
+   ========================================================= */
+
+/* ---------- 태블릿 ---------- */
+@media (max-width: 900px) {
+  .hero { height: 82vh; min-height: 480px; }
+
+  /* 좌우 여백 축소 (데스크톱 51/144px → 24px) */
+  .cart-hero, .cart-tabs, .cart-body,
+  .club-hero, .club-body,
+  .archive-wrap, .profile-hero, .profile-body,
+  .faq-section, .adopt-hero, .plans-grid { padding-left: 24px; padding-right: 24px; }
+  .cart-tabs { margin-left: 24px; margin-right: 24px; }
+
+  .shop-layout { padding: 0 24px 60px; }
+  .shop-main { margin-left: 40px; }
+  .shop-sidebar { width: 210px; margin-top: 120px; }
+  .product-grid { gap: 56px 14px; }
+
+  .faq-section { gap: 40px; }
+  .faq-title { width: 300px; font-size: 44px; }
+
+  .plans-grid { gap: 32px; }
+  .adopt-cols { --abox: 84px; --agap: 12px; gap: 16px; }
+  .adopt-lassie-title { font-size: 56px; }
+}
+
+/* ---------- 스마트폰 ---------- */
+@media (max-width: 600px) {
+  /* --- 공통: 헤더 --- */
+  .site-header { padding: 12px 14px; gap: 8px; }
+  .logo-typo, .logo-symbol { height: 34px; }
+  .header-right { gap: 8px; }
+  .menu-wrap { margin-right: 4px; }
+  .nav-pill { width: auto; min-width: 0; }
+  #menuNavToggle { flex: 0 0 auto; width: auto; padding: 8px 10px; font-size: 13px; }
+  .nav-item { font-size: 13px; padding: 8px 10px; gap: 6px; }
+  .nav-about { padding: 8px 12px; }
+  .nav-divider { margin-left: 4px; }
+  .nav-search { padding: 8px 8px; }
+  .icon-btn { width: 34px; height: 34px; }
+  .icon-btn .ic { width: 14px; height: 14px; }
+  .cart-badge { min-width: 18px; height: 18px; font-size: 11px; }
+  .menu-panel { width: calc(100vw - 28px); max-width: none; }
+  .menu-panel-content { padding: 74px 22px 32px; }
+  .menu-close { top: 74px; right: 14px; }
+
+  /* --- 공통: 페이지 좌우 여백 --- */
+  .cart-hero, .cart-tabs, .cart-body,
+  .club-hero, .club-body,
+  .archive-wrap, .profile-hero, .profile-body,
+  .faq-section, .adopt-hero, .plans-grid,
+  .site-footer-lg { padding-left: 18px; padding-right: 18px; }
+  .cart-tabs { margin-left: 18px; margin-right: 18px; }
+
+  /* --- 공통: 큰 타이틀 --- */
+  .cart-page-title, .club-title, .shop-title, .archive-title,
+  .plans-title, .adopt-lassie-title { font-size: 40px; }
+  .club-subtitle { font-size: 20px; }
+  .plans-subtitle { font-size: 15px; }
+
+  /* --- 메인 --- */
+  .hero { height: 72vh; min-height: 420px; }
+  .site-footer-lg { padding-top: 60px; padding-bottom: 70px; }
+  .footer-main { margin-top: 40px; flex-direction: column; gap: 28px; }
+  .footer-brand { width: auto; font-size: 22px; }
+  .footer-info { grid-template-columns: 1fr; row-gap: 18px; font-size: 15px; }
+  .footer-ceo { grid-template-columns: 1fr 1fr; gap: 6px 12px; }
+
+  /* --- Adoption: 3단 → 세로 스택 --- */
+  .adopt-cols { flex-direction: column; height: auto; gap: 26px; }
+  .adopt-left { flex: 1 1 auto; width: 100%; }
+  .adopt-bottom { margin-top: 26px; }
+  .adopt-center { width: 100%; height: 62vw; min-height: 240px; }
+  /* 데스크톱은 height 기준(width:auto)이라 좁은 화면에서 폭이 화면을 넘어선다 → 폭 기준으로 전환 */
+  .adopt-center .turn-viewport img,
+  .leg-overlay {
+    top: 0; left: 0;
+    transform: none;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .adopt-360 { width: 56%; bottom: 2%; }
+  .adopt-boxes { flex-direction: row; width: 100%; gap: 10px; }
+  .adopt-box { flex: 1 1 0; width: auto; height: auto; aspect-ratio: 1 / 1; }
+  .adopt-hero .adopt-tags { flex-wrap: wrap; gap: 8px; }
+  .adopt-hero .detail-tag { flex: 0 0 auto; font-size: 12.5px; padding: 8px 12px; }
+  .adopt-legs { position: static; }
+  .adopt-swap { min-height: 0; }
+  .adopt-buy-row { flex-wrap: nowrap; }
+  .detail-add-cart { font-size: 14px; }
+
+  /* --- Accessories: 사이드바 → 상단, 그리드 2열 --- */
+  .shop-layout { flex-direction: column; padding: 0 18px 48px; }
+  .shop-sidebar { width: 100%; margin-top: 24px; }
+  .shop-main { margin-left: 0; margin-top: 32px; }
+  .product-grid { grid-template-columns: repeat(2, 1fr); gap: 34px 12px; }
+  .shop-meta { flex-wrap: wrap; gap: 12px; }
+  .shop-meta-right { gap: 16px; font-size: 12.5px; }
+  .pagination { flex-wrap: wrap; gap: 14px; }
+
+  /* 상품 상세 슬라이드인 */
+  .detail-panel { width: 100%; }
+  .detail-scroll { padding: 84px 18px 60px; }
+  .detail-columns { flex-direction: column; gap: 22px; }
+  .detail-back { left: 12px; }
+
+  /* --- Cart --- */
+  .cart-body { flex-direction: column; gap: 32px; }
+  .cart-items-col { border-right: none; padding-right: 0; }
+  .cart-side-col { width: 100%; }
+  .cart-tab { font-size: 13px; padding-bottom: 12px; }
+  .cart-item { gap: 14px; }
+  .cart-item-media { width: 108px; height: 108px; }
+  .cart-item-top h3 { font-size: 16px; }
+  .cart-item-price { font-size: 16px; }
+  .form-row.two, .form-row.three { grid-template-columns: 1fr; }
+  .brand-logos { flex-wrap: wrap; gap: 10px; }
+
+  /* --- Plans --- */
+  .plans-hero { padding-top: 56px; }
+  .plans-grid { flex-direction: column; padding-top: 40px; padding-bottom: 70px; gap: 22px; }
+  .plan-card { padding: 32px 24px; }
+  .plan-price { font-size: 34px; margin-top: 24px; }
+  .plan-name { font-size: 22px; }
+  .plans-toggle { margin-top: 30px; }
+  .plans-seg { padding: 11px 20px; font-size: 14px; }
+
+  /* --- Club: 4열 표 → 2열 --- */
+  .club-row { grid-template-columns: 1fr 1fr; gap: 6px 14px; font-size: 14px; padding: 18px 0; }
+  .club-row-head { display: none; }
+
+  /* --- FAQ --- */
+  .faq-section { flex-direction: column; gap: 26px; padding-bottom: 120px; }
+  .faq-title { width: 100%; font-size: 34px; }
+  .faq-question { font-size: 14.5px; }
+  .cs-button { right: 16px; bottom: 16px; font-size: 13px; padding: 12px 18px; }
+  .chat-widget {
+    width: calc(100vw - 24px);
+    right: 12px;
+    left: 12px;
+    top: 96px;
+    bottom: 84px;
+    max-height: none;
+  }
+
+  /* --- Archive --- */
+  .archive-title { font-size: 40px; margin-left: 0; }
+  .archive-words { margin-left: 0; margin-right: 0; font-size: 12px; }
+  .archive-words .aw-mid { gap: 16px; }
+  .arch-row { gap: 10px; }
+  .archive-grid { gap: 10px; }
+
+  /* --- Profile --- */
+  .profile-welcome { font-size: 34px; }
+  .profile-tagline { font-size: 17px; }
+  .profile-body { padding-top: 40px; padding-bottom: 70px; }
+}
