@@ -1524,32 +1524,18 @@ textarea:focus-visible {
 }
 .archive-words .aw-mid { display: inline-flex; gap: 48px; }
 
-.archive-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;                   /* 세로 여백 20px */
+.archive-video-wrap {
+  margin-top: 8px;
 }
 
-.arch-row {
-  display: flex;
-  gap: 20px;                   /* 가로 여백 20px */
-}
-
-.arch-fig {
-  margin: 0;
-  overflow: hidden;
-  background: #ededed;
-  min-width: 0;                /* flex 아이템 이미지 넘침 방지 */
-}
-.arch-pair .arch-fig { flex: 1 1 0; }        /* 페어: 반반 병렬 */
-.arch-single .arch-fig { flex: 1 1 100%; }   /* 단독: 전체 폭 */
-
-.arch-fig img {
-  width: 100%;
-  height: auto;                /* 원본 비율 유지 */
+/* 영상 배경이 흰색이라 페이지와 자연스럽게 이어진다 */
+.archive-video {
   display: block;
+  width: 100%;
+  height: auto;
   -webkit-user-drag: none;
   user-select: none;
+  pointer-events: none;
 }
 
 /* ===== Club page ===== */
@@ -2970,8 +2956,7 @@ body.adoption-page .site-header {
   .archive-title { font-size: 40px; margin-left: 0; }
   .archive-words { margin-left: 0; margin-right: 0; font-size: 12px; }
   .archive-words .aw-mid { gap: 16px; }
-  .arch-row { gap: 10px; }
-  .archive-grid { gap: 10px; }
+  .archive-video-wrap { margin-top: 4px; }
 
   /* --- Profile --- */
   .profile-welcome { font-size: 34px; }

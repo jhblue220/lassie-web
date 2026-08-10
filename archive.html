@@ -92,31 +92,9 @@
       <span>Index</span>
     </div>
 
-    <div class="archive-grid">
-      <div class="arch-row arch-pair">
-        <figure class="arch-fig"><img src="assets/archive_v2/1_1.jpg" alt="" loading="lazy" draggable="false" /></figure>
-        <figure class="arch-fig"><img src="assets/archive_v2/1_2.jpg" alt="" loading="lazy" draggable="false" /></figure>
-      </div>
-      <div class="arch-row arch-single">
-        <figure class="arch-fig"><img src="assets/archive_v2/2.jpg" alt="" loading="lazy" draggable="false" /></figure>
-      </div>
-      <div class="arch-row arch-pair">
-        <figure class="arch-fig"><img src="assets/archive_v2/3_1.jpg" alt="" loading="lazy" draggable="false" /></figure>
-        <figure class="arch-fig"><img src="assets/archive_v2/3_2.jpg" alt="" loading="lazy" draggable="false" /></figure>
-      </div>
-      <div class="arch-row arch-single">
-        <figure class="arch-fig"><img src="assets/archive_v2/4.jpg" alt="" loading="lazy" draggable="false" /></figure>
-      </div>
-      <div class="arch-row arch-pair">
-        <figure class="arch-fig"><img src="assets/archive_v2/5_1.jpg" alt="" loading="lazy" draggable="false" /></figure>
-        <figure class="arch-fig"><img src="assets/archive_v2/5_2.jpg" alt="" loading="lazy" draggable="false" /></figure>
-      </div>
-      <div class="arch-row arch-single">
-        <figure class="arch-fig"><img src="assets/archive_v2/6.jpg" alt="" loading="lazy" draggable="false" /></figure>
-      </div>
-      <div class="arch-row arch-single">
-        <figure class="arch-fig"><img src="assets/archive_v2/7.jpg" alt="" loading="lazy" draggable="false" /></figure>
-      </div>
+    <div class="archive-video-wrap">
+      <video class="archive-video" id="archiveVideo"
+             autoplay muted loop playsinline preload="auto"></video>
     </div>
   </section>
 
@@ -197,6 +175,18 @@
       }
     });
 
+
+    // ---- Archive 영상: 화면에 맞는 소스 하나만 로드 ----
+    (function initArchiveVideo() {
+      const v = document.getElementById('archiveVideo');
+      if (!v) return;
+      const phone = window.matchMedia('(max-width: 600px)').matches;
+      v.src = phone ? 'assets/archive_video/archive_mobile.mp4'
+                    : 'assets/archive_video/archive_wide.mp4';
+      const play = () => v.play().catch(() => {});
+      if (v.readyState >= 2) play();
+      else v.addEventListener('loadeddata', play, { once: true });
+    })();
   </script>
 </body>
 </html>
