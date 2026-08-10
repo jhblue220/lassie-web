@@ -380,6 +380,7 @@ textarea:focus-visible {
   z-index: 0;
   pointer-events: none;
 }
+.adopt-360.is-hidden { opacity: 0; }
 
 
 /* 홈: 헤더를 히어로 위에 겹쳐 뜨고, 스크롤해도 고정 */
@@ -1976,6 +1977,7 @@ body.adoption-page .site-header {
   max-width: none;
 }
 .adopt-360 {
+  transition: opacity 0.5s ease;
   position: absolute;
   /* 12번 프레임에서 강아지 중심(x=594.5)이 이미지 중심(550)보다 오른쪽으로 치우쳐 있다.
      원본 +44.5px에 렌더 배율(행높이 464px×1.233 ÷ 619)을 곱해 약 +41px 보정. */

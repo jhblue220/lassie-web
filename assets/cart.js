@@ -27,9 +27,27 @@ const Cart = (() => {
     if (existing) {
       existing.qty += item.qty || 1;
     } else {
-      items.push({ id: item.id, name: item.name, price: item.price, desc: item.desc || '', color: item.color || '', image: item.image || '', qty: item.qty || 1 });
+      items.push({
+        id: item.id, name: item.name, price: item.price,
+        desc: item.desc || '', color: item.color || '',
+        colorCode: item.colorCode || '',      // 컬러칩 표시에 필요
+        legName: item.legName || '',          // 플랜 재계산에 필요
+        legPrice: item.legPrice || 0,
+        planName: item.planName || '',
+        image: item.image || '', qty: item.qty || 1,
+      });
     }
     write(items);
+  }
+
+  // 기존 항목의 일부 값만 갱신 (플랜 선택 시 가격·이름 반영용)
+  function update(id, patch) {
+    const items = read();
+    const target = items.find((i) => i.id === id);
+    if (!target) return false;
+    Object.assign(target, patch);
+    write(items);
+    return true;
   }
 
   function setQty(id, qty) {
@@ -94,5 +112,5 @@ const Cart = (() => {
 
   document.addEventListener('DOMContentLoaded', updateBadge);
 
-  return { getAll, add, setQty, remove, clear, count, subtotal, updateBadge, colorLabel, chipStyle };
+  return { getAll, add, update, setQty, remove, clear, count, subtotal, updateBadge, colorLabel, chipStyle };
 })();

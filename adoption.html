@@ -417,6 +417,9 @@
     function enterLegMode() {
       legMode = true;
       preloadLegs(turnColor);
+      // 레그를 고르는 단계에서는 회전이 불가하므로 360 인디케이터를 감춘다
+      var ind360 = document.querySelector('.adopt-360');
+      if (ind360) { ind360.classList.add('is-hidden'); setTimeout(function () { ind360.hidden = true; }, FADE); }
       fadeSwap(adoptTags, adoptLegs);
       fadeSwap(adoptSub, adoptLegNote);
       // 컬러칩은 페이드아웃 후 자리까지 비운다
@@ -466,6 +469,8 @@
         desc: 'Color: ' + selectedColor.label + ' / ' + leg.name,
         color: selectedColor.label,
         colorCode: CART_HEX[selectedColor.id] || '',
+        legName: leg.name,
+        legPrice: leg.price,
         image: selectedLeg === 'basic'
           ? (CART_IMG[selectedColor.id] || CART_IMG.gray)
           : `assets/legs/${selectedColor.id}_${selectedLeg}.png`,   // 화면에서 고른 레그 그대로

@@ -245,7 +245,22 @@
         if (!info) return;
         btn.classList.add('picked');
         try { localStorage.setItem('lassie_plan', JSON.stringify(info)); } catch (e) {}
-        setTimeout(() => { window.location.href = 'adoption.html'; }, 220);
+
+        // 장바구니에 담긴 Lassie에 선택한 플랜을 반영 (플랜 금액 + 레그 추가금)
+        const lassie = Cart.getAll().find((i) => String(i.id).startsWith('lassie'));
+        if (lassie) {
+          const legPrice = lassie.legPrice || 0;
+          const legName = lassie.legName && lassie.legName !== 'Basic Leg' ? ' · ' + lassie.legName : '';
+          Cart.update(lassie.id, {
+            planName: info.name,
+            price: info.price + legPrice,
+            name: 'Lassie · ' + info.name + legName,
+            desc: (lassie.color ? 'Color: ' + lassie.color : '') +
+                  (lassie.legName ? ' / ' + lassie.legName : '') + ' / ' + info.name,
+          });
+        }
+        // 선택 후 곧바로 장바구니로 이동
+        setTimeout(() => { window.location.href = 'cart.html'; }, 220);
       });
     });
   </script>
