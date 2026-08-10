@@ -30,7 +30,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 input { font-family: inherit; }
 
 /* Android Chromium(Chrome·Samsung Internet)의 기본 파란 탭 하이라이트만 제거.
+   이 속성은 상속되므로 html에 걸어 클릭 가능한 div/span까지 전부 덮는다.
    디자인과 hover/active 애니메이션은 그대로 유지된다. */
+html,
 a,
 button,
 [role="button"],
@@ -38,7 +40,8 @@ input,
 select,
 textarea,
 label,
-summary {
+summary,
+* {
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -1993,6 +1996,8 @@ body.adoption-page .site-header {
 .adopt-swap { position: relative; }
 .adopt-swap > * { transition: opacity 0.5s ease; }
 .adopt-swap > .is-hidden { opacity: 0; }
+/* .detail-tags/.adopt-legs의 display:flex가 [hidden]을 덮어써서 둘 다 보이던 문제 해결 */
+.adopt-swap > [hidden] { display: none; }
 
 /* 태그가 있던 자리의 상단 끝선에 맞춰 띄운다 (아래 요소를 밀지 않도록 절대배치) */
 .adopt-legs { position: absolute; top: 0; left: 0; right: 0; display: flex; gap: 12px; }
