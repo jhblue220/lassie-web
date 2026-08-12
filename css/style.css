@@ -1968,7 +1968,7 @@ body.adoption-page .site-header {
   /* 12번 프레임에서 강아지 중심(x=594.5)이 이미지 중심(550)보다 오른쪽으로 치우쳐 있다.
      원본 +44.5px에 렌더 배율(행높이 464px×1.233 ÷ 619)을 곱해 약 +41px 보정. */
   left: calc(50% + 41px);
-  bottom: calc(4% - 20px);   /* 강아지에 너무 붙어 있어 20px 내림 */
+  bottom: calc(4% - 40px);   /* 강아지에 너무 붙어 있어 아래로 내림(20px + 추가 20px) */
   transform: translateX(-50%);
   width: 42%;
   max-width: 420px;
