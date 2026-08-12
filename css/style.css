@@ -1516,7 +1516,7 @@ textarea:focus-visible {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin: 0 20px 40px;
+  margin: 20px 20px 40px;   /* Life·Moves·Better 줄을 20px 내림 */
   font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -2668,7 +2668,6 @@ body.adoption-page .site-header {
 .plans-seg.active {
   background: #fff;
   color: var(--navy);
-  box-shadow: 0 2px 8px rgba(30, 42, 61, 0.08);
 }
 .seg-save { font-size: 15px; color: #a7abb2; font-weight: 500; }
 
@@ -2852,8 +2851,6 @@ body.adoption-page .site-header {
   .menu-panel-content { padding: 81px 22px 32px; }
   .menu-close { top: 76px; right: 14px; }
   .br-phone { display: inline; }
-  /* 세그먼트 토글 그림자 제거 */
-  .plans-seg.active { box-shadow: none; }
 
   /* --- 공통: 페이지 좌우 여백 --- */
   .cart-hero, .cart-tabs, .cart-body,
