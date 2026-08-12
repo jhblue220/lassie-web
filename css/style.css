@@ -2672,6 +2672,9 @@ body.adoption-page .site-header {
 }
 .seg-save { font-size: 15px; color: #a7abb2; font-weight: 500; }
 
+/* 스마트폰에서만 줄바꿈 */
+.br-phone { display: none; }
+
 /* 카드 그리드 */
 .plans-grid {
   display: flex;
@@ -2844,8 +2847,13 @@ body.adoption-page .site-header {
   .icon-btn .ic { width: 14px; height: 14px; }
   .cart-badge { min-width: 18px; height: 18px; font-size: 11px; }
   .menu-panel { width: calc(100% + 20px); max-width: calc(100vw - 28px); }   /* 탭과 동일한 좌우 10px 간격 */
-  .menu-panel-content { padding: 74px 22px 32px; }
-  .menu-close { top: 74px; right: 14px; }
+  /* 좌측 메뉴 아이콘(16px)과 우측 X(26px)의 세로 중심을 맞추고 둘 다 7px 내림
+     → 아이콘 중심 89px 기준: 콘텐츠 padding-top 81px, X top 76px */
+  .menu-panel-content { padding: 81px 22px 32px; }
+  .menu-close { top: 76px; right: 14px; }
+  .br-phone { display: inline; }
+  /* 세그먼트 토글 그림자 제거 */
+  .plans-seg.active { box-shadow: none; }
 
   /* --- 공통: 페이지 좌우 여백 --- */
   .cart-hero, .cart-tabs, .cart-body,
